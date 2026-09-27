@@ -1,0 +1,25 @@
+[
+  {
+    "id": "PV-001",
+    "brand": "Sample",
+    "model": "550W Monocrystalline",
+    "technology": "Monocrystalline",
+    "power_w": 550,
+    "voc_v": 49.8,
+    "vmp_v": 41.5,
+    "isc_a": 14.2,
+    "imp_a": 13.3,
+    "max_system_voltage_v": 1500,
+    "max_series_fuse_a": 25,
+    "dimensions_mm": {
+      "length": 2279,
+      "width": 1134,
+      "thickness": 35
+    },
+    "weight_kg": 27.5,
+    "warranty_years": 12,
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  }
+]
