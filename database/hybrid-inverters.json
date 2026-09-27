@@ -1,0 +1,32 @@
+[
+  {
+    "id": "HYB-001",
+    "brand": "Sample",
+    "model": "5kW Hybrid Inverter",
+    "type": "Hybrid",
+    "rated_power_w": 5000,
+    "battery_voltage_v": 48,
+    "max_pv_power_w": 6500,
+    "max_pv_voltage_v": 500,
+    "mppt_voltage_min_v": 120,
+    "mppt_voltage_max_v": 450,
+    "mppt_count": 2,
+    "max_pv_current_a": 18,
+    "max_charge_current_a": 100,
+    "max_discharge_current_a": 100,
+    "ac_input_voltage_v": 230,
+    "ac_output_voltage_v": 230,
+    "frequency_hz": 60,
+    "efficiency_percent": 95,
+    "grid_connection": true,
+    "backup_output": true,
+    "battery_chemistry": [
+      "LiFePO4",
+      "Lithium-ion",
+      "Lead-acid"
+    ],
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  }
+]
