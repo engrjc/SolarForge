@@ -2,24 +2,34 @@
 // SolarForge Project / Site Survey Module
 // ========================================
 
+
+// ========================================
+// OPEN NEW PROJECT
+// ========================================
+
 function openNewProject() {
 
     document.getElementById("dashboardPage").style.display = "none";
+
     document.getElementById("databasePage").style.display = "none";
+
     document.getElementById("projectPage").style.display = "block";
 
     setActiveButton("project");
+
+    loadSavedProject();
 
 }
 
 
 // ========================================
-// SHOW DASHBOARD
+// CLOSE PROJECT
 // ========================================
 
 function closeProject() {
 
     document.getElementById("projectPage").style.display = "none";
+
     document.getElementById("dashboardPage").style.display = "block";
 
     setActiveButton("dashboard");
@@ -36,22 +46,22 @@ function saveProject() {
     const project = {
 
         projectId:
-            document.getElementById("projectId").value,
+            document.getElementById("projectId").value.trim(),
 
         projectName:
-            document.getElementById("projectName").value,
+            document.getElementById("projectName").value.trim(),
 
         customerName:
-            document.getElementById("customerName").value,
+            document.getElementById("customerName").value.trim(),
 
         contactNumber:
-            document.getElementById("contactNumber").value,
+            document.getElementById("contactNumber").value.trim(),
 
         email:
-            document.getElementById("customerEmail").value,
+            document.getElementById("customerEmail").value.trim(),
 
         address:
-            document.getElementById("siteAddress").value,
+            document.getElementById("siteAddress").value.trim(),
 
         installationType:
             document.getElementById("installationType").value,
@@ -66,7 +76,7 @@ function saveProject() {
             document.getElementById("gridConnection").value,
 
         notes:
-            document.getElementById("siteNotes").value,
+            document.getElementById("siteNotes").value.trim(),
 
         createdAt:
             new Date().toISOString()
@@ -74,11 +84,17 @@ function saveProject() {
     };
 
 
-    // Basic validation
+    // ====================================
+    // REQUIRED FIELD CHECK
+    // ====================================
 
     if (!project.projectName) {
 
         alert("Please enter a project name.");
+
+        document
+            .getElementById("projectName")
+            .focus();
 
         return;
 
@@ -89,12 +105,18 @@ function saveProject() {
 
         alert("Please enter the customer name.");
 
+        document
+            .getElementById("customerName")
+            .focus();
+
         return;
 
     }
 
 
-    // Save locally for now
+    // ====================================
+    // SAVE PROJECT
+    // ====================================
 
     localStorage.setItem(
         "solarforge_current_project",
@@ -102,9 +124,16 @@ function saveProject() {
     );
 
 
+    // ====================================
+    // CONFIRMATION
+    // ====================================
+
     alert(
         "Project saved successfully.\n\n" +
-        "Project: " + project.projectName
+        "Project: " +
+        project.projectName +
+        "\nCustomer: " +
+        project.customerName
     );
 
 
@@ -183,6 +212,12 @@ function loadSavedProject() {
 
         document.getElementById("siteNotes").value =
             project.notes || "";
+
+
+        console.log(
+            "SolarForge saved project loaded:",
+            project
+        );
 
 
     }
