@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SolarForge</title>
+    <title>SolarForge | Solar System Design & Installation Platform</title>
 
     <style>
         * {
@@ -14,152 +14,347 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             background: #f4f7fb;
             color: #172033;
         }
 
+        /* =========================
+           HEADER
+        ========================= */
+
         header {
-            background: #102a43;
+            height: 72px;
+            background: #0b1f3a;
             color: white;
-            padding: 22px 30px;
-        }
-
-        header h1 {
-            font-size: 28px;
-        }
-
-        header p {
-            margin-top: 5px;
-            color: #cbd5e1;
-        }
-
-        .container {
             display: flex;
-            min-height: calc(100vh - 91px);
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            font-size: 30px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+        }
+
+        .logo p {
+            font-size: 11px;
+            color: #b9c7d9;
+            margin-top: 3px;
+        }
+
+        .header-status {
+            font-size: 13px;
+            color: #c8d5e5;
+        }
+
+        /* =========================
+           LAYOUT
+        ========================= */
+
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 72px);
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
 
         .sidebar {
-            width: 230px;
+            width: 235px;
             background: white;
-            border-right: 1px solid #e2e8f0;
+            border-right: 1px solid #dfe5ed;
             padding: 20px 12px;
+            flex-shrink: 0;
         }
 
-        .sidebar button {
+        .sidebar-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: #8a96a8;
+            text-transform: uppercase;
+            padding: 0 12px;
+            margin-bottom: 10px;
+        }
+
+        .nav-btn {
             width: 100%;
             border: none;
             background: transparent;
-            padding: 13px;
             text-align: left;
+            padding: 12px;
             border-radius: 8px;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            font-size: 14px;
+            color: #445066;
             cursor: pointer;
-            font-size: 15px;
         }
 
-        .sidebar button:hover {
-            background: #eaf2ff;
+        .nav-btn:hover {
+            background: #edf4ff;
+            color: #1769d2;
         }
+
+        .nav-btn.active {
+            background: #e8f1ff;
+            color: #1769d2;
+            font-weight: bold;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
 
         .main {
             flex: 1;
-            padding: 30px;
+            padding: 28px;
+            overflow-x: auto;
         }
 
-        .welcome {
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .page-subtitle {
+            color: #6c7789;
             margin-bottom: 25px;
         }
 
-        .welcome h2 {
-            font-size: 27px;
-        }
+        /* =========================
+           DASHBOARD CARDS
+        ========================= */
 
-        .welcome p {
-            margin-top: 8px;
-            color: #64748b;
-        }
-
-        .cards {
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 18px;
+            margin-bottom: 28px;
         }
 
         .card {
             background: white;
-            border-radius: 14px;
-            padding: 22px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+            border: 1px solid #e0e6ee;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
         .card-icon {
-            font-size: 30px;
+            font-size: 28px;
             margin-bottom: 12px;
         }
 
-        .card h3 {
+        .card-title {
+            font-size: 14px;
+            color: #697589;
             margin-bottom: 8px;
         }
 
-        .card p {
-            color: #64748b;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .design-section {
-            margin-top: 25px;
-            background: white;
-            border-radius: 14px;
-            padding: 25px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .design-section h2 {
-            margin-bottom: 10px;
-        }
-
-        .design-section p {
-            color: #64748b;
-            margin-bottom: 20px;
-        }
-
-        .start-button {
-            background: #f59e0b;
-            color: white;
-            border: none;
-            padding: 13px 22px;
-            border-radius: 8px;
-            font-size: 15px;
+        .card-value {
+            font-size: 25px;
             font-weight: bold;
+        }
+
+        .card-description {
+            font-size: 12px;
+            color: #8a94a4;
+            margin-top: 8px;
+        }
+
+        /* =========================
+           DESIGN AREA
+        ========================= */
+
+        .section {
+            background: white;
+            border: 1px solid #e0e6ee;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 22px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .section-header h2 {
+            font-size: 19px;
+        }
+
+        .primary-btn {
+            border: none;
+            background: #1769d2;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .primary-btn:hover {
+            background: #0e55ad;
+        }
+
+        .secondary-btn {
+            border: 1px solid #ccd5e2;
+            background: white;
+            color: #354257;
+            padding: 10px 16px;
+            border-radius: 7px;
             cursor: pointer;
         }
 
-        .start-button:hover {
-            background: #d97706;
+        /* =========================
+           PRODUCT DATABASE
+        ========================= */
+
+        .database-toolbar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 220px;
+            padding: 11px 13px;
+            border: 1px solid #ccd5e2;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .database-table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th {
+            background: #f1f5fa;
+            color: #4a566b;
+            text-align: left;
+            padding: 12px;
+            font-size: 12px;
+            border-bottom: 1px solid #dce3ec;
+        }
+
+        td {
+            padding: 13px 12px;
+            border-bottom: 1px solid #edf0f4;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #f8fbff;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            background: #eef6ff;
+            color: #1769d2;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty-state {
+            text-align: center;
+            padding: 45px 20px;
+            color: #7a8595;
+        }
+
+        .empty-state-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1000px) {
+
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sidebar {
+                width: 200px;
+            }
         }
 
         @media (max-width: 700px) {
-            .container {
-                flex-direction: column;
+
+            header {
+                padding: 0 15px;
+            }
+
+            .header-status {
+                display: none;
+            }
+
+            .layout {
+                display: block;
             }
 
             .sidebar {
                 width: 100%;
                 border-right: none;
-                border-bottom: 1px solid #e2e8f0;
+                border-bottom: 1px solid #dfe5ed;
+                padding: 10px;
+                display: flex;
+                overflow-x: auto;
+                gap: 5px;
             }
 
-            .sidebar button {
-                display: inline-block;
+            .sidebar-title {
+                display: none;
+            }
+
+            .nav-btn {
                 width: auto;
-                margin-right: 5px;
+                white-space: nowrap;
+                margin-bottom: 0;
             }
 
             .main {
-                padding: 20px;
+                padding: 18px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 23px;
             }
         }
     </style>
@@ -167,85 +362,781 @@
 
 <body>
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
-    <h1>☀️ SolarForge</h1>
-    <p>Solar System Design & Installation Platform</p>
+
+    <div class="logo">
+
+        <div class="logo-icon">☀️</div>
+
+        <div>
+            <h1>SolarForge</h1>
+            <p>Solar System Design & Installation Platform</p>
+        </div>
+
+    </div>
+
+    <div class="header-status">
+        Engineering & Business Management System
+    </div>
+
 </header>
 
-<div class="container">
+
+<!-- =========================
+     MAIN LAYOUT
+========================= -->
+
+<div class="layout">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
 
     <aside class="sidebar">
-        <button>🏠 Dashboard</button>
-        <button>☀️ Solar Panels</button>
-        <button>⚡ Hybrid Inverters</button>
-        <button>🔋 Batteries</button>
-        <button>🔌 Cables & Protection</button>
-        <button>📦 Inventory</button>
-        <button>👥 Customers</button>
-        <button>📋 Projects</button>
-        <button>💰 Quotations</button>
-        <button>⚙️ Settings</button>
+
+        <div class="sidebar-title">
+            Main Menu
+        </div>
+
+        <button class="nav-btn active" onclick="showDashboard()">
+            🏠 Dashboard
+        </button>
+
+        <button class="nav-btn" onclick="showDatabase('solarPanels')">
+            ☀️ Solar Panels
+        </button>
+
+        <button class="nav-btn" onclick="showDatabase('hybridInverters')">
+            ⚡ Hybrid Inverters
+        </button>
+
+        <button class="nav-btn" onclick="showDatabase('batteries')">
+            🔋 Batteries
+        </button>
+
+        <button class="nav-btn" onclick="showDatabase('cables')">
+            🔌 Cables
+        </button>
+
+        <button class="nav-btn" onclick="showDatabase('protection')">
+            🛡 Protection
+        </button>
+
+        <button class="nav-btn" onclick="showDatabase('mounting')">
+            🔧 Mounting
+        </button>
+
+        <button class="nav-btn" onclick="showDatabase('accessories')">
+            🧰 Accessories
+        </button>
+
+        <br>
+
+        <div class="sidebar-title">
+            Business
+        </div>
+
+        <button class="nav-btn" onclick="comingSoon('Inventory')">
+            📦 Inventory
+        </button>
+
+        <button class="nav-btn" onclick="comingSoon('Customers')">
+            👤 Customers
+        </button>
+
+        <button class="nav-btn" onclick="comingSoon('Projects')">
+            📋 Projects
+        </button>
+
+        <button class="nav-btn" onclick="comingSoon('Quotations')">
+            💰 Quotations
+        </button>
+
+        <button class="nav-btn" onclick="comingSoon('Settings')">
+            ⚙️ Settings
+        </button>
+
     </aside>
 
-    <main class="main">
 
-        <section class="welcome">
-            <h2>SolarForge Dashboard</h2>
-            <p>Design, assemble, install, and manage solar energy systems.</p>
-        </section>
+    <!-- =========================
+         MAIN CONTENT
+    ========================= -->
 
-        <section class="cards">
+    <main class="main" id="mainContent">
 
-            <div class="card">
-                <div class="card-icon">☀️</div>
-                <h3>Solar Panels</h3>
-                <p>Manage panel specifications and PV array configurations.</p>
-            </div>
+        <!-- DASHBOARD -->
 
-            <div class="card">
-                <div class="card-icon">⚡</div>
-                <h3>Hybrid Inverters</h3>
-                <p>Configure hybrid inverters and check PV, battery, and grid compatibility.</p>
-            </div>
+        <div id="dashboardPage">
 
-            <div class="card">
-                <div class="card-icon">🔋</div>
-                <h3>Battery Systems</h3>
-                <p>Manage battery voltage, capacity, chemistry, and configurations.</p>
-            </div>
+            <h1 class="page-title">
+                SolarForge Dashboard
+            </h1>
 
-            <div class="card">
-                <div class="card-icon">🏠</div>
-                <h3>Load Analysis</h3>
-                <p>Calculate customer energy consumption and system requirements.</p>
-            </div>
-
-        </section>
-
-        <section class="design-section">
-
-            <h2>⚙️ Solar System Designer</h2>
-
-            <p>
-                Create a solar system design using panels, hybrid inverter,
-                battery storage, protection, and installation materials.
+            <p class="page-subtitle">
+                Solar system design, equipment management and installation workflow.
             </p>
 
-            <button class="start-button" onclick="startDesign()">
-                Start New Design
-            </button>
 
-        </section>
+            <!-- DATABASE COUNTERS -->
+
+            <div class="dashboard-grid">
+
+                <div class="card">
+                    <div class="card-icon">☀️</div>
+                    <div class="card-title">Solar Panels</div>
+                    <div class="card-value" id="panelCount">0</div>
+                    <div class="card-description">
+                        Products in database
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <div class="card-title">Hybrid Inverters</div>
+                    <div class="card-value" id="inverterCount">0</div>
+                    <div class="card-description">
+                        Products in database
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔋</div>
+                    <div class="card-title">Battery Systems</div>
+                    <div class="card-value" id="batteryCount">0</div>
+                    <div class="card-description">
+                        Products in database
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔌</div>
+                    <div class="card-title">Cables & Protection</div>
+                    <div class="card-value" id="electricalCount">0</div>
+                    <div class="card-description">
+                        Electrical products
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- START DESIGN -->
+
+            <div class="section">
+
+                <div class="section-header">
+
+                    <div>
+                        <h2>Solar System Design</h2>
+
+                        <p style="color:#7a8595; margin-top:5px;">
+                            Create a new hybrid solar system design.
+                        </p>
+                    </div>
+
+                    <button class="primary-btn"
+                            onclick="startNewDesign()">
+                        + Start New Design
+                    </button>
+
+                </div>
+
+                <div class="empty-state">
+
+                    <div class="empty-state-icon">
+                        ☀️
+                    </div>
+
+                    <h3>No active project</h3>
+
+                    <p style="margin-top:8px;">
+                        Start a new design to begin load analysis,
+                        inverter selection, battery sizing and system configuration.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SYSTEM WORKFLOW -->
+
+            <div class="section">
+
+                <div class="section-header">
+                    <h2>SolarForge Workflow</h2>
+                </div>
+
+                <div class="dashboard-grid">
+
+                    <div class="card">
+                        <div class="card-icon">📋</div>
+                        <div class="card-title">1. Site Survey</div>
+                        <div class="card-description">
+                            Customer and installation information
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">⚡</div>
+                        <div class="card-title">2. Load Analysis</div>
+                        <div class="card-description">
+                            Determine energy demand
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">☀️</div>
+                        <div class="card-title">3. PV Design</div>
+                        <div class="card-description">
+                            Panel and string configuration
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🔋</div>
+                        <div class="card-title">4. Battery Design</div>
+                        <div class="card-description">
+                            Battery capacity and configuration
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DATABASE PAGE -->
+
+        <div id="databasePage" style="display:none;">
+
+            <h1 class="page-title" id="databaseTitle">
+                Product Database
+            </h1>
+
+            <p class="page-subtitle" id="databaseSubtitle">
+                SolarForge equipment database.
+            </p>
+
+
+            <div class="section">
+
+                <div class="database-toolbar">
+
+                    <input
+                        type="text"
+                        id="databaseSearch"
+                        class="search-box"
+                        placeholder="Search products..."
+                        oninput="filterDatabase()"
+                    >
+
+                    <button class="secondary-btn"
+                            onclick="showDashboard()">
+                        ← Dashboard
+                    </button>
+
+                </div>
+
+
+                <div class="database-table-wrapper">
+
+                    <table>
+
+                        <thead id="databaseHead">
+                        </thead>
+
+                        <tbody id="databaseBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </main>
 
 </div>
 
-<script>
-    function startDesign() {
-        alert("SolarForge System Designer is coming next!");
-    }
-</script>
+
+<!-- =========================
+     DATABASE SCRIPT
+========================= -->
+
 <script src="js/database.js"></script>
+
+
+<!-- =========================
+     SOLARFORGE APPLICATION
+========================= -->
+
+<script>
+
+let currentDatabase = null;
+
+
+/* =========================
+   DATABASE INFORMATION
+========================= */
+
+const databaseInfo = {
+
+    solarPanels: {
+        title: "Solar Panels",
+        subtitle: "Solar photovoltaic panel database.",
+        icon: "☀️"
+    },
+
+    hybridInverters: {
+        title: "Hybrid Inverters",
+        subtitle: "Hybrid inverter equipment database.",
+        icon: "⚡"
+    },
+
+    batteries: {
+        title: "Battery Systems",
+        subtitle: "Battery storage equipment database.",
+        icon: "🔋"
+    },
+
+    cables: {
+        title: "Cables",
+        subtitle: "Solar and battery cable database.",
+        icon: "🔌"
+    },
+
+    protection: {
+        title: "Protection",
+        subtitle: "DC, AC and surge protection equipment.",
+        icon: "🛡"
+    },
+
+    mounting: {
+        title: "Mounting Materials",
+        subtitle: "Solar panel mounting equipment.",
+        icon: "🔧"
+    },
+
+    accessories: {
+        title: "Installation Accessories",
+        subtitle: "Connectors, busbars and installation accessories.",
+        icon: "🧰"
+    }
+
+};
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function showDashboard() {
+
+    document.getElementById("dashboardPage").style.display = "block";
+    document.getElementById("databasePage").style.display = "none";
+
+    currentDatabase = null;
+
+    updateActiveButton("Dashboard");
+
+}
+
+
+/* =========================
+   SHOW DATABASE
+========================= */
+
+function showDatabase(databaseName) {
+
+    currentDatabase = databaseName;
+
+    const data = SolarForgeDB[databaseName];
+
+    const info = databaseInfo[databaseName];
+
+    document.getElementById("dashboardPage").style.display = "none";
+    document.getElementById("databasePage").style.display = "block";
+
+    document.getElementById("databaseTitle").innerHTML =
+        info.icon + " " + info.title;
+
+    document.getElementById("databaseSubtitle").innerText =
+        info.subtitle;
+
+    document.getElementById("databaseSearch").value = "";
+
+    renderDatabase(data);
+
+    updateActiveButton(info.title);
+
+}
+
+
+/* =========================
+   RENDER DATABASE
+========================= */
+
+function renderDatabase(data) {
+
+    const head = document.getElementById("databaseHead");
+    const body = document.getElementById("databaseBody");
+
+    head.innerHTML = "";
+    body.innerHTML = "";
+
+    if (!data || data.length === 0) {
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="10">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>No products found</h3>
+                        <p>No products are currently stored in this database.</p>
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    let columns = [];
+
+
+    /* SOLAR PANELS */
+
+    if (currentDatabase === "solarPanels") {
+
+        columns = [
+            "id",
+            "brand",
+            "model",
+            "power_w",
+            "voc_v",
+            "vmp_v",
+            "isc_a",
+            "imp_a"
+        ];
+
+    }
+
+
+    /* HYBRID INVERTERS */
+
+    else if (currentDatabase === "hybridInverters") {
+
+        columns = [
+            "id",
+            "brand",
+            "model",
+            "rated_power_w",
+            "battery_voltage_v",
+            "max_pv_power_w",
+            "max_pv_voltage_v",
+            "mppt_count"
+        ];
+
+    }
+
+
+    /* BATTERIES */
+
+    else if (currentDatabase === "batteries") {
+
+        columns = [
+            "id",
+            "brand",
+            "model",
+            "chemistry",
+            "nominal_voltage_v",
+            "capacity_ah",
+            "energy_kwh",
+            "recommended_depth_of_discharge_percent"
+        ];
+
+    }
+
+
+    /* CABLES */
+
+    else if (currentDatabase === "cables") {
+
+        columns = [
+            "id",
+            "category",
+            "type",
+            "size_mm2",
+            "conductor_material",
+            "rated_voltage_v",
+            "max_current_a"
+        ];
+
+    }
+
+
+    /* PROTECTION */
+
+    else if (currentDatabase === "protection") {
+
+        columns = [
+            "id",
+            "category",
+            "sub_category",
+            "brand",
+            "model",
+            "rated_voltage_vdc",
+            "rated_current_a"
+        ];
+
+    }
+
+
+    /* MOUNTING */
+
+    else if (currentDatabase === "mounting") {
+
+        columns = [
+            "id",
+            "category",
+            "name",
+            "material",
+            "length_m",
+            "compatible_panel_type"
+        ];
+
+    }
+
+
+    /* ACCESSORIES */
+
+    else if (currentDatabase === "accessories") {
+
+        columns = [
+            "id",
+            "category",
+            "name",
+            "rated_voltage_v",
+            "rated_current_a",
+            "material"
+        ];
+
+    }
+
+
+    /* TABLE HEADER */
+
+    columns.forEach(column => {
+
+        const th = document.createElement("th");
+
+        th.innerText = formatColumnName(column);
+
+        head.appendChild(th);
+
+    });
+
+
+    /* TABLE BODY */
+
+    data.forEach(item => {
+
+        const row = document.createElement("tr");
+
+        columns.forEach(column => {
+
+            const cell = document.createElement("td");
+
+            let value = item[column];
+
+            if (value === undefined || value === null) {
+                value = "—";
+            }
+
+            if (Array.isArray(value)) {
+                value = value.join(", ");
+            }
+
+            if (typeof value === "boolean") {
+                value = value ? "Yes" : "No";
+            }
+
+            cell.innerText = value;
+
+            row.appendChild(cell);
+
+        });
+
+        body.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================
+   FORMAT COLUMN NAMES
+========================= */
+
+function formatColumnName(column) {
+
+    return column
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, letter => letter.toUpperCase());
+
+}
+
+
+/* =========================
+   SEARCH DATABASE
+========================= */
+
+function filterDatabase() {
+
+    if (!currentDatabase) {
+        return;
+    }
+
+    const search =
+        document.getElementById("databaseSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const data = SolarForgeDB[currentDatabase];
+
+    if (!search) {
+
+        renderDatabase(data);
+
+        return;
+    }
+
+
+    const filtered = data.filter(item => {
+
+        return JSON.stringify(item)
+            .toLowerCase()
+            .includes(search);
+
+    });
+
+
+    renderDatabase(filtered);
+
+}
+
+
+/* =========================
+   UPDATE DASHBOARD COUNTS
+========================= */
+
+function updateDashboardCounts() {
+
+    document.getElementById("panelCount").innerText =
+        SolarForgeDB.solarPanels.length;
+
+    document.getElementById("inverterCount").innerText =
+        SolarForgeDB.hybridInverters.length;
+
+    document.getElementById("batteryCount").innerText =
+        SolarForgeDB.batteries.length;
+
+    document.getElementById("electricalCount").innerText =
+        SolarForgeDB.cables.length +
+        SolarForgeDB.protection.length;
+
+}
+
+
+/* =========================
+   ACTIVE SIDEBAR BUTTON
+========================= */
+
+function updateActiveButton(name) {
+
+    const buttons =
+        document.querySelectorAll(".nav-btn");
+
+    buttons.forEach(button => {
+
+        button.classList.remove("active");
+
+        if (
+            button.innerText
+                .toLowerCase()
+                .includes(name.toLowerCase())
+        ) {
+            button.classList.add("active");
+        }
+
+    });
+
+}
+
+
+/* =========================
+   NEW DESIGN
+========================= */
+
+function startNewDesign() {
+
+    alert(
+        "SolarForge Design Module\n\n" +
+        "The next development stage will include:\n\n" +
+        "1. Customer information\n" +
+        "2. Site survey\n" +
+        "3. Load analysis\n" +
+        "4. Solar panel configuration\n" +
+        "5. Hybrid inverter selection\n" +
+        "6. Battery sizing\n" +
+        "7. Cable sizing\n" +
+        "8. Protection selection\n" +
+        "9. Wiring diagram\n" +
+        "10. Bill of Materials\n" +
+        "11. Costing and quotation"
+    );
+
+}
+
+
+/* =========================
+   COMING SOON
+========================= */
+
+function comingSoon(moduleName) {
+
+    alert(
+        moduleName +
+        " module is currently under development."
+    );
+
+}
+
+
+/* =========================
+   WAIT FOR DATABASE
+========================= */
+
+setTimeout(() => {
+
+    updateDashboardCounts();
+
+}, 500);
+
+</script>
+
 </body>
 </html>
