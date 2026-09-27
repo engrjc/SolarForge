@@ -1,0 +1,29 @@
+[
+  {
+    "id": "BAT-001",
+    "brand": "Sample",
+    "model": "48V 100Ah LiFePO4",
+    "chemistry": "LiFePO4",
+    "nominal_voltage_v": 48,
+    "capacity_ah": 100,
+    "energy_kwh": 4.8,
+    "recommended_depth_of_discharge_percent": 90,
+    "max_charge_current_a": 50,
+    "max_discharge_current_a": 100,
+    "continuous_discharge_current_a": 100,
+    "peak_discharge_current_a": 150,
+    "bms_included": true,
+    "communication": [
+      "CAN",
+      "RS485"
+    ],
+    "parallel_units_max": 8,
+    "series_connection_allowed": false,
+    "operating_temperature_min_c": -20,
+    "operating_temperature_max_c": 55,
+    "warranty_years": 5,
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  }
+]
