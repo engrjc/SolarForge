@@ -1,0 +1,63 @@
+[
+  {
+    "id": "MNT-001",
+    "category": "Mounting Rail",
+    "name": "Aluminum Solar Mounting Rail",
+    "material": "Aluminum",
+    "length_m": 4.2,
+    "compatible_panel_type": "Framed",
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "MNT-002",
+    "category": "Mid Clamp",
+    "name": "Solar Panel Mid Clamp",
+    "material": "Aluminum",
+    "compatible_rail": "Standard Solar Rail",
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "MNT-003",
+    "category": "End Clamp",
+    "name": "Solar Panel End Clamp",
+    "material": "Aluminum",
+    "compatible_rail": "Standard Solar Rail",
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "MNT-004",
+    "category": "Rail Connector",
+    "name": "Solar Rail Splice Connector",
+    "material": "Aluminum",
+    "compatible_rail": "Standard Solar Rail",
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "MNT-005",
+    "category": "Roof Mount",
+    "name": "Roof Hook",
+    "material": "Stainless Steel",
+    "roof_type": "Tile / Metal",
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "MNT-006",
+    "category": "Ground Mount",
+    "name": "Ground Mount Structure",
+    "material": "Galvanized Steel",
+    "compatible_panel_type": "Framed",
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  }
+]
