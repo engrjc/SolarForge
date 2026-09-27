@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>SolarForge</title>
+
 
     <style>
 
@@ -14,499 +20,1132 @@
             padding: 0;
         }
 
+
         body {
-            font-family: Arial, Helvetica, sans-serif;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
             background: #f4f7fb;
+
             color: #1f2937;
+
         }
 
-        /* ==============================
+
+        /* ==========================================
            HEADER
-        ============================== */
+        ========================================== */
 
         .header {
+
             height: 70px;
+
             background: #0b1f3a;
+
             color: white;
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
             padding: 0 28px;
+
             position: sticky;
+
             top: 0;
+
             z-index: 100;
+
         }
+
 
         .logo-area {
+
             display: flex;
+
             align-items: center;
+
             gap: 12px;
+
         }
+
 
         .logo {
+
             width: 38px;
+
             height: 38px;
+
             background: #f5b400;
+
             border-radius: 8px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             color: #0b1f3a;
+
             font-weight: bold;
+
             font-size: 20px;
+
         }
+
 
         .brand {
+
             font-size: 22px;
+
             font-weight: bold;
+
         }
+
 
         .brand-subtitle {
+
             font-size: 11px;
+
             color: #b9c7da;
+
             margin-top: 2px;
+
         }
+
 
         .header-right {
+
             font-size: 13px;
+
             color: #c9d4e4;
+
         }
 
-        /* ==============================
+
+        /* ==========================================
            LAYOUT
-        ============================== */
+        ========================================== */
 
         .app-layout {
+
             display: flex;
-            min-height: calc(100vh - 70px);
+
+            min-height:
+                calc(100vh - 70px);
+
         }
 
-        /* ==============================
+
+        /* ==========================================
            SIDEBAR
-        ============================== */
+        ========================================== */
 
         .sidebar {
+
             width: 245px;
+
             background: white;
-            border-right: 1px solid #dfe5ed;
+
+            border-right:
+                1px solid #dfe5ed;
+
             padding: 20px 14px;
+
             flex-shrink: 0;
+
         }
+
 
         .sidebar-title {
+
             font-size: 11px;
+
             font-weight: bold;
+
             color: #8a96a8;
+
             text-transform: uppercase;
-            margin: 10px 10px 8px;
+
+            margin:
+                10px 10px 8px;
+
         }
+
 
         .sidebar button {
+
             width: 100%;
+
             border: none;
+
             background: transparent;
+
             padding: 11px 13px;
+
             text-align: left;
+
             border-radius: 7px;
+
             margin-bottom: 4px;
+
             cursor: pointer;
+
             color: #435168;
+
             font-size: 14px;
+
         }
+
 
         .sidebar button:hover {
+
             background: #eef4fb;
+
         }
+
 
         .sidebar button.active {
+
             background: #e7f0fc;
+
             color: #1769d2;
+
             font-weight: bold;
+
         }
+
 
         .sidebar-divider {
+
             height: 1px;
+
             background: #e3e8ef;
+
             margin: 18px 8px;
+
         }
 
-        /* ==============================
+
+        /* ==========================================
            MAIN CONTENT
-        ============================== */
+        ========================================== */
 
         .main-content {
+
             flex: 1;
+
             padding: 28px;
+
             overflow-x: auto;
+
         }
+
 
         .page {
+
             max-width: 1400px;
+
             margin: auto;
+
         }
+
 
         .page-header {
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             margin-bottom: 25px;
+
             gap: 15px;
+
         }
+
 
         .page-title {
+
             font-size: 27px;
+
             color: #172b4d;
+
             font-weight: bold;
+
         }
+
 
         .page-description {
+
             color: #728096;
+
             margin-top: 5px;
+
             font-size: 14px;
+
         }
 
-        /* ==============================
+
+        /* ==========================================
            BUTTONS
-        ============================== */
+        ========================================== */
 
         .btn {
+
             border: none;
+
             border-radius: 7px;
+
             padding: 11px 17px;
+
             cursor: pointer;
+
             font-weight: bold;
+
             font-size: 13px;
+
         }
+
 
         .btn-primary {
+
             background: #1769d2;
+
             color: white;
+
         }
+
 
         .btn-primary:hover {
+
             background: #1258b3;
+
         }
+
 
         .btn-secondary {
+
             background: #e9eef5;
+
             color: #405069;
+
         }
+
 
         .btn-secondary:hover {
+
             background: #dce3ed;
+
         }
+
 
         .btn-success {
+
             background: #218838;
+
             color: white;
+
         }
 
-        /* ==============================
-           DASHBOARD CARDS
-        ============================== */
+
+        .btn-danger {
+
+            background: #dc3545;
+
+            color: white;
+
+        }
+
+
+        .btn-small {
+
+            padding:
+                7px 10px;
+
+            font-size: 12px;
+
+        }
+
+
+        /* ==========================================
+           DASHBOARD
+        ========================================== */
 
         .stats-grid {
+
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 18px;
+
             margin-bottom: 25px;
+
         }
+
 
         .stat-card {
+
             background: white;
-            border: 1px solid #dfe5ed;
+
+            border:
+                1px solid #dfe5ed;
+
             border-radius: 10px;
+
             padding: 20px;
+
         }
+
 
         .stat-label {
+
             font-size: 12px;
+
             color: #78869a;
+
             margin-bottom: 8px;
+
         }
+
 
         .stat-value {
+
             font-size: 28px;
+
             font-weight: bold;
+
             color: #172b4d;
+
         }
 
-        /* ==============================
+
+        /* ==========================================
            WORKFLOW
-        ============================== */
+        ========================================== */
 
         .section-title {
+
             font-size: 18px;
+
             color: #243b5a;
+
             margin-bottom: 15px;
+
         }
+
 
         .workflow-grid {
+
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 16px;
+
         }
+
 
         .workflow-card {
+
             background: white;
-            border: 1px solid #dfe5ed;
+
+            border:
+                1px solid #dfe5ed;
+
             border-radius: 10px;
+
             padding: 20px;
+
             cursor: pointer;
+
             transition: 0.2s;
+
         }
+
 
         .workflow-card:hover {
+
             border-color: #1769d2;
+
             transform: translateY(-2px);
+
         }
+
 
         .workflow-number {
+
             width: 32px;
+
             height: 32px;
+
             border-radius: 50%;
+
             background: #e7f0fc;
+
             color: #1769d2;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             font-weight: bold;
+
             margin-bottom: 13px;
+
         }
+
 
         .workflow-card h3 {
+
             font-size: 15px;
+
             margin-bottom: 7px;
+
             color: #263b58;
+
         }
+
 
         .workflow-card p {
+
             font-size: 12px;
+
             line-height: 1.5;
+
             color: #7a8799;
+
         }
 
-        /* ==============================
+
+        /* ==========================================
            DATABASE
-        ============================== */
+        ========================================== */
 
         .database-toolbar {
+
             display: flex;
+
             gap: 10px;
+
             margin-bottom: 18px;
+
         }
+
 
         .database-toolbar input {
+
             flex: 1;
+
             padding: 11px 13px;
-            border: 1px solid #ccd5e2;
+
+            border:
+                1px solid #ccd5e2;
+
             border-radius: 7px;
+
             outline: none;
+
         }
 
-        .database-toolbar select {
-            padding: 11px 13px;
-            border: 1px solid #ccd5e2;
-            border-radius: 7px;
-            background: white;
-        }
 
         .table-container {
+
             background: white;
-            border: 1px solid #dfe5ed;
+
+            border:
+                1px solid #dfe5ed;
+
             border-radius: 10px;
+
             overflow-x: auto;
+
         }
+
 
         table {
+
             width: 100%;
+
             border-collapse: collapse;
+
             min-width: 800px;
+
         }
+
 
         th {
+
             background: #f5f7fa;
+
             color: #56657a;
+
             font-size: 12px;
+
             text-align: left;
+
             padding: 13px;
-            border-bottom: 1px solid #dfe5ed;
+
+            border-bottom:
+                1px solid #dfe5ed;
+
         }
+
 
         td {
+
             padding: 13px;
+
             font-size: 13px;
-            border-bottom: 1px solid #edf0f4;
+
+            border-bottom:
+                1px solid #edf0f4;
+
             color: #3e4c60;
+
         }
 
-        tr:last-child td {
-            border-bottom: none;
-        }
 
-        /* ==============================
+        /* ==========================================
            PROJECT FORM
-        ============================== */
+        ========================================== */
 
         .project-container {
+
             background: white;
-            border: 1px solid #dfe5ed;
+
+            border:
+                1px solid #dfe5ed;
+
             border-radius: 10px;
+
             padding: 25px;
+
         }
+
 
         .form-section {
+
             margin-bottom: 30px;
+
         }
+
 
         .form-section-title {
+
             font-size: 17px;
+
             font-weight: bold;
+
             color: #243b5a;
+
             margin-bottom: 17px;
+
             padding-bottom: 10px;
-            border-bottom: 1px solid #e4e9f0;
+
+            border-bottom:
+                1px solid #e4e9f0;
+
         }
+
 
         .form-grid {
+
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
             gap: 18px;
+
         }
+
 
         .form-group {
+
             margin-bottom: 4px;
+
         }
+
 
         .form-group.full-width {
+
             grid-column: 1 / -1;
+
         }
 
+
         .form-group label {
+
             display: block;
+
             font-size: 13px;
+
             font-weight: bold;
+
             color: #445166;
+
             margin-bottom: 7px;
+
         }
+
 
         .form-group input,
         .form-group select,
         .form-group textarea {
+
             width: 100%;
+
             padding: 11px 12px;
-            border: 1px solid #ccd5e2;
+
+            border:
+                1px solid #ccd5e2;
+
             border-radius: 7px;
+
             background: white;
-            font-family: Arial, Helvetica, sans-serif;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
             font-size: 14px;
+
             outline: none;
+
         }
+
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
+
             border-color: #1769d2;
+
         }
+
 
         .form-group textarea {
+
             resize: vertical;
+
             min-height: 110px;
+
         }
+
 
         .form-actions {
+
             display: flex;
+
             justify-content: flex-end;
+
             gap: 10px;
+
             margin-top: 25px;
+
             padding-top: 20px;
-            border-top: 1px solid #e4e9f0;
+
+            border-top:
+                1px solid #e4e9f0;
+
         }
 
-        /* ==============================
-           EMPTY / INFO
-        ============================== */
+
+        /* ==========================================
+           LOAD ANALYSIS
+        ========================================== */
+
+        .load-summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .load-summary-card {
+
+            background: white;
+
+            border:
+                1px solid #dfe5ed;
+
+            border-radius: 10px;
+
+            padding: 18px;
+
+        }
+
+
+        .load-summary-label {
+
+            font-size: 12px;
+
+            color: #7a8799;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .load-summary-value {
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+            color: #172b4d;
+
+        }
+
+
+        .load-analysis-container {
+
+            background: white;
+
+            border:
+                1px solid #dfe5ed;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+        }
+
+
+        .load-toolbar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 18px;
+
+            gap: 10px;
+
+        }
+
+
+        .load-toolbar-title {
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            color: #243b5a;
+
+        }
+
+
+        .load-table-wrapper {
+
+            overflow-x: auto;
+
+        }
+
+
+        .load-table {
+
+            min-width: 1100px;
+
+        }
+
+
+        .load-table input,
+        .load-table select {
+
+            width: 100%;
+
+            padding: 8px;
+
+            border:
+                1px solid #ccd5e2;
+
+            border-radius: 5px;
+
+            font-size: 13px;
+
+            outline: none;
+
+        }
+
+
+        .load-table input:focus,
+        .load-table select:focus {
+
+            border-color: #1769d2;
+
+        }
+
+
+        .load-table .energy-cell {
+
+            font-weight: bold;
+
+            color: #1769d2;
+
+            white-space: nowrap;
+
+        }
+
+
+        .load-table .delete-cell {
+
+            text-align: center;
+
+        }
+
+
+        .load-table .delete-btn {
+
+            border: none;
+
+            background: #fce8e8;
+
+            color: #c62828;
+
+            border-radius: 5px;
+
+            padding: 7px 9px;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+        }
+
+
+        .load-table .delete-btn:hover {
+
+            background: #f8d4d4;
+
+        }
+
+
+        .load-footer {
+
+            margin-top: 18px;
+
+            padding-top: 18px;
+
+            border-top:
+                1px solid #e4e9f0;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .load-note {
+
+            font-size: 12px;
+
+            color: #7a8799;
+
+            line-height: 1.5;
+
+        }
+
+
+        .load-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        /* ==========================================
+           EMPTY MESSAGE
+        ========================================== */
 
         .empty-message {
+
             padding: 35px;
+
             text-align: center;
+
             color: #8491a3;
+
             font-size: 14px;
+
         }
 
-        /* ==============================
+
+        /* ==========================================
            RESPONSIVE
-        ============================== */
+        ========================================== */
 
         @media (max-width: 1000px) {
 
             .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
             }
 
+
             .workflow-grid {
-                grid-template-columns: repeat(2, 1fr);
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .load-summary-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
             }
 
         }
+
 
         @media (max-width: 750px) {
 
             .sidebar {
+
                 width: 190px;
+
             }
+
 
             .main-content {
+
                 padding: 18px;
+
             }
+
 
             .form-grid {
+
                 grid-template-columns: 1fr;
+
             }
+
 
             .form-group.full-width {
+
                 grid-column: auto;
+
             }
 
+
             .header-right {
+
                 display: none;
+
+            }
+
+
+            .load-footer {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+            }
+
+
+            .load-actions {
+
+                justify-content: flex-end;
+
             }
 
         }
 
+
         @media (max-width: 600px) {
 
             .app-layout {
+
                 flex-direction: column;
+
             }
+
 
             .sidebar {
+
                 width: 100%;
+
                 border-right: none;
-                border-bottom: 1px solid #dfe5ed;
+
+                border-bottom:
+                    1px solid #dfe5ed;
+
             }
+
 
             .sidebar button {
+
                 display: inline-block;
+
                 width: auto;
+
             }
+
 
             .stats-grid,
-            .workflow-grid {
+            .workflow-grid,
+            .load-summary-grid {
+
                 grid-template-columns: 1fr;
+
             }
 
+
             .page-header {
+
                 flex-direction: column;
+
                 align-items: flex-start;
+
             }
 
         }
 
     </style>
+
 </head>
 
+
 <body>
+
 
 <!-- ==========================================
      HEADER
@@ -520,17 +1159,22 @@
             SF
         </div>
 
+
         <div>
+
             <div class="brand">
                 SolarForge
             </div>
 
+
             <div class="brand-subtitle">
                 Solar System Design & Installation Platform
             </div>
+
         </div>
 
     </div>
+
 
     <div class="header-right">
         Internal Engineering & Business System
@@ -539,11 +1183,13 @@
 </header>
 
 
+
 <!-- ==========================================
      APP LAYOUT
 ========================================== -->
 
 <div class="app-layout">
+
 
     <!-- ======================================
          SIDEBAR
@@ -551,88 +1197,122 @@
 
     <aside class="sidebar">
 
+
         <div class="sidebar-title">
             Main
         </div>
+
 
         <button
             class="active"
             data-page="dashboard"
             onclick="showDashboard()">
+
             Dashboard
+
         </button>
+
 
         <button
             data-page="project"
             onclick="openNewProject()">
+
             New Project
+
         </button>
 
 
+        <button
+            data-page="loadAnalysis"
+            onclick="openLoadAnalysis()">
+
+            Load Analysis
+
+        </button>
+
+
+
         <div class="sidebar-divider"></div>
+
 
 
         <div class="sidebar-title">
             Equipment Database
         </div>
 
+
         <button onclick="showDatabase('solarPanels')">
             Solar Panels
         </button>
+
 
         <button onclick="showDatabase('hybridInverters')">
             Hybrid Inverters
         </button>
 
+
         <button onclick="showDatabase('batteries')">
             Batteries
         </button>
+
 
         <button onclick="showDatabase('cables')">
             Cables
         </button>
 
+
         <button onclick="showDatabase('protection')">
             Protection
         </button>
 
+
         <button onclick="showDatabase('mounting')">
             Mounting
         </button>
+
 
         <button onclick="showDatabase('accessories')">
             Accessories
         </button>
 
 
+
         <div class="sidebar-divider"></div>
+
 
 
         <div class="sidebar-title">
             Business
         </div>
 
+
         <button onclick="underDevelopment('Inventory')">
             Inventory
         </button>
+
 
         <button onclick="underDevelopment('Customers')">
             Customers
         </button>
 
+
         <button onclick="underDevelopment('Projects')">
             Projects
         </button>
+
 
         <button onclick="underDevelopment('Quotations')">
             Quotations
         </button>
 
+
         <button onclick="underDevelopment('Settings')">
             Settings
         </button>
 
+
     </aside>
+
 
 
     <!-- ======================================
@@ -641,36 +1321,52 @@
 
     <main class="main-content">
 
+
         <!-- ==================================
-             DASHBOARD PAGE
+             DASHBOARD
         =================================== -->
 
-        <section id="dashboardPage" class="page">
+        <section
+            id="dashboardPage"
+            class="page">
+
 
             <div class="page-header">
 
+
                 <div>
+
                     <div class="page-title">
                         SolarForge Dashboard
                     </div>
 
+
                     <div class="page-description">
-                        Internal solar engineering, installation and business management system.
+
+                        Internal solar engineering,
+                        installation and business
+                        management system.
+
                     </div>
+
                 </div>
+
 
                 <button
                     class="btn btn-primary"
                     onclick="startNewDesign()">
+
                     + New Project
+
                 </button>
+
 
             </div>
 
 
-            <!-- STATISTICS -->
 
             <div class="stats-grid">
+
 
                 <div class="stat-card">
 
@@ -681,10 +1377,13 @@
                     <div
                         class="stat-value"
                         id="panelCount">
+
                         0
+
                     </div>
 
                 </div>
+
 
 
                 <div class="stat-card">
@@ -696,10 +1395,13 @@
                     <div
                         class="stat-value"
                         id="inverterCount">
+
                         0
+
                     </div>
 
                 </div>
+
 
 
                 <div class="stat-card">
@@ -711,10 +1413,13 @@
                     <div
                         class="stat-value"
                         id="batteryCount">
+
                         0
+
                     </div>
 
                 </div>
+
 
 
                 <div class="stat-card">
@@ -726,22 +1431,28 @@
                     <div
                         class="stat-value"
                         id="protectionCount">
+
                         0
+
                     </div>
 
                 </div>
 
+
             </div>
 
 
-            <!-- WORKFLOW -->
 
             <h2 class="section-title">
+
                 SolarForge Engineering Workflow
+
             </h2>
 
 
+
             <div class="workflow-grid">
+
 
                 <div
                     class="workflow-card"
@@ -756,13 +1467,18 @@
                     </h3>
 
                     <p>
-                        Record customer, site, roof and electrical service information.
+                        Record customer, site,
+                        roof and electrical
+                        service information.
                     </p>
 
                 </div>
 
 
-                <div class="workflow-card">
+
+                <div
+                    class="workflow-card"
+                    onclick="openLoadAnalysis()">
 
                     <div class="workflow-number">
                         2
@@ -773,10 +1489,13 @@
                     </h3>
 
                     <p>
-                        Determine connected load, daily energy consumption and peak demand.
+                        Determine connected load,
+                        daily energy consumption
+                        and peak demand.
                     </p>
 
                 </div>
+
 
 
                 <div class="workflow-card">
@@ -790,10 +1509,13 @@
                     </h3>
 
                     <p>
-                        Calculate PV array size, string configuration and inverter requirements.
+                        Calculate PV array size,
+                        string configuration
+                        and inverter requirements.
                     </p>
 
                 </div>
+
 
 
                 <div class="workflow-card">
@@ -807,10 +1529,14 @@
                     </h3>
 
                     <p>
-                        Select an inverter based on load, PV input, battery voltage and compatibility.
+                        Select an inverter based
+                        on load, PV input,
+                        battery voltage
+                        and compatibility.
                     </p>
 
                 </div>
+
 
 
                 <div class="workflow-card">
@@ -824,10 +1550,13 @@
                     </h3>
 
                     <p>
-                        Determine usable battery energy and battery bank configuration.
+                        Determine usable battery
+                        energy and battery bank
+                        configuration.
                     </p>
 
                 </div>
+
 
 
                 <div class="workflow-card">
@@ -841,10 +1570,13 @@
                     </h3>
 
                     <p>
-                        Determine conductor and protection requirements using engineering rules.
+                        Determine conductor and
+                        protection requirements
+                        using engineering rules.
                     </p>
 
                 </div>
+
 
 
                 <div class="workflow-card">
@@ -858,10 +1590,13 @@
                     </h3>
 
                     <p>
-                        Generate the system electrical connection layout.
+                        Generate the system
+                        electrical connection
+                        layout.
                     </p>
 
                 </div>
+
 
 
                 <div class="workflow-card">
@@ -875,14 +1610,19 @@
                     </h3>
 
                     <p>
-                        Generate materials, costs, labor, margin and project quotation.
+                        Generate materials,
+                        costs, labor, margin
+                        and project quotation.
                     </p>
 
                 </div>
 
+
             </div>
 
+
         </section>
+
 
 
         <!-- ==================================
@@ -894,32 +1634,46 @@
             class="page"
             style="display:none;">
 
+
             <div class="page-header">
+
 
                 <div>
 
                     <div
                         class="page-title"
                         id="databaseTitle">
+
                         Equipment Database
+
                     </div>
 
+
                     <div class="page-description">
-                        SolarForge equipment and material database.
+
+                        SolarForge equipment
+                        and material database.
+
                     </div>
 
                 </div>
 
+
                 <button
                     class="btn btn-secondary"
                     onclick="showDashboard()">
+
                     Back to Dashboard
+
                 </button>
+
 
             </div>
 
 
+
             <div class="database-toolbar">
+
 
                 <input
                     type="text"
@@ -927,24 +1681,33 @@
                     placeholder="Search equipment..."
                     oninput="filterDatabase()">
 
+
             </div>
+
 
 
             <div class="table-container">
 
+
                 <table>
+
 
                     <thead id="databaseHead">
                     </thead>
 
+
                     <tbody id="databaseBody">
                     </tbody>
 
+
                 </table>
+
 
             </div>
 
+
         </section>
+
 
 
         <!-- ==================================
@@ -956,7 +1719,9 @@
             class="page"
             style="display:none;">
 
+
             <div class="page-header">
+
 
                 <div>
 
@@ -964,20 +1729,27 @@
                         New Solar Project
                     </div>
 
+
                     <div class="page-description">
-                        Create the project and record the initial site survey information.
+
+                        Create the project and
+                        record the initial
+                        site survey information.
+
                     </div>
 
                 </div>
 
+
             </div>
+
 
 
             <div class="project-container">
 
-                <!-- PROJECT INFORMATION -->
 
                 <div class="form-section">
+
 
                     <div class="form-section-title">
                         Project Information
@@ -986,41 +1758,51 @@
 
                     <div class="form-grid">
 
+
                         <div class="form-group">
+
 
                             <label for="projectId">
                                 Project ID
                             </label>
+
 
                             <input
                                 type="text"
                                 id="projectId"
                                 placeholder="Example: SF-2026-001">
 
+
                         </div>
+
 
 
                         <div class="form-group">
 
+
                             <label for="projectName">
                                 Project Name *
                             </label>
+
 
                             <input
                                 type="text"
                                 id="projectName"
                                 placeholder="Example: Juan Residence Solar System">
 
+
                         </div>
 
+
                     </div>
+
 
                 </div>
 
 
-                <!-- CUSTOMER INFORMATION -->
 
                 <div class="form-section">
+
 
                     <div class="form-section-title">
                         Customer Information
@@ -1029,69 +1811,87 @@
 
                     <div class="form-grid">
 
+
                         <div class="form-group">
+
 
                             <label for="customerName">
                                 Customer Name *
                             </label>
+
 
                             <input
                                 type="text"
                                 id="customerName"
                                 placeholder="Customer full name">
 
+
                         </div>
+
 
 
                         <div class="form-group">
 
+
                             <label for="contactNumber">
                                 Contact Number
                             </label>
+
 
                             <input
                                 type="text"
                                 id="contactNumber"
                                 placeholder="09XXXXXXXXX">
 
+
                         </div>
+
 
 
                         <div class="form-group">
 
+
                             <label for="customerEmail">
                                 Email
                             </label>
+
 
                             <input
                                 type="email"
                                 id="customerEmail"
                                 placeholder="customer@email.com">
 
+
                         </div>
+
 
 
                         <div class="form-group full-width">
 
+
                             <label for="siteAddress">
                                 Site Address
                             </label>
+
 
                             <input
                                 type="text"
                                 id="siteAddress"
                                 placeholder="Complete installation address">
 
+
                         </div>
 
+
                     </div>
+
 
                 </div>
 
 
-                <!-- SITE SURVEY -->
 
                 <div class="form-section">
+
 
                     <div class="form-section-title">
                         Site Survey Information
@@ -1100,172 +1900,512 @@
 
                     <div class="form-grid">
 
+
                         <div class="form-group">
+
 
                             <label for="installationType">
                                 Installation Type
                             </label>
 
+
                             <select id="installationType">
+
 
                                 <option value="">
                                     Select installation type
                                 </option>
 
+
                                 <option value="Residential">
                                     Residential
                                 </option>
+
 
                                 <option value="Commercial">
                                     Commercial
                                 </option>
 
+
                                 <option value="Industrial">
                                     Industrial
                                 </option>
+
 
                                 <option value="Off-Grid">
                                     Off-Grid
                                 </option>
 
+
                             </select>
+
 
                         </div>
 
 
+
                         <div class="form-group">
+
 
                             <label for="roofType">
                                 Roof / Mounting Type
                             </label>
 
+
                             <select id="roofType">
+
 
                                 <option value="">
                                     Select roof type
                                 </option>
 
+
                                 <option value="Metal">
                                     Metal
                                 </option>
+
 
                                 <option value="Long Span">
                                     Long Span
                                 </option>
 
+
                                 <option value="Tile">
                                     Tile
                                 </option>
+
 
                                 <option value="Concrete">
                                     Concrete
                                 </option>
 
+
                                 <option value="Ground Mount">
                                     Ground Mount
                                 </option>
 
+
                             </select>
+
 
                         </div>
 
 
+
                         <div class="form-group">
+
 
                             <label for="electricalService">
                                 Electrical Service
                             </label>
 
+
                             <select id="electricalService">
+
 
                                 <option value="">
                                     Select electrical service
                                 </option>
 
+
                                 <option value="Single Phase">
                                     Single Phase
                                 </option>
+
 
                                 <option value="Three Phase">
                                     Three Phase
                                 </option>
 
+
                             </select>
+
 
                         </div>
 
 
+
                         <div class="form-group">
+
 
                             <label for="gridConnection">
                                 System Type
                             </label>
 
+
                             <select id="gridConnection">
+
 
                                 <option value="">
                                     Select system type
                                 </option>
 
+
                                 <option value="Grid-Tied">
                                     Grid-Tied
                                 </option>
+
 
                                 <option value="Hybrid">
                                     Hybrid
                                 </option>
 
+
                                 <option value="Off-Grid">
                                     Off-Grid
                                 </option>
 
+
                             </select>
+
 
                         </div>
 
 
+
                         <div class="form-group full-width">
+
 
                             <label for="siteNotes">
                                 Site Survey Notes
                             </label>
 
+
                             <textarea
                                 id="siteNotes"
                                 placeholder="Record roof condition, available installation area, shading, electrical panel condition, customer requirements, site observations, etc."></textarea>
 
+
                         </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="form-actions">
+
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="closeProject()">
+
+                        Back to Dashboard
+
+                    </button>
+
+
+                    <button
+                        class="btn btn-success"
+                        onclick="saveProject()">
+
+                        Save Project
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==================================
+             LOAD ANALYSIS PAGE
+        =================================== -->
+
+        <section
+            id="loadAnalysisPage"
+            class="page"
+            style="display:none;">
+
+
+            <div class="page-header">
+
+
+                <div>
+
+                    <div class="page-title">
+                        Load Analysis
+                    </div>
+
+
+                    <div class="page-description">
+
+                        Analyze the customer's electrical
+                        loads and daily energy consumption.
 
                     </div>
 
                 </div>
 
 
-                <!-- ACTIONS -->
+                <button
+                    class="btn btn-secondary"
+                    onclick="closeLoadAnalysis()">
 
-                <div class="form-actions">
+                    Back to Dashboard
 
-                    <button
-                        class="btn btn-secondary"
-                        onclick="closeProject()">
-                        Back to Dashboard
-                    </button>
+                </button>
 
-                    <button
-                        class="btn btn-success"
-                        onclick="saveProject()">
-                        Save Project
-                    </button>
-
-                </div>
 
             </div>
 
+
+
+            <!-- SUMMARY -->
+
+            <div class="load-summary-grid">
+
+
+                <div class="load-summary-card">
+
+
+                    <div class="load-summary-label">
+                        Connected Load
+                    </div>
+
+
+                    <div
+                        class="load-summary-value"
+                        id="totalConnectedLoad">
+
+                        0 W
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="load-summary-card">
+
+
+                    <div class="load-summary-label">
+                        Daily Energy
+                    </div>
+
+
+                    <div
+                        class="load-summary-value"
+                        id="totalDailyEnergy">
+
+                        0.00 kWh
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="load-summary-card">
+
+
+                    <div class="load-summary-label">
+                        Monthly Energy
+                    </div>
+
+
+                    <div
+                        class="load-summary-value"
+                        id="totalMonthlyEnergy">
+
+                        0.00 kWh
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="load-summary-card">
+
+
+                    <div class="load-summary-label">
+                        Essential Load
+                    </div>
+
+
+                    <div
+                        class="load-summary-value"
+                        id="totalEssentialLoad">
+
+                        0 W
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- LOAD TABLE -->
+
+            <div class="load-analysis-container">
+
+
+                <div class="load-toolbar">
+
+
+                    <div class="load-toolbar-title">
+
+                        Electrical Loads
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="addLoadRow()">
+
+                        + Add Load
+
+                    </button>
+
+
+                </div>
+
+
+
+                <div class="load-table-wrapper">
+
+
+                    <table
+                        class="load-table">
+
+
+                        <thead>
+
+
+                            <tr>
+
+                                <th>
+                                    Appliance / Load
+                                </th>
+
+                                <th>
+                                    Category
+                                </th>
+
+                                <th>
+                                    Qty
+                                </th>
+
+                                <th>
+                                    Power (W)
+                                </th>
+
+                                <th>
+                                    Hours/Day
+                                </th>
+
+                                <th>
+                                    Days/Month
+                                </th>
+
+                                <th>
+                                    Priority
+                                </th>
+
+                                <th>
+                                    Daily Energy
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+
+                        </thead>
+
+
+                        <tbody
+                            id="loadTableBody">
+
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+
+                <div class="load-footer">
+
+
+                    <div class="load-note">
+
+                        Daily energy is calculated as:
+                        <strong>
+                            Quantity × Power × Hours ÷ 1000
+                        </strong>.
+
+                        Monthly energy uses the
+                        specified operating days.
+
+                        These values are preliminary
+                        engineering estimates and will
+                        later feed into PV and battery
+                        sizing.
+
+                    </div>
+
+
+                    <div class="load-actions">
+
+
+                        <button
+                            class="btn btn-secondary"
+                            onclick="clearLoadAnalysis()">
+
+                            Clear
+
+                        </button>
+
+
+                        <button
+                            class="btn btn-success"
+                            onclick="saveLoadAnalysis()">
+
+                            Save Load Analysis
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
         </section>
+
 
     </main>
 
+
 </div>
+
 
 
 <!-- ==========================================
@@ -1273,29 +2413,53 @@
 ========================================== -->
 
 <script src="js/database.js"></script>
+
 <script src="js/project.js"></script>
+
+<script src="js/load-analysis.js"></script>
+
 
 
 <script>
+
 
     /* ==========================================
        PAGE NAVIGATION
     ========================================== */
 
+
     function hideAllPages() {
 
-        document.getElementById("dashboardPage").style.display = "none";
+        document
+            .getElementById("dashboardPage")
+            .style.display = "none";
 
-        document.getElementById("databasePage").style.display = "none";
 
-        document.getElementById("projectPage").style.display = "none";
+        document
+            .getElementById("databasePage")
+            .style.display = "none";
+
+
+        document
+            .getElementById("projectPage")
+            .style.display = "none";
+
+
+        document
+            .getElementById("loadAnalysisPage")
+            .style.display = "none";
 
     }
 
 
+
     function setActiveButton(pageName) {
 
-        const buttons = document.querySelectorAll(".sidebar button");
+        const buttons =
+            document.querySelectorAll(
+                ".sidebar button"
+            );
+
 
         buttons.forEach(function(button) {
 
@@ -1303,9 +2467,12 @@
 
         });
 
-        const activeButton = document.querySelector(
-            `.sidebar button[data-page="${pageName}"]`
-        );
+
+        const activeButton =
+            document.querySelector(
+                `.sidebar button[data-page="${pageName}"]`
+            );
+
 
         if (activeButton) {
 
@@ -1316,15 +2483,21 @@
     }
 
 
+
     function showDashboard() {
 
         hideAllPages();
 
-        document.getElementById("dashboardPage").style.display = "block";
+
+        document
+            .getElementById("dashboardPage")
+            .style.display = "block";
+
 
         setActiveButton("dashboard");
 
     }
+
 
 
     function startNewDesign() {
@@ -1332,6 +2505,7 @@
         openNewProject();
 
     }
+
 
 
     function underDevelopment(name) {
@@ -1344,9 +2518,11 @@
     }
 
 
+
     /* ==========================================
        DATABASE DISPLAY
     ========================================== */
+
 
     let currentDatabase = [];
 
@@ -1372,36 +2548,58 @@
     };
 
 
+
     function showDatabase(databaseName) {
 
         hideAllPages();
 
-        document.getElementById("databasePage").style.display = "block";
 
-        currentDatabaseName = databaseName;
+        document
+            .getElementById("databasePage")
+            .style.display = "block";
+
+
+        currentDatabaseName =
+            databaseName;
+
 
         setActiveButton("");
 
-        document.getElementById("databaseTitle").textContent =
-            databaseNames[databaseName] || "Equipment Database";
 
-        document.getElementById("databaseSearch").value = "";
+        document
+            .getElementById("databaseTitle")
+            .textContent =
+            databaseNames[databaseName] ||
+            "Equipment Database";
+
+
+        document
+            .getElementById("databaseSearch")
+            .value = "";
+
 
         currentDatabase =
             SolarForgeDB[databaseName] || [];
+
 
         renderDatabase(currentDatabase);
 
     }
 
 
+
     function renderDatabase(data) {
 
         const head =
-            document.getElementById("databaseHead");
+            document.getElementById(
+                "databaseHead"
+            );
+
 
         const body =
-            document.getElementById("databaseBody");
+            document.getElementById(
+                "databaseBody"
+            );
 
 
         head.innerHTML = "";
@@ -1409,16 +2607,27 @@
         body.innerHTML = "";
 
 
-        if (!data || data.length === 0) {
+        if (
+            !data ||
+            data.length === 0
+        ) {
 
             body.innerHTML = `
+
                 <tr>
+
                     <td colspan="10">
+
                         <div class="empty-message">
+
                             No equipment records found.
+
                         </div>
+
                     </td>
+
                 </tr>
+
             `;
 
             return;
@@ -1426,38 +2635,54 @@
         }
 
 
-        const keys = Object.keys(data[0]);
+        const keys =
+            Object.keys(data[0]);
 
 
-        let headerHTML = "<tr>";
+        let headerHTML =
+            "<tr>";
+
 
         keys.forEach(function(key) {
 
             headerHTML += `
+
                 <th>
                     ${formatHeader(key)}
                 </th>
+
             `;
 
         });
 
-        headerHTML += "</tr>";
 
-        head.innerHTML = headerHTML;
+        headerHTML +=
+            "</tr>";
+
+
+        head.innerHTML =
+            headerHTML;
+
 
 
         data.forEach(function(item) {
 
-            let rowHTML = "<tr>";
+            let rowHTML =
+                "<tr>";
+
 
             keys.forEach(function(key) {
 
-                let value = item[key];
+                let value =
+                    item[key];
 
 
-                if (Array.isArray(value)) {
+                if (
+                    Array.isArray(value)
+                ) {
 
-                    value = value.join(", ");
+                    value =
+                        value.join(", ");
 
                 }
 
@@ -1467,7 +2692,8 @@
                     value !== null
                 ) {
 
-                    value = JSON.stringify(value);
+                    value =
+                        JSON.stringify(value);
 
                 }
 
@@ -1476,7 +2702,8 @@
                     value === true
                 ) {
 
-                    value = "Yes";
+                    value =
+                        "Yes";
 
                 }
 
@@ -1485,7 +2712,8 @@
                     value === false
                 ) {
 
-                    value = "No";
+                    value =
+                        "No";
 
                 }
 
@@ -1501,43 +2729,58 @@
 
 
                 rowHTML += `
+
                     <td>
                         ${value}
                     </td>
+
                 `;
 
             });
 
 
-            rowHTML += "</tr>";
+            rowHTML +=
+                "</tr>";
 
-            body.innerHTML += rowHTML;
+
+            body.innerHTML +=
+                rowHTML;
 
         });
 
     }
 
 
+
     function formatHeader(key) {
 
         return key
 
-            .replace(/_/g, " ")
+            .replace(
+                /_/g,
+                " "
+            )
 
-            .replace(/\b\w/g, function(letter) {
+            .replace(
+                /\b\w/g,
+                function(letter) {
 
-                return letter.toUpperCase();
+                    return letter.toUpperCase();
 
-            });
+                }
+            );
 
     }
+
 
 
     function filterDatabase() {
 
         const searchValue =
             document
-                .getElementById("databaseSearch")
+                .getElementById(
+                    "databaseSearch"
+                )
                 .value
                 .toLowerCase()
                 .trim();
@@ -1545,7 +2788,9 @@
 
         if (!searchValue) {
 
-            renderDatabase(currentDatabase);
+            renderDatabase(
+                currentDatabase
+            );
 
             return;
 
@@ -1553,23 +2798,29 @@
 
 
         const filtered =
-            currentDatabase.filter(function(item) {
+            currentDatabase.filter(
+                function(item) {
 
-                return JSON.stringify(item)
-                    .toLowerCase()
-                    .includes(searchValue);
+                    return JSON.stringify(item)
+                        .toLowerCase()
+                        .includes(searchValue);
 
-            });
+                }
+            );
 
 
-        renderDatabase(filtered);
+        renderDatabase(
+            filtered
+        );
 
     }
 
 
+
     /* ==========================================
-       DATABASE READY EVENT
+       DATABASE READY
     ========================================== */
+
 
     window.addEventListener(
         "solarforgeDatabaseReady",
@@ -1579,6 +2830,7 @@
 
         }
     );
+
 
 
     function updateDashboardCounts() {
@@ -1592,27 +2844,53 @@
         }
 
 
-        document.getElementById("panelCount").textContent =
-            SolarForgeDB.solarPanels.length;
+        document
+            .getElementById(
+                "panelCount"
+            )
+            .textContent =
+            SolarForgeDB
+                .solarPanels
+                .length;
 
 
-        document.getElementById("inverterCount").textContent =
-            SolarForgeDB.hybridInverters.length;
+        document
+            .getElementById(
+                "inverterCount"
+            )
+            .textContent =
+            SolarForgeDB
+                .hybridInverters
+                .length;
 
 
-        document.getElementById("batteryCount").textContent =
-            SolarForgeDB.batteries.length;
+        document
+            .getElementById(
+                "batteryCount"
+            )
+            .textContent =
+            SolarForgeDB
+                .batteries
+                .length;
 
 
-        document.getElementById("protectionCount").textContent =
-            SolarForgeDB.protection.length;
+        document
+            .getElementById(
+                "protectionCount"
+            )
+            .textContent =
+            SolarForgeDB
+                .protection
+                .length;
 
     }
+
 
 
     /* ==========================================
        INITIALIZE
     ========================================== */
+
 
     document.addEventListener(
         "DOMContentLoaded",
@@ -1623,7 +2901,10 @@
         }
     );
 
+
 </script>
 
+
 </body>
+
 </html>
