@@ -1,0 +1,77 @@
+[
+  {
+    "id": "ACC-001",
+    "category": "Connector",
+    "name": "MC4 Male Connector",
+    "rated_voltage_v": 1500,
+    "rated_current_a": 30,
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "ACC-002",
+    "category": "Connector",
+    "name": "MC4 Female Connector",
+    "rated_voltage_v": 1500,
+    "rated_current_a": 30,
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "ACC-003",
+    "category": "Connector",
+    "name": "MC4 Y Branch Connector",
+    "rated_voltage_v": 1500,
+    "rated_current_a": 30,
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "ACC-004",
+    "category": "Terminal",
+    "name": "Copper Cable Lug",
+    "material": "Copper",
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "ACC-005",
+    "category": "Busbar",
+    "name": "DC Positive Busbar",
+    "rated_current_a": 250,
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "ACC-006",
+    "category": "Busbar",
+    "name": "DC Negative Busbar",
+    "rated_current_a": 250,
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "ACC-007",
+    "category": "Cable Management",
+    "name": "Solar Cable Clip",
+    "material": "Stainless Steel",
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  },
+  {
+    "id": "ACC-008",
+    "category": "Enclosure",
+    "name": "Weatherproof DC Enclosure",
+    "ip_rating": "IP65",
+    "purchase_price_php": 0,
+    "selling_price_php": 0,
+    "stock": 0
+  }
+]
