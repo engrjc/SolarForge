@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolarForge — System Designer</title>
+<link rel="stylesheet" href="css/designer.css">
+</head>
+
+<body>
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-mark">☀</div>
+        <div>
+            <div class="brand-name">Solar<span>Forge</span></div>
+            <div class="brand-sub">Solar System Design & Installation Platform</div>
+        </div>
+    </div>
+
+    <div class="top-project">
+        <span>Project</span>
+        <select id="projectSelect">
+            <option>Residential Solar System</option>
+            <option>New Solar Design</option>
+        </select>
+    </div>
+
+    <div class="top-actions">
+        <button id="undoBtn" class="icon-btn" title="Undo">↶</button>
+        <button id="redoBtn" class="icon-btn" title="Redo">↷</button>
+        <button id="saveBtn" class="primary-btn">Save Design</button>
+    </div>
+</header>
+
+<div class="app-shell">
+
+    <aside class="sidebar">
+        <button class="nav-item">⌂ <span>Dashboard</span></button>
+        <button class="nav-item">▣ <span>Project</span></button>
+        <button class="nav-item active">⌘ <span>System Designer</span></button>
+        <button class="nav-item">◉ <span>Load Analysis</span></button>
+        <button class="nav-item">✓ <span>Engineering Checks</span></button>
+        <button class="nav-item">⌘ <span>Wiring Diagram</span></button>
+        <button class="nav-item">▤ <span>BOM</span></button>
+
+        <div class="nav-divider"></div>
+
+        <button class="nav-item">▦ <span>Equipment Database</span></button>
+        <button class="nav-item">⚙ <span>Settings</span></button>
+    </aside>
+
+    <main class="designer">
+
+        <section class="materials-panel">
+            <div class="panel-title-row">
+                <div>
+                    <h2>Materials Library</h2>
+                    <p>Select a component to place it on the canvas.</p>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <span>⌕</span>
+                <input id="materialSearch" placeholder="Search equipment...">
+            </div>
+
+            <div class="filter-row">
+                <button class="filter active" data-filter="all">All</button>
+                <button class="filter" data-filter="pv">Panels</button>
+                <button class="filter" data-filter="inverter">Inverters</button>
+                <button class="filter" data-filter="battery">Batteries</button>
+                <button class="filter" data-filter="protection">Protection</button>
+                <button class="filter" data-filter="load">Loads</button>
+            </div>
+
+            <div id="materialList" class="material-list"></div>
+        </section>
+
+        <section class="canvas-area">
+            <div class="canvas-toolbar">
+                <div class="tool-group">
+                    <button id="selectTool" class="tool active">↖ Select</button>
+                    <button id="wireTool" class="tool">⌁ Wire</button>
+                    <button id="deleteTool" class="tool">⌫ Delete</button>
+                </div>
+
+                <div class="tool-group">
+                    <button id="zoomOut" class="tool">−</button>
+                    <span id="zoomValue">100%</span>
+                    <button id="zoomIn" class="tool">+</button>
+                    <button id="fitBtn" class="tool">Fit</button>
+                    <button id="clearBtn" class="tool danger">Clear</button>
+                </div>
+            </div>
+
+            <div id="canvasViewport" class="canvas-viewport">
+                <div id="designCanvas" class="design-canvas">
+                    <svg id="wireLayer" class="wire-layer"></svg>
+                    <div id="componentLayer" class="component-layer"></div>
+                </div>
+
+                <div class="canvas-help">
+                    <strong>Wiring:</strong> click a port, then click a compatible port.
+                    <span>Drag components to reposition them.</span>
+                </div>
+            </div>
+
+            <div class="connection-legend">
+                <div><i class="dc-positive"></i> DC Positive</div>
+                <div><i class="dc-negative"></i> DC Negative</div>
+                <div><i class="battery-wire"></i> Battery DC</div>
+                <div><i class="ac-wire"></i> AC</div>
+                <div><i class="ground-wire"></i> Ground</div>
+            </div>
+        </section>
+
+        <aside class="properties-panel">
+            <div class="panel-title-row">
+                <div>
+                    <h2>Component Properties</h2>
+                    <p id="selectionStatus">No component selected</p>
+                </div>
+                <button id="closeProperties" class="close-btn">×</button>
+            </div>
+
+            <div id="propertiesContent" class="properties-content">
+                <div class="empty-properties">
+                    <div class="empty-icon">⌁</div>
+                    <h3>Select a component</h3>
+                    <p>Choose a material from the library or select an existing component on the canvas.</p>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-title">Design Summary</div>
+                <div class="summary-row"><span>Components</span><strong id="summaryComponents">0</strong></div>
+                <div class="summary-row"><span>Connections</span><strong id="summaryConnections">0</strong></div>
+                <div class="summary-row"><span>DC Power</span><strong id="summaryPower">0 W</strong></div>
+                <div id="designStatus" class="status good">● Design canvas ready</div>
+            </div>
+        </aside>
+
+    </main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="js/system-designer.js"></script>
+</body>
+</html>
