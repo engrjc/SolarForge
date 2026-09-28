@@ -1,7 +1,23 @@
-// ========================================
+// =========================================================
 // SolarForge Visual System Designer
-// Flexible Engineering Workspace
-// ========================================
+// Version 2
+//
+// Features:
+// - Collapsible Materials panel
+// - Collapsible Properties panel
+// - Floating reopen buttons
+// - Large engineering workspace
+// - Draggable components
+// - Touch/iPad dragging
+// - Full visible port set
+// - Port-to-port wiring
+// - Compatible port highlighting
+// - Undo / Redo
+// - Save / Load
+// - Zoom
+// - Component properties
+// =========================================================
+
 
 const SolarForgeDesigner = {
 
@@ -23,23 +39,26 @@ const SolarForgeDesigner = {
 
     future: [],
 
-    materialsCollapsed: false,
+    dragging: false
 
-    propertiesCollapsed: false
 };
 
 
-/* ========================================
+/* =========================================================
    MATERIAL LIBRARY
-======================================== */
+========================================================= */
 
 const MATERIALS = [
 
     {
         type: "pv",
+
         name: "Solar Panel",
+
         model: "550W Monocrystalline",
+
         power: 550,
+
         image: "",
 
         fields: {
@@ -50,27 +69,35 @@ const MATERIALS = [
         },
 
         ports: [
+
             {
                 key: "positive",
                 label: "+",
                 side: "right",
                 kind: "dc-positive"
             },
+
             {
                 key: "negative",
                 label: "−",
-                side: "right-bottom",
+                side: "right",
                 kind: "dc-negative"
             }
+
         ]
+
     },
 
 
     {
         type: "inverter",
+
         name: "Hybrid Inverter",
+
         model: "5kW / 48V Hybrid Inverter",
+
         power: 5000,
+
         image: "",
 
         fields: {
@@ -81,6 +108,7 @@ const MATERIALS = [
         },
 
         ports: [
+
             {
                 key: "pv-positive",
                 label: "PV+",
@@ -129,15 +157,21 @@ const MATERIALS = [
                 side: "bottom-center",
                 kind: "ground"
             }
+
         ]
+
     },
 
 
     {
         type: "battery",
+
         name: "Battery",
+
         model: "48V 100Ah LiFePO4",
+
         power: 4800,
+
         image: "",
 
         fields: {
@@ -148,6 +182,7 @@ const MATERIALS = [
         },
 
         ports: [
+
             {
                 key: "positive",
                 label: "+",
@@ -161,15 +196,21 @@ const MATERIALS = [
                 side: "top-right",
                 kind: "battery-negative"
             }
+
         ]
+
     },
 
 
     {
         type: "protection",
+
         name: "DC Isolator",
+
         model: "1000V / 32A DC Isolator",
+
         power: 0,
+
         image: "",
 
         fields: {
@@ -179,6 +220,7 @@ const MATERIALS = [
         },
 
         ports: [
+
             {
                 key: "in-positive",
                 label: "IN+",
@@ -206,15 +248,21 @@ const MATERIALS = [
                 side: "right-bottom",
                 kind: "dc-negative"
             }
+
         ]
+
     },
 
 
     {
         type: "protection",
+
         name: "DC SPD",
+
         model: "PV DC SPD Type 2",
+
         power: 0,
+
         image: "",
 
         fields: {
@@ -224,6 +272,7 @@ const MATERIALS = [
         },
 
         ports: [
+
             {
                 key: "in-positive",
                 label: "IN+",
@@ -258,15 +307,21 @@ const MATERIALS = [
                 side: "bottom-center",
                 kind: "ground"
             }
+
         ]
+
     },
 
 
     {
         type: "protection",
+
         name: "AC Breaker",
+
         model: "2P 32A AC Breaker",
+
         power: 0,
+
         image: "",
 
         fields: {
@@ -276,6 +331,7 @@ const MATERIALS = [
         },
 
         ports: [
+
             {
                 key: "in-line",
                 label: "IN-L",
@@ -303,15 +359,21 @@ const MATERIALS = [
                 side: "right-bottom",
                 kind: "ac-neutral"
             }
+
         ]
+
     },
 
 
     {
         type: "protection",
+
         name: "AC SPD",
+
         model: "AC SPD Type 2",
+
         power: 0,
+
         image: "",
 
         fields: {
@@ -321,6 +383,7 @@ const MATERIALS = [
         },
 
         ports: [
+
             {
                 key: "in-line",
                 label: "IN-L",
@@ -355,15 +418,21 @@ const MATERIALS = [
                 side: "bottom-center",
                 kind: "ground"
             }
+
         ]
+
     },
 
 
     {
         type: "load",
+
         name: "AC Load",
+
         model: "Residential Loads",
+
         power: 2500,
+
         image: "",
 
         fields: {
@@ -372,6 +441,7 @@ const MATERIALS = [
         },
 
         ports: [
+
             {
                 key: "line",
                 label: "L",
@@ -392,15 +462,17 @@ const MATERIALS = [
                 side: "left-center",
                 kind: "ground"
             }
+
         ]
+
     }
 
 ];
 
 
-/* ========================================
+/* =========================================================
    PORT COMPATIBILITY
-======================================== */
+========================================================= */
 
 const portCompatibility = {
 
@@ -435,21 +507,18 @@ const portCompatibility = {
 };
 
 
-/* ========================================
+/* =========================================================
    DOM REFERENCES
-======================================== */
-
-const canvasViewport =
-    document.getElementById("designerCanvas");
+========================================================= */
 
 const canvas =
-    document.getElementById("designCanvas");
+    document.getElementById("designerCanvas");
 
 const componentLayer =
-    document.getElementById("componentLayer");
+    document.getElementById("canvasComponents");
 
 const wireLayer =
-    document.getElementById("wireLayer");
+    document.getElementById("wiringLayer");
 
 const materialList =
     document.getElementById("materialsList");
@@ -458,7 +527,10 @@ const propertiesContent =
     document.getElementById("propertiesContent");
 
 const toast =
-    document.getElementById("toast");
+    document.getElementById("designerToast");
+
+const canvasEmptyState =
+    document.getElementById("canvasEmptyState");
 
 const materialsPanel =
     document.getElementById("materialsPanel");
@@ -466,13 +538,16 @@ const materialsPanel =
 const propertiesPanel =
     document.getElementById("propertiesPanel");
 
-const designerBody =
-    document.querySelector(".designer-body");
+const openMaterialsButton =
+    document.getElementById("openMaterialsButton");
+
+const openPropertiesButton =
+    document.getElementById("openPropertiesButton");
 
 
-/* ========================================
-   UTILITY
-======================================== */
+/* =========================================================
+   UTILITIES
+========================================================= */
 
 function uid() {
 
@@ -482,27 +557,60 @@ function uid() {
 }
 
 
-function clone(obj) {
+function clone(object) {
 
     return JSON.parse(
-        JSON.stringify(obj)
+        JSON.stringify(object)
     );
 
 }
 
 
-function formatNumber(value) {
+function formatNumber(number) {
 
-    return Number(
-        value || 0
-    ).toLocaleString("en-US");
+    return Number(number || 0)
+        .toLocaleString("en-US");
 
 }
 
 
-/* ========================================
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message,
+    type = "info"
+) {
+
+    if (!toast) return;
+
+    toast.textContent =
+        message;
+
+    toast.className =
+        "designer-toast show " +
+        type;
+
+    clearTimeout(
+        showToast.timer
+    );
+
+    showToast.timer =
+        setTimeout(() => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        }, 2200);
+
+}
+
+
+/* =========================================================
    HISTORY
-======================================== */
+========================================================= */
 
 function saveHistory() {
 
@@ -522,7 +630,7 @@ function saveHistory() {
 
     if (
         SolarForgeDesigner.history.length >
-        30
+        40
     ) {
 
         SolarForgeDesigner.history.shift();
@@ -534,39 +642,9 @@ function saveHistory() {
 }
 
 
-/* ========================================
-   TOAST
-======================================== */
-
-function showToast(
-    message,
-    type = "info"
-) {
-
-    toast.textContent = message;
-
-    toast.className =
-        "toast show " + type;
-
-    clearTimeout(
-        showToast.timer
-    );
-
-    showToast.timer =
-        setTimeout(() => {
-
-            toast.classList.remove(
-                "show"
-            );
-
-        }, 2200);
-
-}
-
-
-/* ========================================
+/* =========================================================
    MATERIAL IMAGE
-======================================== */
+========================================================= */
 
 function materialImage(material) {
 
@@ -575,7 +653,7 @@ function materialImage(material) {
         return `
             <img
                 src="${material.image}"
-                alt="${material.name}"
+                alt="${material.name || "Equipment"}"
                 onerror="this.style.display='none'">
         `;
 
@@ -596,7 +674,7 @@ function materialImage(material) {
     };
 
     return `
-        <div class="fallback-image">
+        <div>
             ${icons[material.type] || "◈"}
         </div>
     `;
@@ -604,11 +682,13 @@ function materialImage(material) {
 }
 
 
-/* ========================================
-   MATERIAL LIBRARY
-======================================== */
+/* =========================================================
+   MATERIAL LIST
+========================================================= */
 
 function renderMaterials() {
+
+    if (!materialList) return;
 
     const searchInput =
         document.getElementById(
@@ -622,102 +702,158 @@ function renderMaterials() {
                 .trim()
             : "";
 
-    const active =
+    const activeFilter =
         document.querySelector(
             ".filter-button.active"
-        )?.dataset.filter || "all";
+        )?.dataset.filter ||
+        "all";
 
     materialList.innerHTML = "";
 
-    MATERIALS
 
-        .filter(material => {
+    const filtered =
+        MATERIALS
+            .filter(material => {
 
-            return (
-                active === "all" ||
-                material.type === active
-            );
+                if (
+                    activeFilter ===
+                    "all"
+                ) {
 
-        })
+                    return true;
 
-        .filter(material => {
+                }
 
-            return (
-                material.name +
-                " " +
-                material.model
-            )
-                .toLowerCase()
-                .includes(query);
-
-        })
-
-        .forEach(material => {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "material-card";
-
-            card.innerHTML = `
-
-                <div class="material-thumb">
-
-                    ${materialImage(material)}
-
-                </div>
-
-                <div class="material-info">
-
-                    <strong>
-                        ${material.name}
-                    </strong>
-
-                    <span>
-                        ${material.model}
-                    </span>
-
-                </div>
-
-                <button
-                    class="add-material"
-                    type="button">
-
-                    Add
-
-                </button>
-
-            `;
-
-            card
-                .querySelector(".add-material")
-                .addEventListener(
-                    "click",
-                    () => addComponent(material)
+                return (
+                    material.type ===
+                    activeFilter
                 );
 
-            materialList.appendChild(card);
+            })
+            .filter(material => {
 
-        });
+                return (
+                    material.name +
+                    " " +
+                    material.model
+                )
+                    .toLowerCase()
+                    .includes(query);
+
+            });
+
+
+    if (!filtered.length) {
+
+        materialList.innerHTML = `
+            <div class="properties-empty">
+                <div class="properties-empty-icon">
+                    ⌕
+                </div>
+
+                <h3>
+                    No Materials Found
+                </h3>
+
+                <p>
+                    Try another search or
+                    material category.
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    filtered.forEach(material => {
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+        card.className =
+            "material-card";
+
+
+        card.innerHTML = `
+
+            <div class="material-thumb">
+
+                ${materialImage(material)}
+
+            </div>
+
+            <div class="material-info">
+
+                <strong>
+                    ${material.name}
+                </strong>
+
+                <span>
+                    ${material.model}
+                </span>
+
+            </div>
+
+            <button
+                class="add-material"
+                type="button">
+
+                Add
+
+            </button>
+
+        `;
+
+
+        card
+            .querySelector(
+                ".add-material"
+            )
+            .addEventListener(
+                "click",
+                event => {
+
+                    event.stopPropagation();
+
+                    addComponent(
+                        material
+                    );
+
+                }
+            );
+
+
+        materialList.appendChild(
+            card
+        );
+
+    });
 
 }
 
 
-/* ========================================
+/* =========================================================
    ADD COMPONENT
-======================================== */
+========================================================= */
 
 function addComponent(material) {
 
     saveHistory();
 
+
     const count =
-        SolarForgeDesigner.components.length;
+        SolarForgeDesigner
+            .components.length;
+
 
     const component = {
 
-        id: uid(),
+        id:
+            uid(),
 
         materialType:
             material.type,
@@ -745,26 +881,27 @@ function addComponent(material) {
             ),
 
         x:
-            180 +
-            ((count % 4) * 360),
+            120 +
+            ((count % 4) * 310),
 
         y:
-            160 +
-            (
-                Math.floor(count / 4) *
-                260
-            )
+            100 +
+            (Math.floor(count / 4) * 230)
 
     };
 
-    SolarForgeDesigner.components.push(
-        component
-    );
+
+    SolarForgeDesigner
+        .components
+        .push(component);
+
 
     SolarForgeDesigner.selectedId =
         component.id;
 
+
     render();
+
 
     showToast(
         `${material.name} added to design`,
@@ -774,9 +911,9 @@ function addComponent(material) {
 }
 
 
-/* ========================================
+/* =========================================================
    MAIN RENDER
-======================================== */
+========================================================= */
 
 function render() {
 
@@ -795,29 +932,39 @@ function render() {
 }
 
 
-/* ========================================
-   COMPONENT RENDERING
-======================================== */
+/* =========================================================
+   RENDER COMPONENTS
+========================================================= */
 
 function renderComponents() {
 
+    if (!componentLayer) return;
+
     componentLayer.innerHTML = "";
 
-    SolarForgeDesigner.components
+
+    SolarForgeDesigner
+        .components
         .forEach(component => {
 
             const card =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             card.className =
                 "component-card " +
                 component.materialType;
 
+
             card.dataset.id =
                 component.id;
 
+
             card.style.left =
                 component.x + "px";
+
 
             card.style.top =
                 component.y + "px";
@@ -842,7 +989,6 @@ function renderComponents() {
                     <div class="component-icon">
 
                         ${materialImage({
-
                             type:
                                 component.materialType,
 
@@ -851,7 +997,6 @@ function renderComponents() {
 
                             name:
                                 component.name
-
                         })}
 
                     </div>
@@ -894,78 +1039,87 @@ function renderComponents() {
 
 
             /*
-             * Render EVERY port.
-             * Nothing is filtered or hidden.
+             * Every port in the component
+             * is rendered.
              */
 
-            component.ports.forEach(port => {
+            component.ports.forEach(
+                port => {
 
-                const portButton =
-                    document.createElement(
-                        "button"
-                    );
-
-                portButton.type =
-                    "button";
-
-                portButton.className =
-                    `port ${port.kind}`;
-
-                portButton.dataset.component =
-                    component.id;
-
-                portButton.dataset.port =
-                    port.key;
-
-                portButton.title =
-                    `${port.label} — ${port.kind}`;
-
-                portButton.innerHTML = `
-
-                    <span></span>
-
-                    <b>
-                        ${port.label}
-                    </b>
-
-                `;
-
-                placePort(
-                    portButton,
-                    port.side
-                );
-
-
-                portButton.addEventListener(
-                    "pointerdown",
-                    event => {
-
-                        event.stopPropagation();
-
-                    }
-                );
-
-
-                portButton.addEventListener(
-                    "click",
-                    event => {
-
-                        event.stopPropagation();
-
-                        handlePortClick(
-                            component.id,
-                            port.key
+                    const portButton =
+                        document.createElement(
+                            "button"
                         );
 
-                    }
-                );
+
+                    portButton.type =
+                        "button";
 
 
-                ports.appendChild(
-                    portButton
-                );
+                    portButton.className =
+                        `port ${port.kind}`;
 
-            });
+
+                    portButton.dataset.component =
+                        component.id;
+
+
+                    portButton.dataset.port =
+                        port.key;
+
+
+                    portButton.title =
+                        `${port.label} — click to connect`;
+
+
+                    portButton.innerHTML = `
+
+                        <span></span>
+
+                        <b>
+                            ${port.label}
+                        </b>
+
+                    `;
+
+
+                    placePort(
+                        portButton,
+                        port.side
+                    );
+
+
+                    portButton.addEventListener(
+                        "pointerdown",
+                        event => {
+
+                            event.stopPropagation();
+
+                        }
+                    );
+
+
+                    portButton.addEventListener(
+                        "click",
+                        event => {
+
+                            event.stopPropagation();
+
+                            handlePortClick(
+                                component.id,
+                                port.key
+                            );
+
+                        }
+                    );
+
+
+                    ports.appendChild(
+                        portButton
+                    );
+
+                }
+            );
 
 
             card.addEventListener(
@@ -973,17 +1127,35 @@ function renderComponents() {
                 event => {
 
                     if (
-                        !event.target.closest(
+                        event.target.closest(
                             ".port"
                         )
                     ) {
 
-                        SolarForgeDesigner.selectedId =
-                            component.id;
-
-                        render();
+                        return;
 
                     }
+
+
+                    SolarForgeDesigner.selectedId =
+                        component.id;
+
+
+                    if (
+                        SolarForgeDesigner.tool ===
+                        "delete"
+                    ) {
+
+                        deleteComponent(
+                            component.id
+                        );
+
+                        return;
+
+                    }
+
+
+                    render();
 
                 }
             );
@@ -1004,9 +1176,9 @@ function renderComponents() {
 }
 
 
-/* ========================================
-   PORT POSITION
-======================================== */
+/* =========================================================
+   PORT POSITIONING
+========================================================= */
 
 function placePort(
     element,
@@ -1020,9 +1192,9 @@ function placePort(
 }
 
 
-/* ========================================
+/* =========================================================
    DRAG COMPONENT
-======================================== */
+========================================================= */
 
 function enableDrag(
     card,
@@ -1031,7 +1203,7 @@ function enableDrag(
 
     let dragging = false;
 
-    let moved = false;
+    let pointerId = null;
 
     let startX = 0;
 
@@ -1041,7 +1213,7 @@ function enableDrag(
 
     let originY = 0;
 
-    let pointerId = null;
+    let moved = false;
 
 
     card.addEventListener(
@@ -1074,10 +1246,9 @@ function enableDrag(
                 "delete"
             ) {
 
-                SolarForgeDesigner.selectedId =
-                    component.id;
-
-                deleteSelected();
+                deleteComponent(
+                    component.id
+                );
 
                 return;
 
@@ -1091,14 +1262,18 @@ function enableDrag(
             pointerId =
                 event.pointerId;
 
+
             startX =
                 event.clientX;
+
 
             startY =
                 event.clientY;
 
+
             originX =
                 component.x;
+
 
             originY =
                 component.y;
@@ -1113,9 +1288,15 @@ function enableDrag(
             );
 
 
-            card.setPointerCapture(
-                pointerId
-            );
+            try {
+
+                card.setPointerCapture(
+                    pointerId
+                );
+
+            } catch (error) {
+                // Pointer capture may not be available
+            }
 
 
             event.preventDefault();
@@ -1130,7 +1311,8 @@ function enableDrag(
 
             if (
                 !dragging ||
-                event.pointerId !== pointerId
+                event.pointerId !==
+                pointerId
             ) {
 
                 return;
@@ -1181,6 +1363,7 @@ function enableDrag(
             card.style.left =
                 component.x + "px";
 
+
             card.style.top =
                 component.y + "px";
 
@@ -1193,94 +1376,87 @@ function enableDrag(
                 component.y
             );
 
+
+            event.preventDefault();
+
         }
     );
 
 
-    card.addEventListener(
-        "pointerup",
-        event => {
+    const finishDrag = event => {
 
-            if (
-                !dragging ||
-                event.pointerId !== pointerId
-            ) {
+        if (
+            !dragging ||
+            (
+                event.pointerId !==
+                undefined &&
+                event.pointerId !==
+                pointerId
+            )
+        ) {
 
-                return;
-
-            }
-
-
-            dragging = false;
-
-            card.classList.remove(
-                "dragging"
-            );
-
-
-            try {
-
-                card.releasePointerCapture(
-                    pointerId
-                );
-
-            } catch (error) {
-                // Pointer capture may already be released.
-            }
-
-
-            if (moved) {
-
-                saveHistory();
-
-            }
-
-
-            updateSummary();
+            return;
 
         }
+
+
+        dragging = false;
+
+
+        card.classList.remove(
+            "dragging"
+        );
+
+
+        try {
+
+            card.releasePointerCapture(
+                pointerId
+            );
+
+        } catch (error) {
+            // Pointer capture may already be released
+        }
+
+
+        if (moved) {
+
+            saveHistory();
+
+        }
+
+
+        SolarForgeDesigner.dragging =
+            false;
+
+
+        updateSummary();
+
+    };
+
+
+    card.addEventListener(
+        "pointerup",
+        finishDrag
     );
 
 
     card.addEventListener(
         "pointercancel",
-        () => {
-
-            if (!dragging) return;
-
-            dragging = false;
-
-            card.classList.remove(
-                "dragging"
-            );
-
-            component.x =
-                originX;
-
-            component.y =
-                originY;
-
-            card.style.left =
-                component.x + "px";
-
-            card.style.top =
-                component.y + "px";
-
-            renderWires();
-
-        }
+        finishDrag
     );
 
 }
 
 
-/* ========================================
-   FIND COMPONENT / PORT
-======================================== */
+/* =========================================================
+   COMPONENT FINDERS
+========================================================= */
 
 function findComponent(id) {
 
-    return SolarForgeDesigner.components
+    return SolarForgeDesigner
+        .components
         .find(
             component =>
                 component.id === id
@@ -1299,17 +1475,21 @@ function findPort(
             componentId
         );
 
-    return component?.ports.find(
-        port =>
-            port.key === portKey
-    );
+
+    return component
+        ?.ports
+        .find(
+            port =>
+                port.key ===
+                portKey
+        );
 
 }
 
 
-/* ========================================
+/* =========================================================
    PORT CONNECTION
-======================================== */
+========================================================= */
 
 function handlePortClick(
     componentId,
@@ -1320,6 +1500,7 @@ function handlePortClick(
         findComponent(
             componentId
         );
+
 
     const port =
         findPort(
@@ -1339,20 +1520,32 @@ function handlePortClick(
 
 
     if (
+        SolarForgeDesigner.tool ===
+        "delete"
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+     * First port selected
+     */
+
+    if (
         !SolarForgeDesigner.pendingPort
     ) {
 
         SolarForgeDesigner.pendingPort = {
 
-            componentId,
+            componentId:
+                componentId,
 
-            portKey
+            portKey:
+                portKey
 
         };
-
-
-        SolarForgeDesigner.selectedId =
-            componentId;
 
 
         highlightPorts();
@@ -1373,6 +1566,10 @@ function handlePortClick(
         SolarForgeDesigner.pendingPort;
 
 
+    /*
+     * Same port clicked
+     */
+
     if (
         first.componentId ===
             componentId &&
@@ -1382,6 +1579,7 @@ function handlePortClick(
 
         SolarForgeDesigner.pendingPort =
             null;
+
 
         highlightPorts();
 
@@ -1404,6 +1602,10 @@ function handlePortClick(
         );
 
 
+    /*
+     * Compatibility
+     */
+
     if (
         !isCompatible(
             firstPort,
@@ -1416,10 +1618,15 @@ function handlePortClick(
             "error"
         );
 
+
         return;
 
     }
 
+
+    /*
+     * Prevent duplicate connection
+     */
 
     if (
         connectionExists(
@@ -1432,6 +1639,7 @@ function handlePortClick(
 
         SolarForgeDesigner.pendingPort =
             null;
+
 
         highlightPorts();
 
@@ -1447,40 +1655,49 @@ function handlePortClick(
     }
 
 
+    /*
+     * Save before modification
+     */
+
     saveHistory();
 
 
-    SolarForgeDesigner.connections.push({
+    SolarForgeDesigner
+        .connections
+        .push({
 
-        id:
-            "W" +
-            Date.now() +
-            Math.random()
-                .toString(36)
-                .slice(2, 7),
+            id:
+                "W" +
+                Date.now() +
+                "_" +
+                Math.floor(
+                    Math.random() * 1000
+                ),
 
-        from: {
+            from: {
 
-            componentId:
-                first.componentId,
+                componentId:
+                    first.componentId,
 
-            portKey:
-                first.portKey
+                portKey:
+                    first.portKey
 
-        },
+            },
 
-        to: {
+            to: {
 
-            componentId,
+                componentId:
+                    componentId,
 
-            portKey
+                portKey:
+                    portKey
 
-        },
+            },
 
-        kind:
-            firstPort.kind
+            kind:
+                firstPort.kind
 
-    });
+        });
 
 
     SolarForgeDesigner.pendingPort =
@@ -1498,68 +1715,85 @@ function handlePortClick(
 }
 
 
-/* ========================================
+/* =========================================================
    COMPATIBILITY
-======================================== */
+========================================================= */
 
 function isCompatible(
-    a,
-    b
+    firstPort,
+    secondPort
 ) {
 
+    if (
+        !firstPort ||
+        !secondPort
+    ) {
+
+        return false;
+
+    }
+
+
     return (
-        a &&
-        b &&
-        (
-            portCompatibility[a.kind] ||
-            []
-        ).includes(
-            b.kind
-        )
+        portCompatibility[
+            firstPort.kind
+        ] || []
+    ).includes(
+        secondPort.kind
     );
 
 }
 
 
-/* ========================================
-   CONNECTION EXISTS
-======================================== */
+/* =========================================================
+   EXISTING CONNECTION
+========================================================= */
 
 function connectionExists(
-    a,
-    ap,
-    b,
-    bp
+    componentA,
+    portA,
+    componentB,
+    portB
 ) {
 
     return SolarForgeDesigner
         .connections
-        .some(wire =>
+        .some(
+            wire => {
 
-            (
-                wire.from.componentId === a &&
-                wire.from.portKey === ap &&
-                wire.to.componentId === b &&
-                wire.to.portKey === bp
-            )
+                const normal =
+                    wire.from.componentId ===
+                        componentA &&
+                    wire.from.portKey ===
+                        portA &&
+                    wire.to.componentId ===
+                        componentB &&
+                    wire.to.portKey ===
+                        portB;
 
-            ||
 
-            (
-                wire.from.componentId === b &&
-                wire.from.portKey === bp &&
-                wire.to.componentId === a &&
-                wire.to.portKey === ap
-            )
+                const reverse =
+                    wire.from.componentId ===
+                        componentB &&
+                    wire.from.portKey ===
+                        portB &&
+                    wire.to.componentId ===
+                        componentA &&
+                    wire.to.portKey ===
+                        portA;
 
+
+                return normal || reverse;
+
+            }
         );
 
 }
 
 
-/* ========================================
-   HIGHLIGHT PORTS
-======================================== */
+/* =========================================================
+   PORT HIGHLIGHTING
+========================================================= */
 
 function highlightPorts() {
 
@@ -1570,33 +1804,7 @@ function highlightPorts() {
             port.classList.remove(
                 "pending",
                 "compatible",
-                "incompatible",
-                "connected"
-            );
-
-        });
-
-
-    SolarForgeDesigner
-        .connections
-        .forEach(wire => {
-
-            const from =
-                document.querySelector(
-                    `.port[data-component="${wire.from.componentId}"][data-port="${wire.from.portKey}"]`
-                );
-
-            const to =
-                document.querySelector(
-                    `.port[data-component="${wire.to.componentId}"][data-port="${wire.to.portKey}"]`
-                );
-
-            from?.classList.add(
-                "connected"
-            );
-
-            to?.classList.add(
-                "connected"
+                "incompatible"
             );
 
         });
@@ -1611,27 +1819,31 @@ function highlightPorts() {
     }
 
 
-    const selected =
+    const selectedPort =
         findPort(
-            SolarForgeDesigner.pendingPort
+            SolarForgeDesigner
+                .pendingPort
                 .componentId,
 
-            SolarForgeDesigner.pendingPort
+            SolarForgeDesigner
+                .pendingPort
                 .portKey
         );
 
 
     document
         .querySelectorAll(".port")
-        .forEach(port => {
+        .forEach(element => {
 
             const componentId =
-                port.dataset.component;
+                element.dataset.component;
+
 
             const portKey =
-                port.dataset.port;
+                element.dataset.port;
 
-            const currentPort =
+
+            const port =
                 findPort(
                     componentId,
                     portKey
@@ -1642,36 +1854,33 @@ function highlightPorts() {
                 componentId ===
                     SolarForgeDesigner
                         .pendingPort
-                        .componentId
-                &&
+                        .componentId &&
                 portKey ===
                     SolarForgeDesigner
                         .pendingPort
                         .portKey
             ) {
 
-                port.classList.add(
+                element.classList.add(
                     "pending"
                 );
 
             }
-
             else if (
                 isCompatible(
-                    selected,
-                    currentPort
+                    selectedPort,
+                    port
                 )
             ) {
 
-                port.classList.add(
+                element.classList.add(
                     "compatible"
                 );
 
             }
-
             else {
 
-                port.classList.add(
+                element.classList.add(
                     "incompatible"
                 );
 
@@ -1682,9 +1891,9 @@ function highlightPorts() {
 }
 
 
-/* ========================================
-   PORT POSITION FOR WIRES
-======================================== */
+/* =========================================================
+   PORT POSITION
+========================================================= */
 
 function getPortPosition(
     componentId,
@@ -1744,18 +1953,34 @@ function getPortPosition(
 }
 
 
-/* ========================================
+/* =========================================================
    RENDER WIRES
-======================================== */
+========================================================= */
 
 function renderWires() {
 
-    if (!wireLayer) return;
+    if (
+        !canvas ||
+        !wireLayer
+    ) {
+
+        return;
+
+    }
 
 
-    const width = 2200;
+    const width =
+        Math.max(
+            2200,
+            canvas.scrollWidth
+        );
 
-    const height = 1400;
+
+    const height =
+        Math.max(
+            1400,
+            canvas.scrollHeight
+        );
 
 
     wireLayer.setAttribute(
@@ -1763,10 +1988,12 @@ function renderWires() {
         width
     );
 
+
     wireLayer.setAttribute(
         "height",
         height
     );
+
 
     wireLayer.setAttribute(
         "viewBox",
@@ -1779,153 +2006,157 @@ function renderWires() {
 
     SolarForgeDesigner
         .connections
-        .forEach(wire => {
+        .forEach(
+            wire => {
 
-            const a =
-                getPortPosition(
-                    wire.from.componentId,
-                    wire.from.portKey
+                const start =
+                    getPortPosition(
+                        wire.from.componentId,
+                        wire.from.portKey
+                    );
+
+
+                const end =
+                    getPortPosition(
+                        wire.to.componentId,
+                        wire.to.portKey
+                    );
+
+
+                if (
+                    !start ||
+                    !end
+                ) {
+
+                    return;
+
+                }
+
+
+                const distance =
+                    Math.max(
+                        70,
+                        Math.abs(
+                            end.x -
+                            start.x
+                        ) * .45
+                    );
+
+
+                const direction =
+                    end.x >= start.x
+                        ? 1
+                        : -1;
+
+
+                const path =
+                    document.createElementNS(
+                        "http://www.w3.org/2000/svg",
+                        "path"
+                    );
+
+
+                path.setAttribute(
+                    "d",
+                    `
+                    M ${start.x} ${start.y}
+                    C
+                    ${start.x + distance * direction}
+                    ${start.y},
+                    ${end.x - distance * direction}
+                    ${end.y},
+                    ${end.x} ${end.y}
+                    `
                 );
 
 
-            const b =
-                getPortPosition(
-                    wire.to.componentId,
-                    wire.to.portKey
+                path.setAttribute(
+                    "class",
+                    "wire " +
+                    wire.kind
                 );
 
 
-            if (
-                !a ||
-                !b
-            ) {
+                path.addEventListener(
+                    "click",
+                    event => {
 
-                return;
+                        event.stopPropagation();
+
+                        removeConnection(
+                            wire.id
+                        );
+
+                    }
+                );
+
+
+                wireLayer.appendChild(
+                    path
+                );
+
+
+                const hit =
+                    document.createElementNS(
+                        "http://www.w3.org/2000/svg",
+                        "path"
+                    );
+
+
+                hit.setAttribute(
+                    "d",
+                    path.getAttribute("d")
+                );
+
+
+                hit.setAttribute(
+                    "class",
+                    "wire-hit"
+                );
+
+
+                hit.addEventListener(
+                    "click",
+                    event => {
+
+                        event.stopPropagation();
+
+                        removeConnection(
+                            wire.id
+                        );
+
+                    }
+                );
+
+
+                wireLayer.appendChild(
+                    hit
+                );
 
             }
-
-
-            const dx =
-                Math.max(
-                    70,
-                    Math.abs(
-                        b.x - a.x
-                    ) * .45
-                );
-
-
-            const direction =
-                b.x >= a.x
-                    ? 1
-                    : -1;
-
-
-            const path =
-                document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "path"
-                );
-
-
-            path.setAttribute(
-                "d",
-                `
-                    M ${a.x} ${a.y}
-
-                    C
-                    ${a.x + dx * direction}
-                    ${a.y},
-
-                    ${b.x - dx * direction}
-                    ${b.y},
-
-                    ${b.x}
-                    ${b.y}
-                `
-            );
-
-
-            path.setAttribute(
-                "class",
-                "wire " +
-                wire.kind
-            );
-
-
-            path.addEventListener(
-                "click",
-                event => {
-
-                    event.stopPropagation();
-
-                    removeConnection(
-                        wire.id
-                    );
-
-                }
-            );
-
-
-            wireLayer.appendChild(
-                path
-            );
-
-
-            const hit =
-                path.cloneNode();
-
-
-            hit.removeAttribute(
-                "class"
-            );
-
-
-            hit.setAttribute(
-                "class",
-                "wire-hit"
-            );
-
-
-            hit.addEventListener(
-                "click",
-                event => {
-
-                    event.stopPropagation();
-
-                    removeConnection(
-                        wire.id
-                    );
-
-                }
-            );
-
-
-            wireLayer.appendChild(
-                hit
-            );
-
-        });
+        );
 
 }
 
 
-/* ========================================
+/* =========================================================
    REMOVE CONNECTION
-======================================== */
+========================================================= */
 
 function removeConnection(
-    connectionId
+    wireId
 ) {
 
     saveHistory();
 
 
     SolarForgeDesigner.connections =
-        SolarForgeDesigner.connections
+        SolarForgeDesigner
+            .connections
             .filter(
-                connection =>
-                    connection.id !==
-                    connectionId
+                wire =>
+                    wire.id !==
+                    wireId
             );
 
 
@@ -1940,9 +2171,9 @@ function removeConnection(
 }
 
 
-/* ========================================
+/* =========================================================
    PROPERTIES
-======================================== */
+========================================================= */
 
 function renderProperties() {
 
@@ -1967,9 +2198,9 @@ function renderProperties() {
                 </h3>
 
                 <p>
-                    Select a component on the canvas
-                    to view its specifications,
-                    ports and information.
+                    Select a component on the
+                    canvas to view its information,
+                    specifications and ports.
                 </p>
 
             </div>
@@ -1983,9 +2214,8 @@ function renderProperties() {
 
     const fields =
         Object.entries(
-            component.fields
+            component.fields || {}
         )
-
         .map(
             ([key, value]) => `
 
@@ -2003,36 +2233,33 @@ function renderProperties() {
 
             `
         )
-
         .join("");
 
 
-    const portRows =
+    const ports =
         component.ports
+            .map(
+                port => `
 
-        .map(
-            port => `
+                    <div class="port-list-row">
 
-                <div class="port-list-row">
+                        <span
+                            class="mini-port ${port.kind}">
+                        </span>
 
-                    <span
-                        class="mini-port ${port.kind}">
-                    </span>
+                        <span>
+                            ${port.label}
+                        </span>
 
-                    <span>
-                        ${port.label}
-                    </span>
+                        <small>
+                            ${port.kind}
+                        </small>
 
-                    <small>
-                        ${port.kind}
-                    </small>
+                    </div>
 
-                </div>
-
-            `
-        )
-
-        .join("");
+                `
+            )
+            .join("");
 
 
     propertiesContent.innerHTML = `
@@ -2090,7 +2317,7 @@ function renderProperties() {
 
             <div class="port-list">
 
-                ${portRows}
+                ${ports}
 
             </div>
 
@@ -2107,7 +2334,6 @@ function renderProperties() {
                 Duplicate
 
             </button>
-
 
             <button
                 id="deleteComponent"
@@ -2128,7 +2354,7 @@ function renderProperties() {
             "duplicateComponent"
         )
         .onclick =
-        duplicateSelected;
+            duplicateSelected;
 
 
     document
@@ -2136,14 +2362,14 @@ function renderProperties() {
             "deleteComponent"
         )
         .onclick =
-        deleteSelected;
+            deleteSelected;
 
 }
 
 
-/* ========================================
+/* =========================================================
    DUPLICATE
-======================================== */
+========================================================= */
 
 function duplicateSelected() {
 
@@ -2153,7 +2379,11 @@ function duplicateSelected() {
         );
 
 
-    if (!original) return;
+    if (!original) {
+
+        return;
+
+    }
 
 
     saveHistory();
@@ -2167,12 +2397,13 @@ function duplicateSelected() {
         uid();
 
 
-    copy.x += 60;
+    copy.x += 50;
 
-    copy.y += 60;
+    copy.y += 50;
 
 
-    SolarForgeDesigner.components
+    SolarForgeDesigner
+        .components
         .push(copy);
 
 
@@ -2191,9 +2422,9 @@ function duplicateSelected() {
 }
 
 
-/* ========================================
-   DELETE
-======================================== */
+/* =========================================================
+   DELETE SELECTED
+========================================================= */
 
 function deleteSelected() {
 
@@ -2206,32 +2437,68 @@ function deleteSelected() {
     }
 
 
+    deleteComponent(
+        SolarForgeDesigner.selectedId
+    );
+
+}
+
+
+/* =========================================================
+   DELETE COMPONENT
+========================================================= */
+
+function deleteComponent(
+    componentId
+) {
+
+    const component =
+        findComponent(
+            componentId
+        );
+
+
+    if (!component) {
+
+        return;
+
+    }
+
+
     saveHistory();
 
 
-    const id =
-        SolarForgeDesigner.selectedId;
-
-
     SolarForgeDesigner.components =
-        SolarForgeDesigner.components
+        SolarForgeDesigner
+            .components
             .filter(
-                component =>
-                    component.id !== id
+                item =>
+                    item.id !==
+                    componentId
             );
 
 
     SolarForgeDesigner.connections =
-        SolarForgeDesigner.connections
+        SolarForgeDesigner
+            .connections
             .filter(
                 wire =>
-                    wire.from.componentId !== id &&
-                    wire.to.componentId !== id
+                    wire.from.componentId !==
+                        componentId &&
+                    wire.to.componentId !==
+                        componentId
             );
 
 
-    SolarForgeDesigner.selectedId =
-        null;
+    if (
+        SolarForgeDesigner.selectedId ===
+        componentId
+    ) {
+
+        SolarForgeDesigner.selectedId =
+            null;
+
+    }
 
 
     SolarForgeDesigner.pendingPort =
@@ -2242,43 +2509,40 @@ function deleteSelected() {
 
 
     showToast(
-        "Component deleted",
+        `${component.name} deleted`,
         "info"
     );
 
 }
 
 
-/* ========================================
+/* =========================================================
    SUMMARY
-======================================== */
+========================================================= */
 
 function updateSummary() {
 
-    const components =
+    const componentCount =
         document.getElementById(
-            "summaryComponents"
-        );
-
-    const connections =
-        document.getElementById(
-            "summaryConnections"
-        );
-
-    const power =
-        document.getElementById(
-            "summaryPower"
-        );
-
-    const status =
-        document.getElementById(
-            "designStatus"
+            "componentCount"
         );
 
 
-    if (components) {
+    const connectionCount =
+        document.getElementById(
+            "connectionCount"
+        );
 
-        components.textContent =
+
+    const pvPowerSummary =
+        document.getElementById(
+            "pvPowerSummary"
+        );
+
+
+    if (componentCount) {
+
+        componentCount.textContent =
             SolarForgeDesigner
                 .components
                 .length;
@@ -2286,9 +2550,9 @@ function updateSummary() {
     }
 
 
-    if (connections) {
+    if (connectionCount) {
 
-        connections.textContent =
+        connectionCount.textContent =
             SolarForgeDesigner
                 .connections
                 .length;
@@ -2305,19 +2569,18 @@ function updateSummary() {
                     "pv"
             )
             .reduce(
-                (sum, component) =>
-                    sum +
+                (total, component) =>
+                    total +
                     Number(
-                        component.power ||
-                        0
+                        component.power || 0
                     ),
                 0
             );
 
 
-    if (power) {
+    if (pvPowerSummary) {
 
-        power.textContent =
+        pvPowerSummary.textContent =
             formatNumber(
                 pvPower
             ) +
@@ -2326,105 +2589,103 @@ function updateSummary() {
     }
 
 
+    const status =
+        document.getElementById(
+            "canvasStatus"
+        );
+
+
     if (!status) return;
 
 
     if (
-        SolarForgeDesigner
-            .components
+        SolarForgeDesigner.components
             .length === 0
     ) {
 
-        status.className =
-            "status good";
-
         status.textContent =
-            "● Design canvas ready";
+            "Select a material to begin.";
 
     }
-
     else if (
         SolarForgeDesigner.pendingPort
     ) {
 
-        status.className =
-            "status warning";
-
         status.textContent =
-            "● Choose a compatible port";
+            "Choose a compatible port.";
 
     }
-
     else {
 
-        status.className =
-            "status good";
-
         status.textContent =
-            "● Design editable";
+            "Design editable.";
 
     }
 
 }
 
 
-/* ========================================
+/* =========================================================
    EMPTY STATE
-======================================== */
+========================================================= */
 
 function updateEmptyState() {
 
-    const empty =
-        document.getElementById(
-            "canvasEmptyState"
-        );
+    if (!canvasEmptyState) {
+
+        return;
+
+    }
 
 
-    if (!empty) return;
-
-
-    empty.style.display =
-        SolarForgeDesigner.components.length
-            ? "none"
-            : "block";
+    canvasEmptyState.style.display =
+        SolarForgeDesigner
+            .components
+            .length === 0
+            ? "block"
+            : "none";
 
 }
 
 
-/* ========================================
+/* =========================================================
    COORDINATES
-======================================== */
+========================================================= */
 
 function updateCoordinates(
     x,
     y
 ) {
 
-    const element =
+    const coordinates =
         document.getElementById(
             "canvasCoordinates"
         );
 
 
-    if (!element) return;
+    if (!coordinates) {
+
+        return;
+
+    }
 
 
-    element.innerHTML =
-        `X: ${Math.round(x)}
-         &nbsp;&nbsp;
-         Y: ${Math.round(y)}`;
+    coordinates.textContent =
+        `X: ${Math.round(x)}    Y: ${Math.round(y)}`;
 
 }
 
 
-/* ========================================
+/* =========================================================
    UNDO
-======================================== */
+========================================================= */
 
 function undo() {
 
     const previous =
-        SolarForgeDesigner.history.pop();
+        SolarForgeDesigner
+            .history
+            .pop();
 
 
     if (!previous) {
@@ -2439,19 +2700,23 @@ function undo() {
     }
 
 
-    SolarForgeDesigner.future.push({
+    SolarForgeDesigner
+        .future
+        .push({
 
-        components:
-            clone(
-                SolarForgeDesigner.components
-            ),
+            components:
+                clone(
+                    SolarForgeDesigner
+                        .components
+                ),
 
-        connections:
-            clone(
-                SolarForgeDesigner.connections
-            )
+            connections:
+                clone(
+                    SolarForgeDesigner
+                        .connections
+                )
 
-    });
+        });
 
 
     SolarForgeDesigner.components =
@@ -2472,17 +2737,25 @@ function undo() {
 
     render();
 
+
+    showToast(
+        "Undo",
+        "info"
+    );
+
 }
 
 
-/* ========================================
+/* =========================================================
    REDO
-======================================== */
+========================================================= */
 
 function redo() {
 
     const next =
-        SolarForgeDesigner.future.pop();
+        SolarForgeDesigner
+            .future
+            .pop();
 
 
     if (!next) {
@@ -2497,19 +2770,23 @@ function redo() {
     }
 
 
-    SolarForgeDesigner.history.push({
+    SolarForgeDesigner
+        .history
+        .push({
 
-        components:
-            clone(
-                SolarForgeDesigner.components
-            ),
+            components:
+                clone(
+                    SolarForgeDesigner
+                        .components
+                ),
 
-        connections:
-            clone(
-                SolarForgeDesigner.connections
-            )
+            connections:
+                clone(
+                    SolarForgeDesigner
+                        .connections
+                )
 
-    });
+        });
 
 
     SolarForgeDesigner.components =
@@ -2530,22 +2807,28 @@ function redo() {
 
     render();
 
+
+    showToast(
+        "Redo",
+        "info"
+    );
+
 }
 
 
-/* ========================================
+/* =========================================================
    SAVE DESIGN
-======================================== */
+========================================================= */
 
 function saveDesign() {
 
     const data = {
 
-        version: 2,
+        version:
+            2,
 
         savedAt:
-            new Date()
-                .toISOString(),
+            new Date().toISOString(),
 
         components:
             SolarForgeDesigner
@@ -2572,9 +2855,9 @@ function saveDesign() {
 }
 
 
-/* ========================================
+/* =========================================================
    LOAD DESIGN
-======================================== */
+========================================================= */
 
 function loadDesign() {
 
@@ -2584,7 +2867,11 @@ function loadDesign() {
         );
 
 
-    if (!saved) return;
+    if (!saved) {
+
+        return;
+
+    }
 
 
     try {
@@ -2613,7 +2900,10 @@ function loadDesign() {
             SolarForgeDesigner
                 .components
                 .reduce(
-                    (max, component) => {
+                    (
+                        maximum,
+                        component
+                    ) => {
 
                         const number =
                             parseInt(
@@ -2627,14 +2917,21 @@ function loadDesign() {
                             );
 
 
-                        return Number.isFinite(
-                            number
-                        )
-                            ? Math.max(
-                                max,
+                        if (
+                            Number.isFinite(
                                 number
                             )
-                            : max;
+                        ) {
+
+                            return Math.max(
+                                maximum,
+                                number
+                            );
+
+                        }
+
+
+                        return maximum;
 
                     },
                     0
@@ -2645,7 +2942,8 @@ function loadDesign() {
             maxId + 1;
 
 
-    } catch (error) {
+    }
+    catch (error) {
 
         console.error(
             "Unable to load SolarForge design:",
@@ -2657,9 +2955,9 @@ function loadDesign() {
 }
 
 
-/* ========================================
+/* =========================================================
    CLEAR DESIGN
-======================================== */
+========================================================= */
 
 function clearDesign() {
 
@@ -2674,11 +2972,13 @@ function clearDesign() {
     }
 
 
-    if (
-        !confirm(
+    const confirmed =
+        confirm(
             "Clear the entire design canvas?"
-        )
-    ) {
+        );
+
+
+    if (!confirmed) {
 
         return;
 
@@ -2691,11 +2991,14 @@ function clearDesign() {
     SolarForgeDesigner.components =
         [];
 
+
     SolarForgeDesigner.connections =
         [];
 
+
     SolarForgeDesigner.selectedId =
         null;
+
 
     SolarForgeDesigner.pendingPort =
         null;
@@ -2712,259 +3015,240 @@ function clearDesign() {
 }
 
 
-/* ========================================
+/* =========================================================
    PANEL COLLAPSE
-======================================== */
+========================================================= */
 
-function setMaterialsCollapsed(
-    collapsed
-) {
+function collapseMaterials() {
 
-    SolarForgeDesigner
-        .materialsCollapsed =
-        collapsed;
-
-
-    designerBody.classList.toggle(
-        "materials-collapsed",
-        collapsed
+    materialsPanel.classList.add(
+        "collapsed"
     );
 
 
-    localStorage.setItem(
-        "solarforge_materials_collapsed",
-        collapsed
-            ? "true"
-            : "false"
-    );
-
-
-    setTimeout(
-        renderWires,
-        280
-    );
+    openMaterialsButton.style.display =
+        "flex";
 
 }
 
 
-function setPropertiesCollapsed(
-    collapsed
-) {
+function openMaterials() {
 
-    SolarForgeDesigner
-        .propertiesCollapsed =
-        collapsed;
-
-
-    designerBody.classList.toggle(
-        "properties-collapsed",
-        collapsed
+    materialsPanel.classList.remove(
+        "collapsed"
     );
 
 
-    localStorage.setItem(
-        "solarforge_properties_collapsed",
-        collapsed
-            ? "true"
-            : "false"
-    );
-
-
-    setTimeout(
-        renderWires,
-        280
-    );
+    openMaterialsButton.style.display =
+        "none";
 
 }
 
 
-/* ========================================
-   LOAD PANEL STATE
-======================================== */
+function collapseProperties() {
 
-function loadPanelState() {
-
-    const materials =
-        localStorage.getItem(
-            "solarforge_materials_collapsed"
-        );
-
-
-    const properties =
-        localStorage.getItem(
-            "solarforge_properties_collapsed"
-        );
-
-
-    if (
-        materials !== null
-    ) {
-
-        SolarForgeDesigner
-            .materialsCollapsed =
-            materials === "true";
-
-    }
-
-
-    if (
-        properties !== null
-    ) {
-
-        SolarForgeDesigner
-            .propertiesCollapsed =
-            properties === "true";
-
-    }
-
-
-    designerBody.classList.toggle(
-        "materials-collapsed",
-        SolarForgeDesigner
-            .materialsCollapsed
+    propertiesPanel.classList.add(
+        "collapsed"
     );
 
 
-    designerBody.classList.toggle(
-        "properties-collapsed",
-        SolarForgeDesigner
-            .propertiesCollapsed
-    );
+    openPropertiesButton.style.display =
+        "flex";
 
 }
 
 
-/* ========================================
+function openProperties() {
+
+    propertiesPanel.classList.remove(
+        "collapsed"
+    );
+
+
+    openPropertiesButton.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
    TOOL SETUP
-======================================== */
+========================================================= */
 
 function setupTools() {
+
+
+    /* -----------------------------------------
+       Select
+    ----------------------------------------- */
 
     document
         .getElementById(
             "selectToolButton"
         )
-        .onclick = () =>
-            setTool("select");
+        .addEventListener(
+            "click",
+            () => {
 
+                setTool(
+                    "select"
+                );
+
+            }
+        );
+
+
+    /* -----------------------------------------
+       Wire
+    ----------------------------------------- */
 
     document
         .getElementById(
             "wireToolButton"
         )
-        .onclick = () =>
-            setTool("wire");
+        .addEventListener(
+            "click",
+            () => {
 
+                setTool(
+                    "wire"
+                );
+
+            }
+        );
+
+
+    /* -----------------------------------------
+       Delete
+    ----------------------------------------- */
 
     document
         .getElementById(
             "deleteToolButton"
         )
-        .onclick = () =>
-            setTool("delete");
+        .addEventListener(
+            "click",
+            () => {
 
+                setTool(
+                    "delete"
+                );
+
+            }
+        );
+
+
+    /* -----------------------------------------
+       Undo
+    ----------------------------------------- */
 
     document
         .getElementById(
             "undoButton"
         )
-        .onclick =
-        undo;
+        .addEventListener(
+            "click",
+            undo
+        );
 
+
+    /* -----------------------------------------
+       Redo
+    ----------------------------------------- */
 
     document
         .getElementById(
             "redoButton"
         )
-        .onclick =
-        redo;
+        .addEventListener(
+            "click",
+            redo
+        );
 
+
+    /* -----------------------------------------
+       Save
+    ----------------------------------------- */
 
     document
         .getElementById(
             "saveDesignButton"
         )
-        .onclick =
-        saveDesign;
+        .addEventListener(
+            "click",
+            saveDesign
+        );
 
+
+    /* -----------------------------------------
+       Clear
+    ----------------------------------------- */
 
     document
         .getElementById(
             "clearCanvasButton"
         )
-        .onclick =
-        clearDesign;
+        .addEventListener(
+            "click",
+            clearDesign
+        );
 
+
+    /* -----------------------------------------
+       Zoom
+    ----------------------------------------- */
 
     document
         .getElementById(
             "zoomInButton"
         )
-        .onclick = () =>
-            setZoom(
-                SolarForgeDesigner.zoom +
-                .1
-            );
+        .addEventListener(
+            "click",
+            () => {
+
+                setZoom(
+                    SolarForgeDesigner.zoom +
+                    .1
+                );
+
+            }
+        );
 
 
     document
         .getElementById(
             "zoomOutButton"
         )
-        .onclick = () =>
-            setZoom(
-                SolarForgeDesigner.zoom -
-                .1
-            );
+        .addEventListener(
+            "click",
+            () => {
 
+                setZoom(
+                    SolarForgeDesigner.zoom -
+                    .1
+                );
+
+            }
+        );
+
+
+    /* -----------------------------------------
+       Fit
+    ----------------------------------------- */
 
     document
         .getElementById(
             "fitCanvasButton"
         )
-        .onclick =
-        fitCanvas;
+        .addEventListener(
+            "click",
+            fitCanvas
+        );
 
 
-    document
-        .getElementById(
-            "collapseMaterialsButton"
-        )
-        .onclick = () =>
-            setMaterialsCollapsed(
-                true
-            );
-
-
-    document
-        .getElementById(
-            "openMaterialsButton"
-        )
-        .onclick = () =>
-            setMaterialsCollapsed(
-                false
-            );
-
-
-    document
-        .getElementById(
-            "collapsePropertiesButton"
-        )
-        .onclick = () =>
-            setPropertiesCollapsed(
-                true
-            );
-
-
-    document
-        .getElementById(
-            "openPropertiesButton"
-        )
-        .onclick = () =>
-            setPropertiesCollapsed(
-                false
-            );
-
+    /* -----------------------------------------
+       Material Search
+    ----------------------------------------- */
 
     document
         .getElementById(
@@ -2976,38 +3260,101 @@ function setupTools() {
         );
 
 
+    /* -----------------------------------------
+       Material Filters
+    ----------------------------------------- */
+
     document
         .querySelectorAll(
             ".filter-button"
         )
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.onclick = () => {
+                button.addEventListener(
+                    "click",
+                    () => {
 
-                document
-                    .querySelectorAll(
-                        ".filter-button"
-                    )
-                    .forEach(
-                        item =>
-                            item.classList
-                                .remove(
-                                    "active"
-                                )
-                    );
+                        document
+                            .querySelectorAll(
+                                ".filter-button"
+                            )
+                            .forEach(
+                                item =>
+                                    item.classList
+                                        .remove(
+                                            "active"
+                                        )
+                            );
 
 
-                button.classList.add(
-                    "active"
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        renderMaterials();
+
+                    }
                 );
 
+            }
+        );
 
-                renderMaterials();
 
-            };
+    /* -----------------------------------------
+       Collapse Materials
+    ----------------------------------------- */
 
-        });
+    document
+        .getElementById(
+            "collapseMaterialsButton"
+        )
+        .addEventListener(
+            "click",
+            collapseMaterials
+        );
 
+
+    /* -----------------------------------------
+       Open Materials
+    ----------------------------------------- */
+
+    openMaterialsButton
+        .addEventListener(
+            "click",
+            openMaterials
+        );
+
+
+    /* -----------------------------------------
+       Collapse Properties
+    ----------------------------------------- */
+
+    document
+        .getElementById(
+            "collapsePropertiesButton"
+        )
+        .addEventListener(
+            "click",
+            collapseProperties
+        );
+
+
+    /* -----------------------------------------
+       Open Properties
+    ----------------------------------------- */
+
+    openPropertiesButton
+        .addEventListener(
+            "click",
+            openProperties
+        );
+
+
+    /* -----------------------------------------
+       Canvas click
+    ----------------------------------------- */
 
     canvas.addEventListener(
         "click",
@@ -3022,9 +3369,11 @@ function setupTools() {
                     .selectedId =
                     null;
 
+
                 SolarForgeDesigner
                     .pendingPort =
                     null;
+
 
                 render();
 
@@ -3034,35 +3383,32 @@ function setupTools() {
     );
 
 
-    canvasViewport.addEventListener(
+    /* -----------------------------------------
+       Mouse / Touch Coordinates
+    ----------------------------------------- */
+
+    canvas.addEventListener(
         "pointermove",
         event => {
 
             const rect =
-                canvasViewport
-                    .getBoundingClientRect();
+                canvas.getBoundingClientRect();
 
 
             const x =
-                Math.round(
-                    (
-                        event.clientX -
-                        rect.left +
-                        canvasViewport.scrollLeft
-                    ) /
-                    SolarForgeDesigner.zoom
-                );
+                (
+                    event.clientX -
+                    rect.left
+                ) /
+                SolarForgeDesigner.zoom;
 
 
             const y =
-                Math.round(
-                    (
-                        event.clientY -
-                        rect.top +
-                        canvasViewport.scrollTop
-                    ) /
-                    SolarForgeDesigner.zoom
-                );
+                (
+                    event.clientY -
+                    rect.top
+                ) /
+                SolarForgeDesigner.zoom;
 
 
             updateCoordinates(
@@ -3074,94 +3420,27 @@ function setupTools() {
     );
 
 
+    /* -----------------------------------------
+       Resize
+    ----------------------------------------- */
+
     window.addEventListener(
         "resize",
         () => {
 
-            setTimeout(
-                renderWires,
-                100
-            );
+            renderWires();
 
         }
-    );
-
-
-    document.addEventListener(
-        "keydown",
-        handleKeyboard
     );
 
 }
 
 
-/* ========================================
-   KEYBOARD
-======================================== */
+/* =========================================================
+   TOOLS
+========================================================= */
 
-function handleKeyboard(
-    event
-) {
-
-    const active =
-        document.activeElement;
-
-
-    const isTyping =
-        active &&
-        (
-            active.tagName ===
-                "INPUT" ||
-            active.tagName ===
-                "TEXTAREA" ||
-            active.tagName ===
-                "SELECT"
-        );
-
-
-    if (isTyping) return;
-
-
-    if (
-        event.key ===
-        "Delete"
-    ) {
-
-        if (
-            SolarForgeDesigner
-                .selectedId
-        ) {
-
-            deleteSelected();
-
-        }
-
-    }
-
-
-    if (
-        event.key ===
-        "Escape"
-    ) {
-
-        SolarForgeDesigner
-            .pendingPort =
-            null;
-
-        highlightPorts();
-
-    }
-
-}
-
-
-/* ========================================
-   TOOL
-======================================== */
-
-function setTool(
-    tool
-) {
+function setTool(tool) {
 
     SolarForgeDesigner.tool =
         tool;
@@ -3172,15 +3451,17 @@ function setTool(
             ".tool-button"
         )
         .forEach(
-            button =>
-                button.classList
-                    .remove(
-                        "active"
-                    )
+            button => {
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
         );
 
 
-    const map = {
+    const buttons = {
 
         select:
             "selectToolButton",
@@ -3196,7 +3477,7 @@ function setTool(
 
     document
         .getElementById(
-            map[tool]
+            buttons[tool]
         )
         ?.classList.add(
             "active"
@@ -3208,22 +3489,13 @@ function setTool(
         "wire"
     ) {
 
-        SolarForgeDesigner
-            .pendingPort =
+        SolarForgeDesigner.pendingPort =
             null;
+
 
         highlightPorts();
 
     }
-
-
-    const status =
-        document.getElementById(
-            "canvasStatus"
-        );
-
-
-    if (!status) return;
 
 
     if (
@@ -3231,34 +3503,32 @@ function setTool(
         "wire"
     ) {
 
-        status.textContent =
-            "Wire mode: select a port, then select a compatible port.";
+        showToast(
+            "Wire mode: select a port, then choose a compatible port.",
+            "info"
+        );
 
     }
 
-    else if (
+
+    if (
         tool ===
         "delete"
     ) {
 
-        status.textContent =
-            "Delete mode: select a component to remove it.";
-
-    }
-
-    else {
-
-        status.textContent =
-            "Select and drag components to organize the system.";
+        showToast(
+            "Delete mode: select a component to remove it.",
+            "info"
+        );
 
     }
 
 }
 
 
-/* ========================================
+/* =========================================================
    ZOOM
-======================================== */
+========================================================= */
 
 function setZoom(
     value
@@ -3266,7 +3536,7 @@ function setZoom(
 
     SolarForgeDesigner.zoom =
         Math.max(
-            .5,
+            .7,
             Math.min(
                 1.5,
                 value
@@ -3274,277 +3544,102 @@ function setZoom(
         );
 
 
-    canvas.style.transform =
+    componentLayer.style.transform =
         `scale(${SolarForgeDesigner.zoom})`;
 
 
-    canvas.style.transformOrigin =
+    componentLayer.style.transformOrigin =
         "0 0";
 
 
-    const zoomValue =
-        document.getElementById(
+    wireLayer.style.transform =
+        `scale(${SolarForgeDesigner.zoom})`;
+
+
+    wireLayer.style.transformOrigin =
+        "0 0";
+
+
+    document
+        .getElementById(
             "zoomValue"
-        );
-
-
-    if (zoomValue) {
-
-        zoomValue.textContent =
+        )
+        .textContent =
             Math.round(
                 SolarForgeDesigner.zoom *
                 100
             ) +
             "%";
 
-    }
-
 
     setTimeout(
         renderWires,
-        50
+        30
     );
 
 }
 
 
-/* ========================================
+/* =========================================================
    FIT CANVAS
-======================================== */
+========================================================= */
 
 function fitCanvas() {
 
-    const viewportWidth =
-        canvasViewport.clientWidth;
-
-    const viewportHeight =
-        canvasViewport.clientHeight;
+    setZoom(1);
 
 
-    if (
-        !SolarForgeDesigner
-            .components
-            .length
-    ) {
+    canvas.scrollTo({
 
-        setZoom(1);
+        left:
+            0,
 
-        canvasViewport.scrollTo({
-            left: 0,
-            top: 0
-        });
+        top:
+            0,
 
-        return;
+        behavior:
+            "smooth"
 
-    }
+    });
 
 
-    const minX =
-        Math.min(
-            ...SolarForgeDesigner
-                .components
-                .map(
-                    component =>
-                        component.x
-                )
-        );
-
-
-    const minY =
-        Math.min(
-            ...SolarForgeDesigner
-                .components
-                .map(
-                    component =>
-                        component.y
-                )
-        );
-
-
-    const maxX =
-        Math.max(
-            ...SolarForgeDesigner
-                .components
-                .map(
-                    component =>
-                        component.x +
-                        260
-                )
-        );
-
-
-    const maxY =
-        Math.max(
-            ...SolarForgeDesigner
-                .components
-                .map(
-                    component =>
-                        component.y +
-                        220
-                )
-        );
-
-
-    const requiredWidth =
-        Math.max(
-            500,
-            maxX - minX
-        );
-
-
-    const requiredHeight =
-        Math.max(
-            400,
-            maxY - minY
-        );
-
-
-    const scaleX =
-        (
-            viewportWidth -
-            80
-        ) /
-        requiredWidth;
-
-
-    const scaleY =
-        (
-            viewportHeight -
-            80
-        ) /
-        requiredHeight;
-
-
-    const scale =
-        Math.max(
-            .5,
-            Math.min(
-                1.15,
-                scaleX,
-                scaleY
-            )
-        );
-
-
-    setZoom(scale);
-
-
-    setTimeout(
-        () => {
-
-            canvasViewport.scrollTo({
-
-                left:
-                    Math.max(
-                        0,
-                        (
-                            minX *
-                            scale
-                        ) -
-                        40
-                    ),
-
-                top:
-                    Math.max(
-                        0,
-                        (
-                            minY *
-                            scale
-                        ) -
-                        40
-                    ),
-
-                behavior:
-                    "smooth"
-
-            });
-
-        },
-        80
+    showToast(
+        "Canvas reset to 100%",
+        "info"
     );
 
 }
 
 
-/* ========================================
-   PROJECT SELECTOR
-======================================== */
-
-function loadCurrentProjectName() {
-
-    const selector =
-        document.getElementById(
-            "designerProjectSelect"
-        );
-
-
-    if (!selector) return;
-
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                "solarforge_current_project"
-            );
-
-
-        if (!saved) return;
-
-
-        const project =
-            JSON.parse(saved);
-
-
-        if (
-            project.projectName
-        ) {
-
-            selector.innerHTML = "";
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-            option.textContent =
-                project.projectName;
-
-            selector.appendChild(
-                option
-            );
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Unable to load project:",
-            error
-        );
-
-    }
-
-}
-
-
-/* ========================================
+/* =========================================================
    STARTUP
-======================================== */
+========================================================= */
 
 function initializeDesigner() {
 
-    loadPanelState();
-
     loadDesign();
-
-    loadCurrentProjectName();
 
     setupTools();
 
     renderMaterials();
 
     render();
+
+    /*
+     * Start with both panels visible.
+     * User can minimize either one.
+     */
+
+    openMaterialsButton.style.display =
+        "none";
+
+    openPropertiesButton.style.display =
+        "none";
+
+
+    /*
+     * Initial zoom.
+     */
 
     setZoom(1);
 
