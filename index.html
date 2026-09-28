@@ -245,6 +245,8 @@
 
             overflow-x: auto;
 
+            min-width: 0;
+
         }
 
 
@@ -987,6 +989,52 @@
 
 
         /* ==========================================
+           SYSTEM DESIGNER
+        ========================================== */
+
+        .designer-page {
+
+            width: 100%;
+
+        }
+
+
+        .designer-frame-container {
+
+            background: white;
+
+            border:
+                1px solid #dfe5ed;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            width: 100%;
+
+            min-height: 700px;
+
+        }
+
+
+        .designer-frame {
+
+            width: 100%;
+
+            height: calc(100vh - 155px);
+
+            min-height: 700px;
+
+            border: none;
+
+            display: block;
+
+            background: white;
+
+        }
+
+
+        /* ==========================================
            EMPTY MESSAGE
         ========================================== */
 
@@ -1087,6 +1135,15 @@
 
             }
 
+
+            .designer-frame {
+
+                min-height: 650px;
+
+                height: calc(100vh - 180px);
+
+            }
+
         }
 
 
@@ -1134,6 +1191,13 @@
                 flex-direction: column;
 
                 align-items: flex-start;
+
+            }
+
+
+            .designer-frame-container {
+
+                border-radius: 7px;
 
             }
 
@@ -1227,6 +1291,15 @@
             onclick="openLoadAnalysis()">
 
             Load Analysis
+
+        </button>
+
+
+        <button
+            data-page="systemDesigner"
+            onclick="openSystemDesigner()">
+
+            System Designer
 
         </button>
 
@@ -1498,7 +1571,9 @@
 
 
 
-                <div class="workflow-card">
+                <div
+                    class="workflow-card"
+                    onclick="openSystemDesigner()">
 
                     <div class="workflow-number">
                         3
@@ -1509,16 +1584,19 @@
                     </h3>
 
                     <p>
-                        Calculate PV array size,
-                        string configuration
-                        and inverter requirements.
+                        Design the solar system,
+                        place equipment and create
+                        port-to-port electrical
+                        connections.
                     </p>
 
                 </div>
 
 
 
-                <div class="workflow-card">
+                <div
+                    class="workflow-card"
+                    onclick="openSystemDesigner()">
 
                     <div class="workflow-number">
                         4
@@ -1579,7 +1657,9 @@
 
 
 
-                <div class="workflow-card">
+                <div
+                    class="workflow-card"
+                    onclick="openSystemDesigner()">
 
                     <div class="workflow-number">
                         7
@@ -1590,8 +1670,8 @@
                     </h3>
 
                     <p>
-                        Generate the system
-                        electrical connection
+                        Build and organize the
+                        system electrical connection
                         layout.
                     </p>
 
@@ -2091,7 +2171,7 @@
 
                     <button
                         class="btn btn-secondary"
-                        onclick="closeProject()">
+                        onclick="showDashboard()">
 
                         Back to Dashboard
 
@@ -2401,6 +2481,69 @@
         </section>
 
 
+
+        <!-- ==================================
+             SYSTEM DESIGNER PAGE
+        =================================== -->
+
+        <section
+            id="systemDesignerPage"
+            class="page designer-page"
+            style="display:none;">
+
+
+            <div class="page-header">
+
+
+                <div>
+
+                    <div class="page-title">
+                        Solar System Designer
+                    </div>
+
+
+                    <div class="page-description">
+
+                        Place solar equipment on the canvas
+                        and connect components through
+                        their correct electrical ports.
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="showDashboard()">
+
+                    Back to Dashboard
+
+                </button>
+
+
+            </div>
+
+
+
+            <div class="designer-frame-container">
+
+
+                <iframe
+                    id="systemDesignerFrame"
+                    class="designer-frame"
+                    src="designer.html"
+                    title="SolarForge System Designer">
+
+                </iframe>
+
+
+            </div>
+
+
+        </section>
+
+
     </main>
 
 
@@ -2416,7 +2559,7 @@
 
 <script src="js/project.js"></script>
 
-<script src="js/load-analysis.js"></script>
+<script src="load-analysis.js"></script>
 
 
 
@@ -2447,6 +2590,11 @@
 
         document
             .getElementById("loadAnalysisPage")
+            .style.display = "none";
+
+
+        document
+            .getElementById("systemDesignerPage")
             .style.display = "none";
 
     }
@@ -2495,6 +2643,26 @@
 
 
         setActiveButton("dashboard");
+
+    }
+
+
+
+    /* ==========================================
+       SYSTEM DESIGNER
+    ========================================== */
+
+    function openSystemDesigner() {
+
+        hideAllPages();
+
+
+        document
+            .getElementById("systemDesignerPage")
+            .style.display = "block";
+
+
+        setActiveButton("systemDesigner");
 
     }
 
@@ -2578,8 +2746,20 @@
             .value = "";
 
 
-        currentDatabase =
-            SolarForgeDB[databaseName] || [];
+        if (
+            typeof SolarForgeDB !== "undefined"
+        ) {
+
+            currentDatabase =
+                SolarForgeDB[databaseName] || [];
+
+        }
+
+        else {
+
+            currentDatabase = [];
+
+        }
 
 
         renderDatabase(currentDatabase);
@@ -2821,7 +3001,6 @@
        DATABASE READY
     ========================================== */
 
-
     window.addEventListener(
         "solarforgeDatabaseReady",
         function() {
@@ -2844,44 +3023,68 @@
         }
 
 
-        document
-            .getElementById(
+        const panelCount =
+            document.getElementById(
                 "panelCount"
-            )
-            .textContent =
-            SolarForgeDB
-                .solarPanels
-                .length;
+            );
 
 
-        document
-            .getElementById(
+        const inverterCount =
+            document.getElementById(
                 "inverterCount"
-            )
-            .textContent =
-            SolarForgeDB
-                .hybridInverters
-                .length;
+            );
 
 
-        document
-            .getElementById(
+        const batteryCount =
+            document.getElementById(
                 "batteryCount"
-            )
-            .textContent =
-            SolarForgeDB
-                .batteries
-                .length;
+            );
 
 
-        document
-            .getElementById(
+        const protectionCount =
+            document.getElementById(
                 "protectionCount"
-            )
-            .textContent =
-            SolarForgeDB
-                .protection
-                .length;
+            );
+
+
+        if (panelCount) {
+
+            panelCount.textContent =
+                SolarForgeDB
+                    .solarPanels
+                    .length;
+
+        }
+
+
+        if (inverterCount) {
+
+            inverterCount.textContent =
+                SolarForgeDB
+                    .hybridInverters
+                    .length;
+
+        }
+
+
+        if (batteryCount) {
+
+            batteryCount.textContent =
+                SolarForgeDB
+                    .batteries
+                    .length;
+
+        }
+
+
+        if (protectionCount) {
+
+            protectionCount.textContent =
+                SolarForgeDB
+                    .protection
+                    .length;
+
+        }
 
     }
 
@@ -2890,7 +3093,6 @@
     /* ==========================================
        INITIALIZE
     ========================================== */
-
 
     document.addEventListener(
         "DOMContentLoaded",
