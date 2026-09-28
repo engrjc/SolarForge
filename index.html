@@ -1,3112 +1,1468 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
-
-    <title>SolarForge</title>
-
+    <title>SolarForge — Solar System Design & Installation Platform</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #172033;
+        }
 
         body {
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            background: #f4f7fb;
-
-            color: #1f2937;
-
+            overflow-x: hidden;
         }
 
+        /* ================================
+           APP HEADER
+        ================================= */
 
-        /* ==========================================
-           HEADER
-        ========================================== */
-
-        .header {
-
-            height: 70px;
-
+        .topbar {
+            height: 72px;
             background: #0b1f3a;
-
             color: white;
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
-            padding: 0 28px;
-
-            position: sticky;
-
+            padding: 0 24px;
+            position: fixed;
             top: 0;
-
-            z-index: 100;
-
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
         }
-
-
-        .logo-area {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-        }
-
-
-        .logo {
-
-            width: 38px;
-
-            height: 38px;
-
-            background: #f5b400;
-
-            border-radius: 8px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            color: #0b1f3a;
-
-            font-weight: bold;
-
-            font-size: 20px;
-
-        }
-
 
         .brand {
-
-            font-size: 22px;
-
-            font-weight: bold;
-
-        }
-
-
-        .brand-subtitle {
-
-            font-size: 11px;
-
-            color: #b9c7da;
-
-            margin-top: 2px;
-
-        }
-
-
-        .header-right {
-
-            font-size: 13px;
-
-            color: #c9d4e4;
-
-        }
-
-
-        /* ==========================================
-           LAYOUT
-        ========================================== */
-
-        .app-layout {
-
             display: flex;
-
-            min-height:
-                calc(100vh - 70px);
-
+            align-items: center;
+            gap: 12px;
         }
 
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: #1677ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
 
-        /* ==========================================
+        .brand-text h1 {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: #b9c8dc;
+            margin-top: 3px;
+        }
+
+        .top-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #d7e2f1;
+        }
+
+        .status-dot {
+            width: 9px;
+            height: 9px;
+            background: #2ed573;
+            border-radius: 50%;
+        }
+
+        /* ================================
            SIDEBAR
-        ========================================== */
+        ================================= */
 
         .sidebar {
-
+            position: fixed;
+            top: 72px;
+            left: 0;
+            bottom: 0;
             width: 245px;
-
-            background: white;
-
-            border-right:
-                1px solid #dfe5ed;
-
-            padding: 20px 14px;
-
-            flex-shrink: 0;
-
+            background: #102846;
+            color: white;
+            padding: 18px 12px;
+            overflow-y: auto;
+            z-index: 900;
         }
-
 
         .sidebar-title {
-
+            color: #91a7c1;
             font-size: 11px;
-
-            font-weight: bold;
-
-            color: #8a96a8;
-
             text-transform: uppercase;
-
-            margin:
-                10px 10px 8px;
-
+            letter-spacing: 1px;
+            padding: 12px 13px 8px;
         }
 
-
-        .sidebar button {
-
+        .nav-button {
             width: 100%;
-
             border: none;
-
             background: transparent;
-
-            padding: 11px 13px;
-
+            color: #d8e3f0;
             text-align: left;
-
-            border-radius: 7px;
-
+            padding: 12px 13px;
+            border-radius: 9px;
             margin-bottom: 4px;
-
             cursor: pointer;
-
-            color: #435168;
-
             font-size: 14px;
-
+            transition: 0.2s;
         }
 
-
-        .sidebar button:hover {
-
-            background: #eef4fb;
-
+        .nav-button:hover {
+            background: #17395f;
+            color: white;
         }
 
-
-        .sidebar button.active {
-
-            background: #e7f0fc;
-
-            color: #1769d2;
-
-            font-weight: bold;
-
+        .nav-button.active {
+            background: #1677ff;
+            color: white;
         }
 
-
-        .sidebar-divider {
-
-            height: 1px;
-
-            background: #e3e8ef;
-
-            margin: 18px 8px;
-
+        .nav-icon {
+            display: inline-block;
+            width: 25px;
+            margin-right: 5px;
         }
 
+        /* ================================
+           MAIN AREA
+        ================================= */
 
-        /* ==========================================
-           MAIN CONTENT
-        ========================================== */
-
-        .main-content {
-
-            flex: 1;
-
-            padding: 28px;
-
-            overflow-x: auto;
-
-            min-width: 0;
-
+        .main {
+            margin-left: 245px;
+            padding-top: 72px;
+            min-height: 100vh;
         }
-
 
         .page {
-
-            max-width: 1400px;
-
-            margin: auto;
-
+            padding: 30px;
         }
-
 
         .page-header {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
             margin-bottom: 25px;
-
-            gap: 15px;
-
         }
 
-
-        .page-title {
-
-            font-size: 27px;
-
-            color: #172b4d;
-
-            font-weight: bold;
-
+        .page-header h2 {
+            font-size: 28px;
+            color: #0b1f3a;
+            margin-bottom: 7px;
         }
 
-
-        .page-description {
-
-            color: #728096;
-
-            margin-top: 5px;
-
+        .page-header p {
+            color: #6f7d90;
             font-size: 14px;
-
         }
 
-
-        /* ==========================================
-           BUTTONS
-        ========================================== */
-
-        .btn {
-
-            border: none;
-
-            border-radius: 7px;
-
-            padding: 11px 17px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-
-            font-size: 13px;
-
-        }
-
-
-        .btn-primary {
-
-            background: #1769d2;
-
-            color: white;
-
-        }
-
-
-        .btn-primary:hover {
-
-            background: #1258b3;
-
-        }
-
-
-        .btn-secondary {
-
-            background: #e9eef5;
-
-            color: #405069;
-
-        }
-
-
-        .btn-secondary:hover {
-
-            background: #dce3ed;
-
-        }
-
-
-        .btn-success {
-
-            background: #218838;
-
-            color: white;
-
-        }
-
-
-        .btn-danger {
-
-            background: #dc3545;
-
-            color: white;
-
-        }
-
-
-        .btn-small {
-
-            padding:
-                7px 10px;
-
-            font-size: 12px;
-
-        }
-
-
-        /* ==========================================
+        /* ================================
            DASHBOARD
-        ========================================== */
+        ================================= */
 
-        .stats-grid {
-
+        .dashboard-grid {
             display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
+            grid-template-columns: repeat(4, 1fr);
             gap: 18px;
-
             margin-bottom: 25px;
-
         }
-
 
         .stat-card {
-
             background: white;
-
-            border:
-                1px solid #dfe5ed;
-
-            border-radius: 10px;
-
+            border: 1px solid #e3e9f1;
+            border-radius: 14px;
             padding: 20px;
-
+            box-shadow: 0 3px 12px rgba(20, 42, 70, 0.05);
         }
 
-
-        .stat-label {
-
+        .stat-card h3 {
             font-size: 12px;
-
-            color: #78869a;
-
-            margin-bottom: 8px;
-
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 10px;
         }
-
 
         .stat-value {
-
             font-size: 28px;
-
-            font-weight: bold;
-
-            color: #172b4d;
-
+            font-weight: 700;
+            color: #0b1f3a;
         }
 
-
-        /* ==========================================
-           WORKFLOW
-        ========================================== */
-
-        .section-title {
-
-            font-size: 18px;
-
-            color: #243b5a;
-
-            margin-bottom: 15px;
-
+        .dashboard-section {
+            background: white;
+            border: 1px solid #e3e9f1;
+            border-radius: 14px;
+            padding: 24px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 12px rgba(20, 42, 70, 0.05);
         }
 
+        .dashboard-section h3 {
+            color: #0b1f3a;
+            margin-bottom: 18px;
+        }
 
         .workflow-grid {
-
             display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 16px;
-
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
         }
-
 
         .workflow-card {
-
-            background: white;
-
-            border:
-                1px solid #dfe5ed;
-
-            border-radius: 10px;
-
-            padding: 20px;
-
+            border: 1px solid #dfe7f0;
+            border-radius: 12px;
+            padding: 18px;
             cursor: pointer;
-
+            background: #fbfdff;
             transition: 0.2s;
-
         }
-
 
         .workflow-card:hover {
-
-            border-color: #1769d2;
-
+            border-color: #1677ff;
             transform: translateY(-2px);
-
+            box-shadow: 0 6px 18px rgba(22, 119, 255, 0.1);
         }
 
-
-        .workflow-number {
-
-            width: 32px;
-
-            height: 32px;
-
-            border-radius: 50%;
-
-            background: #e7f0fc;
-
-            color: #1769d2;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-weight: bold;
-
-            margin-bottom: 13px;
-
+        .workflow-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
         }
 
-
-        .workflow-card h3 {
-
+        .workflow-card h4 {
             font-size: 15px;
-
-            margin-bottom: 7px;
-
-            color: #263b58;
-
+            color: #17304f;
+            margin-bottom: 5px;
         }
-
 
         .workflow-card p {
-
+            color: #718096;
             font-size: 12px;
-
             line-height: 1.5;
-
-            color: #7a8799;
-
         }
 
+        /* ================================
+           BUTTONS
+        ================================= */
 
-        /* ==========================================
-           DATABASE
-        ========================================== */
-
-        .database-toolbar {
-
-            display: flex;
-
-            gap: 10px;
-
-            margin-bottom: 18px;
-
+        .primary-button {
+            border: none;
+            background: #1677ff;
+            color: white;
+            border-radius: 8px;
+            padding: 11px 18px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
         }
 
-
-        .database-toolbar input {
-
-            flex: 1;
-
-            padding: 11px 13px;
-
-            border:
-                1px solid #ccd5e2;
-
-            border-radius: 7px;
-
-            outline: none;
-
+        .primary-button:hover {
+            background: #0865e5;
         }
 
-
-        .table-container {
-
+        .secondary-button {
+            border: 1px solid #d7e0eb;
             background: white;
-
-            border:
-                1px solid #dfe5ed;
-
-            border-radius: 10px;
-
-            overflow-x: auto;
-
+            color: #24364d;
+            border-radius: 8px;
+            padding: 10px 17px;
+            cursor: pointer;
+            font-size: 14px;
         }
 
-
-        table {
-
-            width: 100%;
-
-            border-collapse: collapse;
-
-            min-width: 800px;
-
+        .secondary-button:hover {
+            background: #f3f7fb;
         }
 
+        /* ================================
+           PROJECT PAGE
+        ================================= */
 
-        th {
-
-            background: #f5f7fa;
-
-            color: #56657a;
-
-            font-size: 12px;
-
-            text-align: left;
-
-            padding: 13px;
-
-            border-bottom:
-                1px solid #dfe5ed;
-
-        }
-
-
-        td {
-
-            padding: 13px;
-
-            font-size: 13px;
-
-            border-bottom:
-                1px solid #edf0f4;
-
-            color: #3e4c60;
-
-        }
-
-
-        /* ==========================================
-           PROJECT FORM
-        ========================================== */
-
-        .project-container {
-
+        .form-card {
             background: white;
-
-            border:
-                1px solid #dfe5ed;
-
-            border-radius: 10px;
-
-            padding: 25px;
-
+            border: 1px solid #e3e9f1;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 3px 12px rgba(20, 42, 70, 0.05);
         }
-
-
-        .form-section {
-
-            margin-bottom: 30px;
-
-        }
-
-
-        .form-section-title {
-
-            font-size: 17px;
-
-            font-weight: bold;
-
-            color: #243b5a;
-
-            margin-bottom: 17px;
-
-            padding-bottom: 10px;
-
-            border-bottom:
-                1px solid #e4e9f0;
-
-        }
-
 
         .form-grid {
-
             display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
+            grid-template-columns: repeat(2, 1fr);
             gap: 18px;
-
         }
-
 
         .form-group {
-
-            margin-bottom: 4px;
-
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
         }
 
-
-        .form-group.full-width {
-
+        .form-group.full {
             grid-column: 1 / -1;
-
         }
-
 
         .form-group label {
-
-            display: block;
-
             font-size: 13px;
-
-            font-weight: bold;
-
-            color: #445166;
-
-            margin-bottom: 7px;
-
+            font-weight: 600;
+            color: #40536b;
         }
-
 
         .form-group input,
         .form-group select,
         .form-group textarea {
-
             width: 100%;
-
+            border: 1px solid #d7e0eb;
+            border-radius: 8px;
             padding: 11px 12px;
-
-            border:
-                1px solid #ccd5e2;
-
-            border-radius: 7px;
-
-            background: white;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
             font-size: 14px;
-
             outline: none;
-
+            background: white;
         }
 
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
-
-            border-color: #1769d2;
-
+            border-color: #1677ff;
         }
-
-
-        .form-group textarea {
-
-            resize: vertical;
-
-            min-height: 110px;
-
-        }
-
 
         .form-actions {
-
+            margin-top: 22px;
             display: flex;
-
-            justify-content: flex-end;
-
             gap: 10px;
-
-            margin-top: 25px;
-
-            padding-top: 20px;
-
-            border-top:
-                1px solid #e4e9f0;
-
         }
 
+        /* ================================
+           DATABASE
+        ================================= */
 
-        /* ==========================================
-           LOAD ANALYSIS
-        ========================================== */
-
-        .load-summary-grid {
-
+        .database-grid {
             display: grid;
-
-            grid-template-columns:
-                repeat(4, 1fr);
-
-            gap: 15px;
-
-            margin-bottom: 20px;
-
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
         }
 
-
-        .load-summary-card {
-
+        .database-card {
             background: white;
-
-            border:
-                1px solid #dfe5ed;
-
-            border-radius: 10px;
-
-            padding: 18px;
-
-        }
-
-
-        .load-summary-label {
-
-            font-size: 12px;
-
-            color: #7a8799;
-
-            margin-bottom: 7px;
-
-        }
-
-
-        .load-summary-value {
-
-            font-size: 23px;
-
-            font-weight: bold;
-
-            color: #172b4d;
-
-        }
-
-
-        .load-analysis-container {
-
-            background: white;
-
-            border:
-                1px solid #dfe5ed;
-
-            border-radius: 10px;
-
+            border: 1px solid #e3e9f1;
+            border-radius: 14px;
             padding: 20px;
-
+            box-shadow: 0 3px 12px rgba(20, 42, 70, 0.05);
         }
 
-
-        .load-toolbar {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 18px;
-
-            gap: 10px;
-
+        .database-card h3 {
+            color: #0b1f3a;
+            margin-bottom: 7px;
         }
 
-
-        .load-toolbar-title {
-
-            font-size: 17px;
-
-            font-weight: bold;
-
-            color: #243b5a;
-
-        }
-
-
-        .load-table-wrapper {
-
-            overflow-x: auto;
-
-        }
-
-
-        .load-table {
-
-            min-width: 1100px;
-
-        }
-
-
-        .load-table input,
-        .load-table select {
-
-            width: 100%;
-
-            padding: 8px;
-
-            border:
-                1px solid #ccd5e2;
-
-            border-radius: 5px;
-
+        .database-card p {
+            color: #718096;
             font-size: 13px;
-
-            outline: none;
-
-        }
-
-
-        .load-table input:focus,
-        .load-table select:focus {
-
-            border-color: #1769d2;
-
-        }
-
-
-        .load-table .energy-cell {
-
-            font-weight: bold;
-
-            color: #1769d2;
-
-            white-space: nowrap;
-
-        }
-
-
-        .load-table .delete-cell {
-
-            text-align: center;
-
-        }
-
-
-        .load-table .delete-btn {
-
-            border: none;
-
-            background: #fce8e8;
-
-            color: #c62828;
-
-            border-radius: 5px;
-
-            padding: 7px 9px;
-
-            cursor: pointer;
-
-            font-size: 12px;
-
-        }
-
-
-        .load-table .delete-btn:hover {
-
-            background: #f8d4d4;
-
-        }
-
-
-        .load-footer {
-
-            margin-top: 18px;
-
-            padding-top: 18px;
-
-            border-top:
-                1px solid #e4e9f0;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            gap: 15px;
-
-        }
-
-
-        .load-note {
-
-            font-size: 12px;
-
-            color: #7a8799;
-
             line-height: 1.5;
-
         }
 
-
-        .load-actions {
-
-            display: flex;
-
-            gap: 10px;
-
-            flex-shrink: 0;
-
+        .database-count {
+            margin-top: 15px;
+            font-size: 25px;
+            font-weight: 700;
+            color: #1677ff;
         }
 
+        /* ================================
+           LOAD ANALYSIS
+        ================================= */
 
-        /* ==========================================
-           SYSTEM DESIGNER
-        ========================================== */
-
-        .designer-page {
-
-            width: 100%;
-
-        }
-
-
-        .designer-frame-container {
-
+        .load-card {
             background: white;
-
-            border:
-                1px solid #dfe5ed;
-
-            border-radius: 10px;
-
-            overflow: hidden;
-
-            width: 100%;
-
-            min-height: 700px;
-
+            border: 1px solid #e3e9f1;
+            border-radius: 14px;
+            padding: 24px;
+            overflow-x: auto;
         }
 
-
-        .designer-frame {
-
-            width: 100%;
-
-            height: calc(100vh - 155px);
-
-            min-height: 700px;
-
-            border: none;
-
-            display: block;
-
-            background: white;
-
-        }
-
-
-        /* ==========================================
-           EMPTY MESSAGE
-        ========================================== */
-
-        .empty-message {
-
-            padding: 35px;
-
-            text-align: center;
-
-            color: #8491a3;
-
-            font-size: 14px;
-
-        }
-
-
-        /* ==========================================
+        /* ================================
            RESPONSIVE
-        ========================================== */
+        ================================= */
 
-        @media (max-width: 1000px) {
-
-            .stats-grid {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
+        @media (max-width: 1100px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-
 
             .workflow-grid {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
+                grid-template-columns: repeat(2, 1fr);
             }
 
-
-            .load-summary-grid {
-
-                grid-template-columns:
-                    repeat(2, 1fr);
-
+            .database-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-
         }
 
-
-        @media (max-width: 750px) {
-
+        @media (max-width: 760px) {
             .sidebar {
-
-                width: 190px;
-
+                width: 205px;
             }
 
-
-            .main-content {
-
-                padding: 18px;
-
+            .main {
+                margin-left: 205px;
             }
 
+            .page {
+                padding: 20px;
+            }
 
             .form-grid {
-
                 grid-template-columns: 1fr;
-
             }
 
-
-            .form-group.full-width {
-
-                grid-column: auto;
-
-            }
-
-
-            .header-right {
-
-                display: none;
-
-            }
-
-
-            .load-footer {
-
-                flex-direction: column;
-
-                align-items: stretch;
-
-            }
-
-
-            .load-actions {
-
-                justify-content: flex-end;
-
-            }
-
-
-            .designer-frame {
-
-                min-height: 650px;
-
-                height: calc(100vh - 180px);
-
-            }
-
-        }
-
-
-        @media (max-width: 600px) {
-
-            .app-layout {
-
-                flex-direction: column;
-
-            }
-
-
-            .sidebar {
-
-                width: 100%;
-
-                border-right: none;
-
-                border-bottom:
-                    1px solid #dfe5ed;
-
-            }
-
-
-            .sidebar button {
-
-                display: inline-block;
-
-                width: auto;
-
-            }
-
-
-            .stats-grid,
-            .workflow-grid,
-            .load-summary-grid {
-
+            .database-grid {
                 grid-template-columns: 1fr;
-
             }
-
-
-            .page-header {
-
-                flex-direction: column;
-
-                align-items: flex-start;
-
-            }
-
-
-            .designer-frame-container {
-
-                border-radius: 7px;
-
-            }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
+    <!-- =========================================
+         TOP BAR
+    ========================================== -->
 
-<!-- ==========================================
-     HEADER
-========================================== -->
+    <header class="topbar">
 
-<header class="header">
+        <div class="brand">
 
-    <div class="logo-area">
-
-        <div class="logo">
-            SF
-        </div>
-
-
-        <div>
-
-            <div class="brand">
-                SolarForge
+            <div class="brand-icon">
+                ☀
             </div>
 
-
-            <div class="brand-subtitle">
-                Solar System Design & Installation Platform
+            <div class="brand-text">
+                <h1>SolarForge</h1>
+                <p>Solar System Design & Installation Platform</p>
             </div>
 
         </div>
 
-    </div>
+        <div class="top-status">
+            <span class="status-dot"></span>
+            System Ready
+        </div>
+
+    </header>
 
 
-    <div class="header-right">
-        Internal Engineering & Business System
-    </div>
-
-</header>
-
-
-
-<!-- ==========================================
-     APP LAYOUT
-========================================== -->
-
-<div class="app-layout">
-
-
-    <!-- ======================================
+    <!-- =========================================
          SIDEBAR
-    ======================================= -->
+    ========================================== -->
 
     <aside class="sidebar">
 
-
         <div class="sidebar-title">
-            Main
+            Workspace
         </div>
 
-
         <button
-            class="active"
+            class="nav-button active"
             data-page="dashboard"
             onclick="showDashboard()">
-
+            <span class="nav-icon">⌂</span>
             Dashboard
-
         </button>
 
-
         <button
+            class="nav-button"
             data-page="project"
             onclick="openNewProject()">
-
+            <span class="nav-icon">▣</span>
             New Project
-
         </button>
 
-
         <button
+            class="nav-button"
             data-page="loadAnalysis"
             onclick="openLoadAnalysis()">
-
+            <span class="nav-icon">▤</span>
             Load Analysis
-
         </button>
 
+
+        <div class="sidebar-title">
+            Engineering
+        </div>
 
         <button
+            class="nav-button"
             data-page="systemDesigner"
             onclick="openSystemDesigner()">
-
+            <span class="nav-icon">⌘</span>
             System Designer
-
         </button>
 
+        <button
+            class="nav-button"
+            onclick="openSystemDesigner()">
+            <span class="nav-icon">⌁</span>
+            Wiring Diagram
+        </button>
 
+        <button
+            class="nav-button"
+            onclick="underDevelopment('Engineering Checks')">
+            <span class="nav-icon">✓</span>
+            Engineering Checks
+        </button>
 
-        <div class="sidebar-divider"></div>
-
+        <button
+            class="nav-button"
+            onclick="underDevelopment('BOM')">
+            <span class="nav-icon">▦</span>
+            Bill of Materials
+        </button>
 
 
         <div class="sidebar-title">
             Equipment Database
         </div>
 
-
-        <button onclick="showDatabase('solarPanels')">
-            Solar Panels
+        <button
+            class="nav-button"
+            onclick="openDatabase()">
+            <span class="nav-icon">▤</span>
+            Equipment Database
         </button>
 
-
-        <button onclick="showDatabase('hybridInverters')">
-            Hybrid Inverters
+        <button
+            class="nav-button"
+            onclick="underDevelopment('Business Management')">
+            <span class="nav-icon">₱</span>
+            Business Management
         </button>
-
-
-        <button onclick="showDatabase('batteries')">
-            Batteries
-        </button>
-
-
-        <button onclick="showDatabase('cables')">
-            Cables
-        </button>
-
-
-        <button onclick="showDatabase('protection')">
-            Protection
-        </button>
-
-
-        <button onclick="showDatabase('mounting')">
-            Mounting
-        </button>
-
-
-        <button onclick="showDatabase('accessories')">
-            Accessories
-        </button>
-
-
-
-        <div class="sidebar-divider"></div>
-
-
-
-        <div class="sidebar-title">
-            Business
-        </div>
-
-
-        <button onclick="underDevelopment('Inventory')">
-            Inventory
-        </button>
-
-
-        <button onclick="underDevelopment('Customers')">
-            Customers
-        </button>
-
-
-        <button onclick="underDevelopment('Projects')">
-            Projects
-        </button>
-
-
-        <button onclick="underDevelopment('Quotations')">
-            Quotations
-        </button>
-
-
-        <button onclick="underDevelopment('Settings')">
-            Settings
-        </button>
-
 
     </aside>
 
 
-
-    <!-- ======================================
+    <!-- =========================================
          MAIN CONTENT
-    ======================================= -->
+    ========================================== -->
 
-    <main class="main-content">
+    <main class="main">
 
 
-        <!-- ==================================
+        <!-- =====================================
              DASHBOARD
-        =================================== -->
+        ====================================== -->
 
         <section
             id="dashboardPage"
             class="page">
 
-
             <div class="page-header">
 
+                <h2>SolarForge Dashboard</h2>
 
-                <div>
-
-                    <div class="page-title">
-                        SolarForge Dashboard
-                    </div>
-
-
-                    <div class="page-description">
-
-                        Internal solar engineering,
-                        installation and business
-                        management system.
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="btn btn-primary"
-                    onclick="startNewDesign()">
-
-                    + New Project
-
-                </button>
-
+                <p>
+                    Engineering workspace for solar system design,
+                    installation and project management.
+                </p>
 
             </div>
 
 
-
-            <div class="stats-grid">
-
+            <div class="dashboard-grid">
 
                 <div class="stat-card">
-
-                    <div class="stat-label">
-                        Solar Panels
-                    </div>
-
+                    <h3>Solar Panels</h3>
                     <div
-                        class="stat-value"
-                        id="panelCount">
-
+                        id="panelCount"
+                        class="stat-value">
                         0
-
                     </div>
-
                 </div>
-
-
 
                 <div class="stat-card">
-
-                    <div class="stat-label">
-                        Hybrid Inverters
-                    </div>
-
+                    <h3>Hybrid Inverters</h3>
                     <div
-                        class="stat-value"
-                        id="inverterCount">
-
+                        id="inverterCount"
+                        class="stat-value">
                         0
-
                     </div>
-
                 </div>
-
-
 
                 <div class="stat-card">
-
-                    <div class="stat-label">
-                        Batteries
-                    </div>
-
+                    <h3>Batteries</h3>
                     <div
-                        class="stat-value"
-                        id="batteryCount">
-
+                        id="batteryCount"
+                        class="stat-value">
                         0
-
                     </div>
-
                 </div>
-
-
 
                 <div class="stat-card">
-
-                    <div class="stat-label">
-                        Protection Devices
-                    </div>
-
+                    <h3>Projects</h3>
                     <div
-                        class="stat-value"
-                        id="protectionCount">
-
+                        id="projectCount"
+                        class="stat-value">
                         0
-
                     </div>
-
                 </div>
-
 
             </div>
 
 
+            <div class="dashboard-section">
 
-            <h2 class="section-title">
+                <h3>Engineering Workflow</h3>
 
-                SolarForge Engineering Workflow
+                <div class="workflow-grid">
 
-            </h2>
+                    <div
+                        class="workflow-card"
+                        onclick="openNewProject()">
 
+                        <div class="workflow-icon">
+                            📋
+                        </div>
 
+                        <h4>Site & Project</h4>
 
-            <div class="workflow-grid">
+                        <p>
+                            Create a project and record
+                            installation information.
+                        </p>
 
-
-                <div
-                    class="workflow-card"
-                    onclick="openNewProject()">
-
-                    <div class="workflow-number">
-                        1
                     </div>
 
-                    <h3>
-                        Site Survey
-                    </h3>
 
-                    <p>
-                        Record customer, site,
-                        roof and electrical
-                        service information.
-                    </p>
+                    <div
+                        class="workflow-card"
+                        onclick="openLoadAnalysis()">
 
-                </div>
+                        <div class="workflow-icon">
+                            ⚡
+                        </div>
 
+                        <h4>Load Analysis</h4>
 
+                        <p>
+                            Analyze connected loads and
+                            estimate energy requirements.
+                        </p>
 
-                <div
-                    class="workflow-card"
-                    onclick="openLoadAnalysis()">
-
-                    <div class="workflow-number">
-                        2
                     </div>
 
-                    <h3>
-                        Load Analysis
-                    </h3>
 
-                    <p>
-                        Determine connected load,
-                        daily energy consumption
-                        and peak demand.
-                    </p>
+                    <div
+                        class="workflow-card"
+                        onclick="openSystemDesigner()">
 
-                </div>
+                        <div class="workflow-icon">
+                            🔧
+                        </div>
 
+                        <h4>PV System Design</h4>
 
+                        <p>
+                            Build the solar system visually
+                            and connect equipment.
+                        </p>
 
-                <div
-                    class="workflow-card"
-                    onclick="openSystemDesigner()">
-
-                    <div class="workflow-number">
-                        3
                     </div>
 
-                    <h3>
-                        PV System Design
-                    </h3>
 
-                    <p>
-                        Design the solar system,
-                        place equipment and create
-                        port-to-port electrical
-                        connections.
-                    </p>
+                    <div
+                        class="workflow-card"
+                        onclick="openSystemDesigner()">
 
-                </div>
+                        <div class="workflow-icon">
+                            🔌
+                        </div>
 
+                        <h4>Wiring Diagram</h4>
 
+                        <p>
+                            Create the equipment wiring
+                            and connection layout.
+                        </p>
 
-                <div
-                    class="workflow-card"
-                    onclick="openSystemDesigner()">
-
-                    <div class="workflow-number">
-                        4
                     </div>
 
-                    <h3>
-                        Hybrid Inverter
-                    </h3>
-
-                    <p>
-                        Select an inverter based
-                        on load, PV input,
-                        battery voltage
-                        and compatibility.
-                    </p>
-
                 </div>
-
-
-
-                <div class="workflow-card">
-
-                    <div class="workflow-number">
-                        5
-                    </div>
-
-                    <h3>
-                        Battery Sizing
-                    </h3>
-
-                    <p>
-                        Determine usable battery
-                        energy and battery bank
-                        configuration.
-                    </p>
-
-                </div>
-
-
-
-                <div class="workflow-card">
-
-                    <div class="workflow-number">
-                        6
-                    </div>
-
-                    <h3>
-                        Protection & Cables
-                    </h3>
-
-                    <p>
-                        Determine conductor and
-                        protection requirements
-                        using engineering rules.
-                    </p>
-
-                </div>
-
-
-
-                <div
-                    class="workflow-card"
-                    onclick="openSystemDesigner()">
-
-                    <div class="workflow-number">
-                        7
-                    </div>
-
-                    <h3>
-                        Wiring Diagram
-                    </h3>
-
-                    <p>
-                        Build and organize the
-                        system electrical connection
-                        layout.
-                    </p>
-
-                </div>
-
-
-
-                <div class="workflow-card">
-
-                    <div class="workflow-number">
-                        8
-                    </div>
-
-                    <h3>
-                        BOM & Quotation
-                    </h3>
-
-                    <p>
-                        Generate materials,
-                        costs, labor, margin
-                        and project quotation.
-                    </p>
-
-                </div>
-
 
             </div>
 
+
+            <div class="dashboard-section">
+
+                <h3>SolarForge Engineering Platform</h3>
+
+                <p style="
+                    color:#718096;
+                    line-height:1.7;
+                    font-size:14px;
+                ">
+                    SolarForge is designed as an internal engineering
+                    and business platform for solar system design,
+                    equipment selection, system wiring, engineering
+                    calculations, bill of materials, costing,
+                    procurement, assembly and installation.
+                </p>
+
+            </div>
 
         </section>
 
 
-
-        <!-- ==================================
+        <!-- =====================================
              DATABASE PAGE
-        =================================== -->
+        ====================================== -->
 
         <section
             id="databasePage"
             class="page"
             style="display:none;">
 
-
             <div class="page-header">
 
+                <h2>Equipment Database</h2>
 
-                <div>
+                <p>
+                    SolarForge equipment and material database.
+                </p>
+
+            </div>
+
+            <div
+                id="databaseGrid"
+                class="database-grid">
+
+                <div class="database-card">
+
+                    <h3>Solar Panels</h3>
+
+                    <p>
+                        PV modules and electrical specifications.
+                    </p>
 
                     <div
-                        class="page-title"
-                        id="databaseTitle">
-
-                        Equipment Database
-
-                    </div>
-
-
-                    <div class="page-description">
-
-                        SolarForge equipment
-                        and material database.
-
+                        id="dbSolarPanels"
+                        class="database-count">
+                        0
                     </div>
 
                 </div>
 
 
-                <button
-                    class="btn btn-secondary"
-                    onclick="showDashboard()">
+                <div class="database-card">
 
-                    Back to Dashboard
+                    <h3>Hybrid Inverters</h3>
 
-                </button>
+                    <p>
+                        Hybrid inverter ratings and compatibility data.
+                    </p>
 
+                    <div
+                        id="dbHybridInverters"
+                        class="database-count">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="database-card">
+
+                    <h3>Batteries</h3>
+
+                    <p>
+                        Battery capacity, voltage and BMS information.
+                    </p>
+
+                    <div
+                        id="dbBatteries"
+                        class="database-count">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="database-card">
+
+                    <h3>Cables</h3>
+
+                    <p>
+                        PV and battery cable specifications.
+                    </p>
+
+                    <div
+                        id="dbCables"
+                        class="database-count">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="database-card">
+
+                    <h3>Protection</h3>
+
+                    <p>
+                        Breakers, isolators, fuses and SPDs.
+                    </p>
+
+                    <div
+                        id="dbProtection"
+                        class="database-count">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="database-card">
+
+                    <h3>Mounting</h3>
+
+                    <p>
+                        Solar mounting system components.
+                    </p>
+
+                    <div
+                        id="dbMounting"
+                        class="database-count">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="database-card">
+
+                    <h3>Accessories</h3>
+
+                    <p>
+                        Connectors, terminals, busbars and accessories.
+                    </p>
+
+                    <div
+                        id="dbAccessories"
+                        class="database-count">
+                        0
+                    </div>
+
+                </div>
 
             </div>
-
-
-
-            <div class="database-toolbar">
-
-
-                <input
-                    type="text"
-                    id="databaseSearch"
-                    placeholder="Search equipment..."
-                    oninput="filterDatabase()">
-
-
-            </div>
-
-
-
-            <div class="table-container">
-
-
-                <table>
-
-
-                    <thead id="databaseHead">
-                    </thead>
-
-
-                    <tbody id="databaseBody">
-                    </tbody>
-
-
-                </table>
-
-
-            </div>
-
 
         </section>
 
 
-
-        <!-- ==================================
+        <!-- =====================================
              PROJECT PAGE
-        =================================== -->
+        ====================================== -->
 
         <section
             id="projectPage"
             class="page"
             style="display:none;">
 
-
             <div class="page-header">
 
+                <h2>New Solar Project</h2>
 
-                <div>
-
-                    <div class="page-title">
-                        New Solar Project
-                    </div>
-
-
-                    <div class="page-description">
-
-                        Create the project and
-                        record the initial
-                        site survey information.
-
-                    </div>
-
-                </div>
-
+                <p>
+                    Create and store project and site information.
+                </p>
 
             </div>
 
 
+            <div class="form-card">
 
-            <div class="project-container">
+                <div class="form-grid">
 
+                    <div class="form-group">
 
-                <div class="form-section">
+                        <label for="projectId">
+                            Project ID
+                        </label>
 
-
-                    <div class="form-section-title">
-                        Project Information
-                    </div>
-
-
-                    <div class="form-grid">
-
-
-                        <div class="form-group">
-
-
-                            <label for="projectId">
-                                Project ID
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="projectId"
-                                placeholder="Example: SF-2026-001">
-
-
-                        </div>
-
-
-
-                        <div class="form-group">
-
-
-                            <label for="projectName">
-                                Project Name *
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="projectName"
-                                placeholder="Example: Juan Residence Solar System">
-
-
-                        </div>
-
+                        <input
+                            id="projectId"
+                            type="text"
+                            placeholder="Example: SF-2026-001">
 
                     </div>
 
+
+                    <div class="form-group">
+
+                        <label for="projectName">
+                            Project Name
+                        </label>
+
+                        <input
+                            id="projectName"
+                            type="text"
+                            placeholder="Solar Installation Project">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="customerName">
+                            Customer Name
+                        </label>
+
+                        <input
+                            id="customerName"
+                            type="text"
+                            placeholder="Customer name">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="contactNumber">
+                            Contact Number
+                        </label>
+
+                        <input
+                            id="contactNumber"
+                            type="text"
+                            placeholder="Contact number">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="customerEmail">
+                            Email
+                        </label>
+
+                        <input
+                            id="customerEmail"
+                            type="email"
+                            placeholder="customer@email.com">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="installationType">
+                            Installation Type
+                        </label>
+
+                        <select id="installationType">
+
+                            <option value="">
+                                Select installation type
+                            </option>
+
+                            <option value="Residential">
+                                Residential
+                            </option>
+
+                            <option value="Commercial">
+                                Commercial
+                            </option>
+
+                            <option value="Industrial">
+                                Industrial
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="roofType">
+                            Roof Type
+                        </label>
+
+                        <select id="roofType">
+
+                            <option value="">
+                                Select roof type
+                            </option>
+
+                            <option value="Metal">
+                                Metal
+                            </option>
+
+                            <option value="Tile">
+                                Tile
+                            </option>
+
+                            <option value="Concrete">
+                                Concrete
+                            </option>
+
+                            <option value="Ground">
+                                Ground Mount
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="electricalService">
+                            Electrical Service
+                        </label>
+
+                        <select id="electricalService">
+
+                            <option value="">
+                                Select service
+                            </option>
+
+                            <option value="230V Single Phase">
+                                230V Single Phase
+                            </option>
+
+                            <option value="230V Three Phase">
+                                230V Three Phase
+                            </option>
+
+                            <option value="400V Three Phase">
+                                400V Three Phase
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="gridConnection">
+                            Grid Connection
+                        </label>
+
+                        <select id="gridConnection">
+
+                            <option value="">
+                                Select
+                            </option>
+
+                            <option value="Grid-Tied">
+                                Grid-Tied
+                            </option>
+
+                            <option value="Hybrid">
+                                Hybrid
+                            </option>
+
+                            <option value="Off-Grid">
+                                Off-Grid
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label for="siteAddress">
+                            Site Address
+                        </label>
+
+                        <textarea
+                            id="siteAddress"
+                            placeholder="Installation site address"></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label for="siteNotes">
+                            Site Notes
+                        </label>
+
+                        <textarea
+                            id="siteNotes"
+                            placeholder="Additional engineering or installation notes"></textarea>
+
+                    </div>
 
                 </div>
-
-
-
-                <div class="form-section">
-
-
-                    <div class="form-section-title">
-                        Customer Information
-                    </div>
-
-
-                    <div class="form-grid">
-
-
-                        <div class="form-group">
-
-
-                            <label for="customerName">
-                                Customer Name *
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="customerName"
-                                placeholder="Customer full name">
-
-
-                        </div>
-
-
-
-                        <div class="form-group">
-
-
-                            <label for="contactNumber">
-                                Contact Number
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="contactNumber"
-                                placeholder="09XXXXXXXXX">
-
-
-                        </div>
-
-
-
-                        <div class="form-group">
-
-
-                            <label for="customerEmail">
-                                Email
-                            </label>
-
-
-                            <input
-                                type="email"
-                                id="customerEmail"
-                                placeholder="customer@email.com">
-
-
-                        </div>
-
-
-
-                        <div class="form-group full-width">
-
-
-                            <label for="siteAddress">
-                                Site Address
-                            </label>
-
-
-                            <input
-                                type="text"
-                                id="siteAddress"
-                                placeholder="Complete installation address">
-
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-
-
-                <div class="form-section">
-
-
-                    <div class="form-section-title">
-                        Site Survey Information
-                    </div>
-
-
-                    <div class="form-grid">
-
-
-                        <div class="form-group">
-
-
-                            <label for="installationType">
-                                Installation Type
-                            </label>
-
-
-                            <select id="installationType">
-
-
-                                <option value="">
-                                    Select installation type
-                                </option>
-
-
-                                <option value="Residential">
-                                    Residential
-                                </option>
-
-
-                                <option value="Commercial">
-                                    Commercial
-                                </option>
-
-
-                                <option value="Industrial">
-                                    Industrial
-                                </option>
-
-
-                                <option value="Off-Grid">
-                                    Off-Grid
-                                </option>
-
-
-                            </select>
-
-
-                        </div>
-
-
-
-                        <div class="form-group">
-
-
-                            <label for="roofType">
-                                Roof / Mounting Type
-                            </label>
-
-
-                            <select id="roofType">
-
-
-                                <option value="">
-                                    Select roof type
-                                </option>
-
-
-                                <option value="Metal">
-                                    Metal
-                                </option>
-
-
-                                <option value="Long Span">
-                                    Long Span
-                                </option>
-
-
-                                <option value="Tile">
-                                    Tile
-                                </option>
-
-
-                                <option value="Concrete">
-                                    Concrete
-                                </option>
-
-
-                                <option value="Ground Mount">
-                                    Ground Mount
-                                </option>
-
-
-                            </select>
-
-
-                        </div>
-
-
-
-                        <div class="form-group">
-
-
-                            <label for="electricalService">
-                                Electrical Service
-                            </label>
-
-
-                            <select id="electricalService">
-
-
-                                <option value="">
-                                    Select electrical service
-                                </option>
-
-
-                                <option value="Single Phase">
-                                    Single Phase
-                                </option>
-
-
-                                <option value="Three Phase">
-                                    Three Phase
-                                </option>
-
-
-                            </select>
-
-
-                        </div>
-
-
-
-                        <div class="form-group">
-
-
-                            <label for="gridConnection">
-                                System Type
-                            </label>
-
-
-                            <select id="gridConnection">
-
-
-                                <option value="">
-                                    Select system type
-                                </option>
-
-
-                                <option value="Grid-Tied">
-                                    Grid-Tied
-                                </option>
-
-
-                                <option value="Hybrid">
-                                    Hybrid
-                                </option>
-
-
-                                <option value="Off-Grid">
-                                    Off-Grid
-                                </option>
-
-
-                            </select>
-
-
-                        </div>
-
-
-
-                        <div class="form-group full-width">
-
-
-                            <label for="siteNotes">
-                                Site Survey Notes
-                            </label>
-
-
-                            <textarea
-                                id="siteNotes"
-                                placeholder="Record roof condition, available installation area, shading, electrical panel condition, customer requirements, site observations, etc."></textarea>
-
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
 
 
                 <div class="form-actions">
 
-
                     <button
-                        class="btn btn-secondary"
-                        onclick="showDashboard()">
-
-                        Back to Dashboard
-
-                    </button>
-
-
-                    <button
-                        class="btn btn-success"
+                        class="primary-button"
                         onclick="saveProject()">
-
                         Save Project
-
                     </button>
 
+                    <button
+                        class="secondary-button"
+                        onclick="showDashboard()">
+                        Cancel
+                    </button>
 
                 </div>
 
-
             </div>
-
 
         </section>
 
 
-
-        <!-- ==================================
+        <!-- =====================================
              LOAD ANALYSIS PAGE
-        =================================== -->
+        ====================================== -->
 
         <section
             id="loadAnalysisPage"
             class="page"
             style="display:none;">
 
-
             <div class="page-header">
 
+                <h2>Load Analysis</h2>
 
-                <div>
-
-                    <div class="page-title">
-                        Load Analysis
-                    </div>
-
-
-                    <div class="page-description">
-
-                        Analyze the customer's electrical
-                        loads and daily energy consumption.
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="btn btn-secondary"
-                    onclick="closeLoadAnalysis()">
-
-                    Back to Dashboard
-
-                </button>
-
+                <p>
+                    Calculate connected loads and estimated energy consumption.
+                </p>
 
             </div>
 
 
+            <div
+                id="loadAnalysisContent"
+                class="load-card">
 
-            <!-- SUMMARY -->
-
-            <div class="load-summary-grid">
-
-
-                <div class="load-summary-card">
-
-
-                    <div class="load-summary-label">
-                        Connected Load
-                    </div>
-
-
-                    <div
-                        class="load-summary-value"
-                        id="totalConnectedLoad">
-
-                        0 W
-
-                    </div>
-
-
+                <div style="
+                    padding:20px;
+                    color:#718096;
+                ">
+                    Load Analysis module loading...
                 </div>
-
-
-
-                <div class="load-summary-card">
-
-
-                    <div class="load-summary-label">
-                        Daily Energy
-                    </div>
-
-
-                    <div
-                        class="load-summary-value"
-                        id="totalDailyEnergy">
-
-                        0.00 kWh
-
-                    </div>
-
-
-                </div>
-
-
-
-                <div class="load-summary-card">
-
-
-                    <div class="load-summary-label">
-                        Monthly Energy
-                    </div>
-
-
-                    <div
-                        class="load-summary-value"
-                        id="totalMonthlyEnergy">
-
-                        0.00 kWh
-
-                    </div>
-
-
-                </div>
-
-
-
-                <div class="load-summary-card">
-
-
-                    <div class="load-summary-label">
-                        Essential Load
-                    </div>
-
-
-                    <div
-                        class="load-summary-value"
-                        id="totalEssentialLoad">
-
-                        0 W
-
-                    </div>
-
-
-                </div>
-
 
             </div>
-
-
-
-            <!-- LOAD TABLE -->
-
-            <div class="load-analysis-container">
-
-
-                <div class="load-toolbar">
-
-
-                    <div class="load-toolbar-title">
-
-                        Electrical Loads
-
-                    </div>
-
-
-                    <button
-                        class="btn btn-primary"
-                        onclick="addLoadRow()">
-
-                        + Add Load
-
-                    </button>
-
-
-                </div>
-
-
-
-                <div class="load-table-wrapper">
-
-
-                    <table
-                        class="load-table">
-
-
-                        <thead>
-
-
-                            <tr>
-
-                                <th>
-                                    Appliance / Load
-                                </th>
-
-                                <th>
-                                    Category
-                                </th>
-
-                                <th>
-                                    Qty
-                                </th>
-
-                                <th>
-                                    Power (W)
-                                </th>
-
-                                <th>
-                                    Hours/Day
-                                </th>
-
-                                <th>
-                                    Days/Month
-                                </th>
-
-                                <th>
-                                    Priority
-                                </th>
-
-                                <th>
-                                    Daily Energy
-                                </th>
-
-                                <th>
-                                    Action
-                                </th>
-
-                            </tr>
-
-
-                        </thead>
-
-
-                        <tbody
-                            id="loadTableBody">
-
-                        </tbody>
-
-
-                    </table>
-
-
-                </div>
-
-
-
-                <div class="load-footer">
-
-
-                    <div class="load-note">
-
-                        Daily energy is calculated as:
-                        <strong>
-                            Quantity × Power × Hours ÷ 1000
-                        </strong>.
-
-                        Monthly energy uses the
-                        specified operating days.
-
-                        These values are preliminary
-                        engineering estimates and will
-                        later feed into PV and battery
-                        sizing.
-
-                    </div>
-
-
-                    <div class="load-actions">
-
-
-                        <button
-                            class="btn btn-secondary"
-                            onclick="clearLoadAnalysis()">
-
-                            Clear
-
-                        </button>
-
-
-                        <button
-                            class="btn btn-success"
-                            onclick="saveLoadAnalysis()">
-
-                            Save Load Analysis
-
-                        </button>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
 
         </section>
-
-
-
-        <!-- ==================================
-             SYSTEM DESIGNER PAGE
-        =================================== -->
-
-        <section
-            id="systemDesignerPage"
-            class="page designer-page"
-            style="display:none;">
-
-
-            <div class="page-header">
-
-
-                <div>
-
-                    <div class="page-title">
-                        Solar System Designer
-                    </div>
-
-
-                    <div class="page-description">
-
-                        Place solar equipment on the canvas
-                        and connect components through
-                        their correct electrical ports.
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="btn btn-secondary"
-                    onclick="showDashboard()">
-
-                    Back to Dashboard
-
-                </button>
-
-
-            </div>
-
-
-
-            <div class="designer-frame-container">
-
-
-                <iframe
-                    id="systemDesignerFrame"
-                    class="designer-frame"
-                    src="designer.html"
-                    title="SolarForge System Designer">
-
-                </iframe>
-
-
-            </div>
-
-
-        </section>
-
 
     </main>
 
 
-</div>
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
 
+    <script src="js/database.js"></script>
 
+    <script src="js/project.js"></script>
 
-<!-- ==========================================
-     JAVASCRIPT
-========================================== -->
+    <script src="load-analysis.js"></script>
 
-<script src="js/database.js"></script>
 
-<script src="js/project.js"></script>
+    <script>
 
-<script src="load-analysis.js"></script>
+        /* ========================================
+           PAGE NAVIGATION
+        ======================================== */
 
+        function hideAllPages() {
 
+            const pages = [
+                "dashboardPage",
+                "databasePage",
+                "projectPage",
+                "loadAnalysisPage"
+            ];
 
-<script>
+            pages.forEach(function(pageId) {
 
+                const page = document.getElementById(pageId);
 
-    /* ==========================================
-       PAGE NAVIGATION
-    ========================================== */
-
-
-    function hideAllPages() {
-
-        document
-            .getElementById("dashboardPage")
-            .style.display = "none";
-
-
-        document
-            .getElementById("databasePage")
-            .style.display = "none";
-
-
-        document
-            .getElementById("projectPage")
-            .style.display = "none";
-
-
-        document
-            .getElementById("loadAnalysisPage")
-            .style.display = "none";
-
-
-        document
-            .getElementById("systemDesignerPage")
-            .style.display = "none";
-
-    }
-
-
-
-    function setActiveButton(pageName) {
-
-        const buttons =
-            document.querySelectorAll(
-                ".sidebar button"
-            );
-
-
-        buttons.forEach(function(button) {
-
-            button.classList.remove("active");
-
-        });
-
-
-        const activeButton =
-            document.querySelector(
-                `.sidebar button[data-page="${pageName}"]`
-            );
-
-
-        if (activeButton) {
-
-            activeButton.classList.add("active");
-
-        }
-
-    }
-
-
-
-    function showDashboard() {
-
-        hideAllPages();
-
-
-        document
-            .getElementById("dashboardPage")
-            .style.display = "block";
-
-
-        setActiveButton("dashboard");
-
-    }
-
-
-
-    /* ==========================================
-       SYSTEM DESIGNER
-    ========================================== */
-
-    function openSystemDesigner() {
-
-        hideAllPages();
-
-
-        document
-            .getElementById("systemDesignerPage")
-            .style.display = "block";
-
-
-        setActiveButton("systemDesigner");
-
-    }
-
-
-
-    function startNewDesign() {
-
-        openNewProject();
-
-    }
-
-
-
-    function underDevelopment(name) {
-
-        alert(
-            name +
-            " module is planned for the next development stage."
-        );
-
-    }
-
-
-
-    /* ==========================================
-       DATABASE DISPLAY
-    ========================================== */
-
-
-    let currentDatabase = [];
-
-    let currentDatabaseName = "";
-
-
-    const databaseNames = {
-
-        solarPanels: "Solar Panels",
-
-        hybridInverters: "Hybrid Inverters",
-
-        batteries: "Batteries",
-
-        cables: "Cables",
-
-        protection: "Protection",
-
-        mounting: "Mounting",
-
-        accessories: "Accessories"
-
-    };
-
-
-
-    function showDatabase(databaseName) {
-
-        hideAllPages();
-
-
-        document
-            .getElementById("databasePage")
-            .style.display = "block";
-
-
-        currentDatabaseName =
-            databaseName;
-
-
-        setActiveButton("");
-
-
-        document
-            .getElementById("databaseTitle")
-            .textContent =
-            databaseNames[databaseName] ||
-            "Equipment Database";
-
-
-        document
-            .getElementById("databaseSearch")
-            .value = "";
-
-
-        if (
-            typeof SolarForgeDB !== "undefined"
-        ) {
-
-            currentDatabase =
-                SolarForgeDB[databaseName] || [];
-
-        }
-
-        else {
-
-            currentDatabase = [];
-
-        }
-
-
-        renderDatabase(currentDatabase);
-
-    }
-
-
-
-    function renderDatabase(data) {
-
-        const head =
-            document.getElementById(
-                "databaseHead"
-            );
-
-
-        const body =
-            document.getElementById(
-                "databaseBody"
-            );
-
-
-        head.innerHTML = "";
-
-        body.innerHTML = "";
-
-
-        if (
-            !data ||
-            data.length === 0
-        ) {
-
-            body.innerHTML = `
-
-                <tr>
-
-                    <td colspan="10">
-
-                        <div class="empty-message">
-
-                            No equipment records found.
-
-                        </div>
-
-                    </td>
-
-                </tr>
-
-            `;
-
-            return;
-
-        }
-
-
-        const keys =
-            Object.keys(data[0]);
-
-
-        let headerHTML =
-            "<tr>";
-
-
-        keys.forEach(function(key) {
-
-            headerHTML += `
-
-                <th>
-                    ${formatHeader(key)}
-                </th>
-
-            `;
-
-        });
-
-
-        headerHTML +=
-            "</tr>";
-
-
-        head.innerHTML =
-            headerHTML;
-
-
-
-        data.forEach(function(item) {
-
-            let rowHTML =
-                "<tr>";
-
-
-            keys.forEach(function(key) {
-
-                let value =
-                    item[key];
-
-
-                if (
-                    Array.isArray(value)
-                ) {
-
-                    value =
-                        value.join(", ");
-
+                if (page) {
+                    page.style.display = "none";
                 }
-
-
-                else if (
-                    typeof value === "object" &&
-                    value !== null
-                ) {
-
-                    value =
-                        JSON.stringify(value);
-
-                }
-
-
-                else if (
-                    value === true
-                ) {
-
-                    value =
-                        "Yes";
-
-                }
-
-
-                else if (
-                    value === false
-                ) {
-
-                    value =
-                        "No";
-
-                }
-
-
-                if (
-                    value === null ||
-                    value === undefined
-                ) {
-
-                    value = "";
-
-                }
-
-
-                rowHTML += `
-
-                    <td>
-                        ${value}
-                    </td>
-
-                `;
 
             });
 
-
-            rowHTML +=
-                "</tr>";
+        }
 
 
-            body.innerHTML +=
-                rowHTML;
+        function setActiveButton(pageName) {
 
-        });
-
-    }
-
-
-
-    function formatHeader(key) {
-
-        return key
-
-            .replace(
-                /_/g,
-                " "
-            )
-
-            .replace(
-                /\b\w/g,
-                function(letter) {
-
-                    return letter.toUpperCase();
-
-                }
-            );
-
-    }
-
-
-
-    function filterDatabase() {
-
-        const searchValue =
             document
-                .getElementById(
-                    "databaseSearch"
-                )
-                .value
-                .toLowerCase()
-                .trim();
+                .querySelectorAll(".nav-button")
+                .forEach(function(button) {
 
+                    button.classList.remove("active");
 
-        if (!searchValue) {
+                    if (
+                        button.dataset.page === pageName
+                    ) {
+                        button.classList.add("active");
+                    }
 
-            renderDatabase(
-                currentDatabase
-            );
-
-            return;
+                });
 
         }
 
 
-        const filtered =
-            currentDatabase.filter(
-                function(item) {
+        function showDashboard() {
 
-                    return JSON.stringify(item)
-                        .toLowerCase()
-                        .includes(searchValue);
+            hideAllPages();
 
+            document.getElementById("dashboardPage").style.display = "block";
+
+            setActiveButton("dashboard");
+
+            updateDashboardCounts();
+
+        }
+
+
+        /* ========================================
+           FULL SCREEN SYSTEM DESIGNER
+        ======================================== */
+
+        function openSystemDesigner() {
+
+            /*
+             * The System Designer is now a completely
+             * separate full-screen application page.
+             *
+             * No iframe is used.
+             */
+
+            window.location.href = "designer.html";
+
+        }
+
+
+        /* ========================================
+           DATABASE
+        ======================================== */
+
+        function openDatabase() {
+
+            hideAllPages();
+
+            document.getElementById("databasePage").style.display = "block";
+
+            setActiveButton("database");
+
+            updateDatabasePage();
+
+        }
+
+
+        function updateDatabasePage() {
+
+            const solarPanels =
+                document.getElementById("dbSolarPanels");
+
+            const inverters =
+                document.getElementById("dbHybridInverters");
+
+            const batteries =
+                document.getElementById("dbBatteries");
+
+            const cables =
+                document.getElementById("dbCables");
+
+            const protection =
+                document.getElementById("dbProtection");
+
+            const mounting =
+                document.getElementById("dbMounting");
+
+            const accessories =
+                document.getElementById("dbAccessories");
+
+
+            if (window.SolarForgeDB) {
+
+                if (solarPanels) {
+                    solarPanels.textContent =
+                        SolarForgeDB.solarPanels.length;
                 }
+
+                if (inverters) {
+                    inverters.textContent =
+                        SolarForgeDB.hybridInverters.length;
+                }
+
+                if (batteries) {
+                    batteries.textContent =
+                        SolarForgeDB.batteries.length;
+                }
+
+                if (cables) {
+                    cables.textContent =
+                        SolarForgeDB.cables.length;
+                }
+
+                if (protection) {
+                    protection.textContent =
+                        SolarForgeDB.protection.length;
+                }
+
+                if (mounting) {
+                    mounting.textContent =
+                        SolarForgeDB.mounting.length;
+                }
+
+                if (accessories) {
+                    accessories.textContent =
+                        SolarForgeDB.accessories.length;
+                }
+
+            }
+
+        }
+
+
+        /* ========================================
+           UNDER DEVELOPMENT
+        ======================================== */
+
+        function underDevelopment(name) {
+
+            alert(
+                name +
+                " module is currently under development."
             );
 
+        }
 
-        renderDatabase(
-            filtered
+
+        /* ========================================
+           DASHBOARD COUNTS
+        ======================================== */
+
+        function updateDashboardCounts() {
+
+            if (!window.SolarForgeDB) {
+                return;
+            }
+
+
+            const panelCount =
+                document.getElementById("panelCount");
+
+            const inverterCount =
+                document.getElementById("inverterCount");
+
+            const batteryCount =
+                document.getElementById("batteryCount");
+
+
+            if (panelCount) {
+
+                panelCount.textContent =
+                    SolarForgeDB.solarPanels.length;
+
+            }
+
+
+            if (inverterCount) {
+
+                inverterCount.textContent =
+                    SolarForgeDB.hybridInverters.length;
+
+            }
+
+
+            if (batteryCount) {
+
+                batteryCount.textContent =
+                    SolarForgeDB.batteries.length;
+
+            }
+
+
+            const savedProject =
+                localStorage.getItem(
+                    "solarforge_current_project"
+                );
+
+
+            const projectCount =
+                document.getElementById("projectCount");
+
+
+            if (projectCount) {
+
+                projectCount.textContent =
+                    savedProject ? "1" : "0";
+
+            }
+
+        }
+
+
+        /* ========================================
+           DATABASE READY
+        ======================================== */
+
+        window.addEventListener(
+            "solarforgeDatabaseReady",
+            function() {
+
+                updateDashboardCounts();
+
+                updateDatabasePage();
+
+            }
         );
 
-    }
 
+        /* ========================================
+           INITIALIZE
+        ======================================== */
 
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
 
-    /* ==========================================
-       DATABASE READY
-    ========================================== */
+                updateDashboardCounts();
 
-    window.addEventListener(
-        "solarforgeDatabaseReady",
-        function() {
+            }
+        );
 
-            updateDashboardCounts();
-
-        }
-    );
-
-
-
-    function updateDashboardCounts() {
-
-        if (
-            typeof SolarForgeDB === "undefined"
-        ) {
-
-            return;
-
-        }
-
-
-        const panelCount =
-            document.getElementById(
-                "panelCount"
-            );
-
-
-        const inverterCount =
-            document.getElementById(
-                "inverterCount"
-            );
-
-
-        const batteryCount =
-            document.getElementById(
-                "batteryCount"
-            );
-
-
-        const protectionCount =
-            document.getElementById(
-                "protectionCount"
-            );
-
-
-        if (panelCount) {
-
-            panelCount.textContent =
-                SolarForgeDB
-                    .solarPanels
-                    .length;
-
-        }
-
-
-        if (inverterCount) {
-
-            inverterCount.textContent =
-                SolarForgeDB
-                    .hybridInverters
-                    .length;
-
-        }
-
-
-        if (batteryCount) {
-
-            batteryCount.textContent =
-                SolarForgeDB
-                    .batteries
-                    .length;
-
-        }
-
-
-        if (protectionCount) {
-
-            protectionCount.textContent =
-                SolarForgeDB
-                    .protection
-                    .length;
-
-        }
-
-    }
-
-
-
-    /* ==========================================
-       INITIALIZE
-    ========================================== */
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        function() {
-
-            updateDashboardCounts();
-
-        }
-    );
-
-
-</script>
-
+    </script>
 
 </body>
-
 </html>
